@@ -1,0 +1,1416 @@
+\documentclass{jsarticle}  %ドキュメントクラスの宣言(言語や文字の大きさなどなど)
+
+%プリアンブルと言われる所(武器を備える)
+\usepackage{amsmath} %数式表記用
+\usepackage{amssymb} %数式表記用
+\usepackage{mathrsfs} %文字式用
+\usepackage{bm} %文字を太くできる
+\usepackage{color} %色を変えられる
+\usepackage{comment} %複数行のコメントアウトができる
+%\usepackage[dvipdfmx]{hyperref} %ハイパーリンク用
+%\usepackage{pxjahyper} %ハイパーリンク用
+\usepackage{wrapfig} %図の挿入用
+\usepackage[dvipdfmx]{graphicx} %図の挿入用
+\usepackage{here}
+\usepackage{ascmac}
+\allowdisplaybreaks %数式のページまたぎ許可
+
+\setlength{\textwidth}{\fullwidth}
+\setlength{\textheight}{40\baselineskip}
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{-0.2in}
+\setlength{\topmargin}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\numberwithin{equation}{section} %式番号をsectionごとに振り当てられる
+\numberwithin{figure}{section}
+
+%タイトル
+\title{統計力学の計算ノート} %タイトル
+\author{}%著者
+
+\date{\today}  %任意の補足データ(\todayと入れれば今日の日付が出る)
+
+%本文開始
+\begin{document}
+\maketitle %タイトル
+\tableofcontents %目次
+
+\newpage
+\section{ミクロカノニカル分布}
+\subsection{理想気体}
+\subsubsection{状態数}
+    自由粒子理想気体のハミルトニアンは
+    \begin{align}
+        \hat{H} = \sum_n^N \frac{1}{2m} \hat{\bm{p}}_n \notag
+    \end{align}
+    である。エネルギー固有値は
+    \begin{align}
+        &\hat{\bm{p}}_n \psi_n(\bm{r}) = E_n \psi_n(\bm{r}) \notag \\
+        &\Leftrightarrow E_n = \epsilon \bm{n}^2,\quad \epsilon = \frac{\hbar^2 \pi^2}{2mL^2} \notag 
+    \end{align}
+    となる。状態数$\Omega$は
+    \begin{align}
+        \Omega &= \sum_n \theta(E - E_n) \notag \\
+        &= \sum_n \theta (E - \epsilon \bm{n}^2) \notag \\
+        &= \sum_n \theta \left( \frac{E}{\epsilon} - \bm{n}^2 \right) \notag 
+    \end{align}
+    したがって系の状態数$\Omega$は半径$\sqrt{E/\epsilon}$の$3N$次元球内の格子点の数と近似できる。よって
+    \begin{align}
+        \Omega &\sim \frac{1}{2^{3N}} \left( \sqrt{\frac{E}{\epsilon}} \right)^{3N} V_{3N}\notag \\
+        &= \frac{1}{2^{3N}} \left( \sqrt{\frac{E}{\epsilon}} \right)^{3N} \frac{(2\pi)^{\frac{3N}{2}}}{(3N)!!} \notag \\
+        &\sim \frac{1}{2^{3N}} \left( \frac{E}{\epsilon} \right)^{\frac{3N}{2}} (2\pi)^{\frac{3N}{2}} \left( \frac{e}{3N} \right)^{\frac{3N}{2}} \notag \\
+        &=\left( \frac{e\pi }{6 N} \frac{E}{\epsilon} \right)^{\frac{3N}{2}} \notag \\
+        &= \left( \frac{emL^2 }{3 \pi \hbar^2} \frac{E}{N} \right)^{\frac{3N}{2}} \notag \\
+        &= \left( \left( \frac{em}{3 \pi \hbar^2} \right)^{\frac{3}{2}} \left( \frac{E}{N} \right)^{\frac{3}{2}} V \right)^{N} \notag 
+    \end{align}
+    となる。したがって状態密度$W$は
+    \begin{align}
+        W  &= \frac{\partial \Omega}{\partial E} \notag \\
+        &= \frac{\partial}{\partial E} \left\{ \left( \left( \frac{em}{3 \pi \hbar^2} \right)^{\frac{3}{2}} \left( \frac{E}{N} \right)^{\frac{3}{2}} V \right)^{N} \right\} \notag \\
+        &= \frac{3N}{2E} \left( \left( \frac{em}{3 \pi \hbar^2} \right)^{\frac{3}{2}} \left( \frac{E}{N} \right)^{\frac{3}{2}} V \right)^{N} \notag
+    \end{align}
+    となる。
+\subsubsection{エントロピー}
+    したがってエントロピー$S$は
+    \begin{align}
+        S &= k_\beta \log \left( \frac{1}{N!} W \Delta E \right) \notag \\
+        &= k_\beta \log \left\{ \frac{1}{N!}\frac{3N}{2E} \left( \left( \frac{em}{3 \pi \hbar^2} \right)^{\frac{3}{2}} \left( \frac{E}{N} \right)^{\frac{3}{2}} V \right)^{N} \Delta E \right\} \notag \\
+        &\sim k_\beta \log \left\{ \left( \frac{e}{N} \right)^N \frac{3N}{2E} \left( \left( \frac{em}{3 \pi \hbar^2} \right)^{\frac{3}{2}} \left( \frac{E}{N} \right)^{\frac{3}{2}} V \right)^{N} \Delta E \right\} \notag \\
+        &= Nk_\beta \log \left( e\left( \frac{em}{3 \pi \hbar^2} \right)^{\frac{3}{2}} \left( \frac{E}{N} \right)^{\frac{3}{2}} \frac{V}{N} \right) + k_\beta \log \left( \frac{3N}{2E} \Delta E \right) \notag \\
+        &\sim Nk_\beta \log \left( e^{\frac{5}{2}} \left(\frac{m}{3 \pi \hbar^2} \right)^{\frac{3}{2}} \left( \frac{E}{N} \right)^{\frac{3}{2}} \frac{V}{N} \right)
+    \end{align}
+\subsubsection{温度}
+    \begin{align}
+        \frac{\partial S}{\partial E} &= \frac{\partial }{\partial E} \left\{ Nk_\beta \log \left( e^{\frac{5}{2}} \left(\frac{m}{3 \pi \hbar^2} \right)^{\frac{3}{2}} \left( \frac{E}{N} \right)^{\frac{3}{2}} \frac{V}{N} \right) \right\} \notag \\
+        &= Nk_\beta \frac{ \frac{3}{2E}\left( e^{\frac{5}{2}} \left(\frac{m}{3 \pi \hbar^2} \right)^{\frac{3}{2}} \left(\frac{E}{N} \right)^{\frac{3}{2}} \frac{V}{N} \right)}{e^{\frac{5}{2}} \left(\frac{m}{3 \pi \hbar^2} \right)^{\frac{3}{2}} \left( \frac{E}{N} \right)^{\frac{3}{2}} \frac{V}{N}} \notag \\
+        &=\frac{3}{2} N k_\beta \frac{1}{E} \notag 
+    \end{align}
+    となるので温度$T$は
+    \begin{align}
+        &\frac{\partial S}{\partial E} = \frac{1}{T} \notag \\
+        &\Leftrightarrow  \frac{3}{2} N k_\beta \frac{1}{E} = \frac{1}{T} \notag \\
+        &\Leftrightarrow E = \frac{3}{2}Nk_\beta T
+    \end{align}
+    となる。
+\subsubsection{圧力}
+    \begin{align}
+        \frac{\partial S}{\partial V} &= \frac{\partial }{\partial V} \left\{ Nk_\beta \log \left( e^{\frac{5}{2}} \left(\frac{m}{3 \pi \hbar^2} \right)^{\frac{3}{2}} \left( \frac{E}{N} \right)^{\frac{3}{2}} \frac{V}{N} \right) \right\} \notag \\
+        &= Nk_\beta \frac{e^{\frac{5}{2}} \left(\frac{m}{3 \pi \hbar^2} \right)^{\frac{3}{2}} \left( \frac{E}{N} \right)^{\frac{3}{2}} \frac{1}{N}}{e^{\frac{5}{2}} \left(\frac{m}{3 \pi \hbar^2} \right)^{\frac{3}{2}} \left( \frac{E}{N} \right)^{\frac{3}{2}} \frac{V}{N}} \notag \\
+        &= Nk_\beta \frac{1}{V} \notag 
+    \end{align}
+    より、圧力$p$は
+    \begin{align}
+        &\frac{\partial S}{\partial V} = \frac{p}{T} \notag \\
+        &\Leftrightarrow Nk_\beta \frac{1}{V} = \frac{p}{T} \notag \\
+        &\Leftrightarrow pV = Nk_\beta T
+    \end{align}
+    となる。
+\subsection{調和振動子}
+\subsubsection{状態数}
+    調和振動子のハミルトニアンは
+    \begin{align}
+        \hat{H} = \sum_n^N \frac{1}{2m} \hat{p}_n^2 + \frac{m\omega^2}{2} \hat{x}^2 \notag
+    \end{align}
+    である。エネルギー固有値は
+    \begin{align}
+        E_n = \left( n_n' + \frac{1}{2} \right)\hbar \omega \notag
+    \end{align}
+    であり、系のエネルギー$E$は
+    \begin{align}
+        E &= \sum_n^N \left( n_n' + \frac{1}{2} \right)\hbar \omega \notag \\
+        &= \frac{N \hbar \omega }{2} + n\hbar \omega ,\quad n:= \sum_i^N n_n'
+    \end{align}
+    状態数は
+    \begin{align}
+        \Omega = \sum_n \frac{(n+N-1)!}{n!(N-1)!} \theta(E-E_n) \notag 
+    \end{align}
+    となるので状態密度$W$は
+    \begin{align}
+        W &= \frac{\partial \Omega}{\partial E} \notag \\
+        &= \frac{\partial }{\partial E} \left\{ \sum_n \frac{(n+N-1)!}{n!(N-1)!} \theta(E-E_n)  \right\} \notag \\
+        &= \sum_n \frac{(n+N-1)!}{n!(N-1)!} \delta(E-E_n) \notag
+    \end{align}
+\subsubsection{エントロピー}
+    \begin{align}
+        W \Delta E &= \sum_n \frac{(n+N-1)!}{n!(N-1)!} \delta(E-E_n) \Delta E \notag \\
+        &\sim \int_E^{E+\Delta E} \frac{(n+N-1)!}{n!(N-1)!} \delta(E'-E_n) dE' \notag \\
+        &= \frac{(n+N-1)!}{n!(N-1)!} \notag 
+    \end{align}
+    したがってエントロピー$S$は
+    \begin{align}
+        S &= k_\beta \log(W \Delta E) \notag \\
+        &= k_\beta \log \left( \frac{(n+N-1)!}{n!(N-1)!} \right) \notag \\
+        &\sim k_\beta \log \left( \frac{(n+N)!}{n!N!} \right) \notag \\
+        &\sim k_\beta \log \left( \left( \frac{n+N}{e} \right)^{n+N} \left( \frac{e}{n} \right)^n \left( \frac{e}{N} \right)^N \right) \notag \\
+        &= k_\beta \log \left( \frac{\left(n+N \right)^{n+N}}{n^n N^N}  \right) \notag \\
+        &= k_\beta \log \left( \frac{\left(1+ \frac{n}{N} \right)^{n+N}}{\left( \frac{n}{N} \right)^n}  \right) \notag \\
+        &= Nk_\beta \log \left( \frac{\left(1+ \frac{n}{N} \right)^{1 + \frac{n}{N}}}{\left( \frac{n}{N} \right)^\frac{n}{N}}  \right) \notag \\
+        &= Nk_\beta \left\{ \left( 1 + \frac{n}{N} \right)\log \left( 1 + \frac{n}{N} \right) - \left( \frac{n}{N} \right)\log \left( \frac{n}{N} \right) \right\} \notag \\
+        &= Nk_\beta \left\{ \left( \frac{E}{N \hbar \omega} + \frac{1}{2} \right)\log \left( \frac{E}{N \hbar \omega} + \frac{1}{2} \right) - \left( \frac{E}{N \hbar \omega} - \frac{1}{2} \right)\log \left( \frac{E}{N \hbar \omega} - \frac{1}{2} \right) \right\}
+    \end{align} 
+    となる。
+\subsubsection{温度}
+    \begin{align}
+        \frac{\partial S}{\partial E} &= \frac{\partial }{\partial E} \left[ Nk_\beta \left\{ \left( \frac{E}{N \hbar \omega} + \frac{1}{2} \right)\log \left( \frac{E}{N \hbar \omega} + \frac{1}{2} \right) - \left( \frac{E}{N \hbar \omega} - \frac{1}{2} \right)\log \left( \frac{E}{N \hbar \omega} - \frac{1}{2} \right) \right\} \right] \notag \\
+        &= Nk_\beta \left\{ \frac{1}{N \hbar \omega} \log \left( \frac{E}{N \hbar \omega} + \frac{1}{2} \right) + \frac{1}{N\hbar \omega } - \frac{1}{N \hbar \omega} \log \left( \frac{E}{N \hbar \omega} - \frac{1}{2} \right) - \frac{1}{N\hbar \omega} \right\} \notag \\
+        &= \frac{k_\beta}{ \hbar \omega} \left\{ \log \left( \frac{E}{N \hbar \omega} + \frac{1}{2} \right) - \log \left( \frac{E}{N \hbar \omega} - \frac{1}{2} \right) \right\} \notag
+    \end{align}
+    したがって、温度$T$は
+    \begin{align}
+        &\frac{\partial S}{\partial E} = \frac{1}{T} \notag \\
+        &\Leftrightarrow \frac{k_\beta}{ \hbar \omega} \left\{ \log \left( \frac{E}{N \hbar \omega} + \frac{1}{2} \right) - \log \left( \frac{E}{N \hbar \omega} - \frac{1}{2} \right) \right\} = \frac{1}{T} \notag \\
+        &\Leftrightarrow T = \frac{\hbar \omega}{k_\beta} \left\{ \log \left( \frac{E}{N \hbar \omega} + \frac{1}{2} \right) - \log \left( \frac{E}{N \hbar \omega} - \frac{1}{2} \right) \right\}^{-1}
+    \end{align}
+    となる。
+\subsection{2準位系}
+\subsubsection{状態数}
+    ハミルトニアンは
+    \begin{align}
+        \hat{H} = \sum_n \epsilon \hat{\sigma}_n\ , \quad \hat{\sigma}_n = \pm 1 \notag 
+    \end{align}
+    であり、エネルギー固有値は
+    \begin{align}
+        E_n = \pm \epsilon \notag  
+    \end{align}
+    である。\\
+    系のエネルギーは
+    \begin{align}
+        E &= n\epsilon - (N - n)\epsilon \notag \\
+        &= 2n\epsilon - N \epsilon \notag 
+    \end{align}
+    となる。\\
+    状態数は
+    \begin{align}
+        \Omega = \sum_n \frac{N!}{n!(N-n)!} \theta (E - E_n) \notag 
+    \end{align}
+    となるので、状態密度$W$は
+    \begin{align}
+        W = \sum_n \frac{(n+N-1)!}{n!(N-1)!} \delta(E-E_n) \notag 
+    \end{align}
+    となるので、$E$付近の状態数は
+    \begin{align}
+        W \Delta E = \frac{N!}{n!(N-n)!} \notag 
+    \end{align}
+\subsubsection{エントロピー}
+    したがってエントロピー$S$は
+    \begin{align}
+        S &= k_\beta \log(W \Delta E) \notag \\
+        &= k_\beta \log \left( \frac{N!}{n!(N-n)!} \right) \notag \\
+        &\sim k_\beta \log \left( \frac{N^N}{n^n (N -n)^{N-n}} \right) \notag \\
+        &= k_\beta \log \left( \frac{1}{\left( \frac{n}{N} \right)^n \left( 1 - \frac{n}{N} \right)^{N-n}} \right) \notag \\
+        &= -Nk_\beta \log \left( \left( \frac{n}{N} \right)^\frac{n}{N} \left( 1 - \frac{n}{N} \right)^{1-\frac{n}{N}} \right) \notag \\
+        &= -Nk_\beta \left\{ \frac{n}{N} \log \left( \frac{n}{N} \right) + \left( 1 - \frac{n}{N} \right) \log \left( 1 - \frac{n}{N} \right) \right\} \notag \\
+        &= -Nk_\beta \left\{ \left( \frac{1}{2} + \frac{E}{2N\epsilon} \right) \log \left( \frac{1}{2} + \frac{E}{2N\epsilon} \right) + \left( \frac{1}{2} - \frac{E}{2N\epsilon} \right) \log \left( \frac{1}{2} - \frac{E}{2N\epsilon} \right) \right\} \notag 
+    \end{align}
+    となる。
+\subsubsection{温度}
+    \begin{align}
+        \frac{\partial S}{\partial E} &= \frac{\partial}{\partial E} \left[ -Nk_\beta \left\{ \left( \frac{1}{2} + \frac{E}{2N\epsilon} \right) \log \left( \frac{1}{2} + \frac{E}{2N\epsilon} \right) + \left( \frac{1}{2} - \frac{E}{2N\epsilon} \right) \log \left( \frac{1}{2} - \frac{E}{2N\epsilon} \right) \right\} \right] \notag \\
+        &=  -Nk_\beta \left\{ \frac{1}{2N\epsilon} \log \left( \frac{1}{2} + \frac{E}{2N\epsilon} \right) +\frac{1}{2N\epsilon} - \frac{1}{2N\epsilon} \log \left( \frac{1}{2} - \frac{E}{2N\epsilon} \right) -\frac{1}{2N\epsilon} \right\}  \notag \\
+        &=  -k_\beta \left\{ \frac{1}{2\epsilon} \log \left( \frac{1}{2} + \frac{E}{2N\epsilon} \right) - \frac{1}{2\epsilon} \log \left( \frac{1}{2} - \frac{E}{2N\epsilon} \right) \right\}  \notag 
+    \end{align}
+    より、温度$T$は
+    \begin{align}
+        &\frac{\partial S}{\partial E} = \frac{1}{T} \notag \\
+        &\Leftrightarrow -k_\beta \left\{ \frac{1}{2\epsilon} \log \left( \frac{1}{2} + \frac{E}{2N\epsilon} \right) - \frac{1}{2\epsilon} \log \left( \frac{1}{2} - \frac{E}{2N\epsilon} \right) \right\} = \frac{1}{T} \notag \\
+        &\Leftrightarrow T = -\frac{1}{k_\beta} \left\{ \frac{1}{2\epsilon} \log \left( \frac{1}{2} + \frac{E}{2N\epsilon} \right) - \frac{1}{2\epsilon} \log \left( \frac{1}{2} - \frac{E}{2N\epsilon} \right) \right\}^{-1}
+    \end{align}
+    となる。
+\subsection{単量体が連結された鎖状分子}
+\section{カノニカル分布}
+\subsection{理想気体}
+\subsubsection{分配関数}
+    ハミルトニアンは
+    \begin{align}
+        \hat{H} = \sum_n^N \frac{1}{2m} \hat{\bm{p}}_n \notag 
+    \end{align}
+    である。エネルギー固有値は
+    \begin{align}
+        E_n = \frac{\hbar^2 \pi^2}{2mL^2} \bm{n}^2 \notag 
+    \end{align}
+    1粒子の分配関数$Z_1$は
+    \begin{align}
+        Z_1 &= \left( \sum_n e^{-\beta E_n} \right)^3 \notag \\
+        &= \left( \sum_n e^{-\beta \frac{\hbar^2 \pi^2}{2mL^2} n^2} \right)^3 \notag \\
+        &\sim \left( \int_0^\infty dn\ \exp\left[ -\beta \frac{\hbar^2 \pi^2}{2mL^2} n^2 \right] \right)^3 \notag \\
+        &= \left( \frac{2mL^2 \pi}{4\beta \hbar^2 \pi^2} \right)^{\frac{3}{2}} \notag \\
+        &= \left( \frac{mL^2}{2\pi \beta \hbar^2 } \right)^{\frac{3}{2}} \notag 
+    \end{align}
+    したがって分配関数$Z$は
+    \begin{align}
+        Z &= \frac{1}{N!} (Z_1)^N \notag \\
+        &= \frac{1}{N!} \left( \frac{mL^2}{2\pi \beta \hbar^2 } \right)^{\frac{3N}{2}}
+    \end{align}
+    となる。
+\subsubsection{Helmholtzの自由エネルギー}
+    よってHelmholtzの自由エネルギー$F$は
+    \begin{align}
+        F &= -\frac{1}{\beta} \log Z \notag \\
+        &= -\frac{1}{\beta} \log \left\{ \frac{1}{N!} \left( \frac{mL^2}{2\pi \beta \hbar^2 } \right)^{\frac{3N}{2}} \right\} \notag \\
+        &\sim -\frac{1}{\beta} \log \left\{ \left( \frac{e}{N} \right)^N \left( \frac{mL^2}{2\pi \beta \hbar^2 } \right)^{\frac{3N}{2}} \right\} \notag \\
+        &= -\frac{N}{\beta} \log \left\{ \frac{e}{N} \left( \frac{mL^2}{2\pi \beta \hbar^2 } \right)^{\frac{3}{2}} \right\} \notag \\
+        &= -\frac{N}{\beta} \log \left\{ e\frac{V}{N} \left( \frac{m}{2\pi \beta \hbar^2 } \right)^{\frac{3}{2}} \right\} \notag \\
+        &= -Nk_\beta T \log \left\{ e\frac{V}{N} \left( \frac{mk_\beta T}{2\pi \hbar^2 } \right)^{\frac{3}{2}} \right\}
+    \end{align}
+    となる。
+\subsubsection{エネルギー}
+    エネルギーの期待値は
+    \begin{align}
+        E &= -\frac{\partial }{\partial \beta} \log Z \notag \\
+        &= -\frac{\partial }{\partial \beta} \log \left( \frac{1}{N!} \left( \frac{mL^2}{2\pi \beta \hbar^2 } \right)^{\frac{3N}{2}} \right) \notag \\
+        &\sim -\frac{\partial }{\partial \beta} \log \left( \left( \frac{e}{N} \right)^N \left( \frac{mL^2}{2\pi \beta \hbar^2 } \right)^{\frac{3N}{2}} \right) \notag \\
+        &= -N\frac{\partial }{\partial \beta} \log \left( \frac{e}{N} \left( \frac{mL^2}{2\pi \beta \hbar^2 } \right)^{\frac{3}{2}} \right) \notag \\
+        &= -N \frac{-\frac{3e}{2N \beta} \left( \frac{mL^2}{2\pi \beta \hbar^2 } \right)^{\frac{3}{2}}}{\frac{e}{N} \left( \frac{mL^2}{2\pi \beta \hbar^2 } \right)^{\frac{3}{2}}} \notag \\
+        &= N \frac{3}{2 \beta} \notag \\
+        &= \frac{3}{2} Nk_\beta T
+    \end{align}
+    となる。
+\subsubsection{エントロピー}
+    \begin{align}
+        \frac{\partial F}{\partial T} &= \frac{\partial }{\partial T} \left\{ -Nk_\beta T \log \left\{ e\frac{V}{N} \left( \frac{mk_\beta T}{2\pi \hbar^2 } \right)^{\frac{3}{2}} \right\} \right\} \notag \\
+        &= -Nk_\beta \log \left\{ e\frac{V}{N} \left( \frac{mk_\beta T}{2\pi \hbar^2 } \right)^{\frac{3}{2}} \right\} -\frac{3}{2}Nk_\beta \notag \\
+        &= -Nk_\beta \log \left\{ e^\frac{5}{2}\frac{V}{N} \left( \frac{mk_\beta T}{2\pi \hbar^2 } \right)^{\frac{3}{2}} \right\} 
+    \end{align}
+    より、エントロピー$S$は
+    \begin{align}
+        &\frac{\partial F}{\partial T} = -S \notag \\
+        &\Leftrightarrow -Nk_\beta \log \left\{ e^\frac{5}{2}\frac{V}{N} \left( \frac{mk_\beta T}{2\pi \hbar^2 } \right)^{\frac{3}{2}} \right\} = -S \notag \\
+        &\Leftrightarrow S = Nk_\beta \log \left\{ e^\frac{5}{2}\frac{V}{N} \left( \frac{mk_\beta T}{2\pi \hbar^2 } \right)^{\frac{3}{2}} \right\} = Nk_\beta \log \left( e^{\frac{5}{2}} \left(\frac{m}{3 \pi \hbar^2} \right)^{\frac{3}{2}} \left( \frac{E}{N} \right)^{\frac{3}{2}} \frac{V}{N} \right)
+    \end{align}
+    となる。
+\subsubsection{圧力}
+    \begin{align}
+        \frac{\partial F}{\partial V} &= \frac{\partial }{\partial V} \left[ -Nk_\beta T \log \left\{ e\frac{V}{N} \left( \frac{mk_\beta T}{2\pi \hbar^2 } \right)^{\frac{3}{2}} \right\} \right] \notag \\
+        &= -Nk_\beta T \frac{1}{V}
+    \end{align}
+    より、圧力$p$は
+    \begin{align}
+        &\frac{\partial F}{\partial V} = -p \notag \\
+        &\Leftrightarrow -Nk_\beta T \frac{1}{V} = -p \notag \\
+        &\Leftrightarrow p = \frac{Nk_\beta T}{V}
+    \end{align}
+    となる。
+\subsection{調和振動子}
+\subsubsection{分配関数}
+    ハミルトニアンは
+    \begin{align}
+        \hat{H} = \sum_n \frac{1}{2m}\hat{p}_n^2 + \frac{m\omega^2}{2} \hat{x}_n^2 \notag
+    \end{align}
+    であり、エネルギー固有値は
+    \begin{align}
+        E_n = \left( n + \frac{1}{2}\right)\hbar \omega \notag 
+    \end{align}
+    である。\\
+    分配関数$Z$は
+    \begin{align}
+        Z &= \left( \sum_n e^{-\beta E_n} \right)^N \notag \\
+        &= \left( \sum_n \exp \left[ -\beta \left( n + \frac{1}{2}\right)\hbar \omega \right] \right)^N \notag \\
+        &= \left( \exp\left[ \frac{\hbar \omega}{2} \right] \sum_n \exp \left[ -\beta \hbar \omega n \right] \right)^N \notag \\
+        &= \left( \exp\left[ -\frac{\hbar \omega}{2} \right] \frac{1}{1 - e^{-\beta \hbar \omega }} \right)^N \notag \\
+        &= \left( \frac{1}{e^{\frac{\beta \hbar \omega}{2}} - e^{-\frac{\beta \hbar \omega}{2}}} \right)^N \notag \\
+        &= \left( \frac{1}{2\sinh \frac{\beta \hbar \omega}{2}} \right)^N \notag 
+    \end{align}
+    となる。
+\subsubsection{Helmholtzの自由エネルギー}
+    したがってHelmholtzの自由エネルギーは
+    \begin{align}
+        F &= -\frac{1}{\beta} \log Z \notag \\
+        &= -\frac{1}{\beta} \log \left( \frac{1}{2\sinh \frac{\beta \hbar \omega}{2}} \right)^N \notag \\
+        &= \frac{N}{\beta} \log \left( 2\sinh \frac{\beta \hbar \omega}{2} \right) 
+    \end{align}
+\subsubsection{エネルギー}
+    エネルギー期待値は
+    \begin{align}
+        E &= - \frac{\partial }{\partial \beta} \log Z \notag \\
+        &= - \frac{\partial }{\partial \beta} \log \left( \frac{1}{2\sinh \frac{\beta \hbar \omega}{2}} \right)^N \notag \\
+        &= N \frac{\partial }{\partial \beta} \log \left( 2\sinh \frac{\beta \hbar \omega}{2} \right) \notag \\
+        &= N \frac{\cosh \frac{\beta \hbar \omega}{2}}{\sinh \frac{\beta \hbar \omega}{2}} \notag \\
+        &= \frac{N\hbar \omega}{2} \frac{1}{\tanh \frac{\beta \hbar \omega }{2}}
+    \end{align}
+\subsubsection{定積熱容量}
+    定積熱容量は
+    \begin{align}
+        C_V &= \frac{\partial E}{\partial T} \notag \\
+        &= \frac{\partial}{\partial T} \frac{N\hbar \omega}{2} \frac{1}{\tanh \frac{\beta \hbar \omega }{2}} \notag \\
+        &= -\frac{N\hbar \omega}{2} \frac{1}{k_\beta T^2}\frac{\partial}{\partial \beta} \frac{1}{\tanh \frac{\beta \hbar \omega }{2}} \notag \\
+        &= -\frac{N\hbar \omega}{2k_\beta T^2} \frac{\hbar \omega}{2} \frac{-1}{\cosh^2 \frac{\beta \hbar \omega }{2}} \notag \\
+        &= Nk_\beta  \left( \frac{\beta k_\beta \omega}{2} \right)^2 \frac{1}{\cosh^2 \frac{\beta \hbar \omega }{2}}
+    \end{align}
+    となる。
+\subsubsection{エントロピー}
+    \begin{align}
+        \frac{\partial F}{\partial T} &= \frac{\partial }{\partial T} \left\{ \frac{N}{\beta} \log \left( 2\sinh \frac{\beta \hbar \omega}{2} \right)  \right\} \notag \\
+        &= -\frac{1}{k_\beta T^2}\frac{\partial }{\partial \beta} \left\{ \frac{N}{\beta} \log \left( 2\sinh \frac{\beta \hbar \omega}{2} \right)  \right\} \notag \\
+        &= -\frac{1}{k_\beta T^2} \left\{ -\frac{N}{\beta^2} \log \left( 2\sinh \frac{\beta \hbar \omega}{2} \right) + \frac{N}{\beta} \frac{\cosh \frac{\beta \hbar \omega}{2}}{\sinh \frac{\beta \hbar \omega}{2} } \frac{\hbar \omega}{2} \right\} \notag \\
+        &= -\frac{1}{k_\beta T^2} \frac{N}{\beta^2} \left\{ \log \left( \frac{1}{2\sinh \frac{\beta \hbar \omega}{2}} \right) + \frac{\beta \hbar \omega}{2} \frac{1}{\tanh \frac{\beta \hbar \omega}{2}} \right\}  \\
+        &= -Nk_\beta \left\{ \log \left( \frac{\sqrt{ \left( \frac{2E}{N\hbar \omega}\right)^2 - 1}}{2}  \right) + \frac{\beta E}{N}  \right\} \notag \\
+        &= -Nk_\beta \left\{ \frac{1}{2} \log \left( \left( \frac{E}{N\hbar \omega}\right)^2 - \frac{1}{4}  \right) + \frac{\beta E}{N} \right\} \notag \\
+        &= -Nk_\beta \left\{ \frac{1}{2} \log \left( \frac{E}{N\hbar \omega} + \frac{1}{2}  \right) + \frac{1}{2} \log \left( \frac{E}{N\hbar \omega} - \frac{1}{2}  \right) + \frac{E}{Nk_\beta} \frac{k_\beta}{ \hbar \omega} \left\{ \log \left( \frac{E}{N \hbar \omega} + \frac{1}{2} \right) - \log \left( \frac{E}{N \hbar \omega} - \frac{1}{2} \right) \right\} \right\} \notag \\
+        &= -Nk_\beta \left\{ \frac{1}{2} \log \left( \frac{E}{N\hbar \omega} + \frac{1}{2}  \right) + \frac{1}{2} \log \left( \frac{E}{N\hbar \omega} - \frac{1}{2}  \right) + \frac{E}{N\hbar \omega} \left\{ \log \left( \frac{E}{N \hbar \omega} + \frac{1}{2} \right) - \log \left( \frac{E}{N \hbar \omega} - \frac{1}{2} \right) \right\} \right\} \notag \\
+        &= -Nk_\beta \left\{ \left( \frac{E}{N\hbar \omega} + \frac{1}{2} \right) \log \left( \frac{E}{N\hbar \omega} + \frac{1}{2} \right) - \left(\frac{E}{N\hbar \omega } -\frac{1}{2} \right)  \log \left( \frac{E}{N\hbar \omega} - \frac{1}{2}  \right) \right\} \notag
+    \end{align}
+    となるので、エントロピー$S$は
+    \begin{align}
+        S &= -\frac{\partial F}{\partial T} \notag \\
+        &= \frac{1}{k_\beta T^2} \frac{N}{\beta^2} \left\{ \log \left( \frac{1}{2\sinh \frac{\beta \hbar \omega}{2}} \right) + \frac{\beta \hbar \omega}{2} \frac{1}{\tanh \frac{\beta \hbar \omega}{2}} \right\} \\ 
+        &= Nk_\beta \left\{ \left( \frac{E}{N\hbar \omega} + \frac{1}{2} \right) \log \left( \frac{E}{N\hbar \omega} + \frac{1}{2} \right) - \left(\frac{E}{N\hbar \omega } -\frac{1}{2} \right)  \log \left( \frac{E}{N\hbar \omega} - \frac{1}{2}  \right) \right\}
+    \end{align}
+    となる。
+\subsection{2準位系}
+\subsubsection{分配関数}
+    ハミルトニアンは
+    \begin{align}
+        \hat{H} = \sum_n \epsilon \hat{\sigma}_n \notag 
+    \end{align}
+    であり、エネルギー固有値は
+    \begin{align}
+        E_n = \pm \epsilon \notag 
+    \end{align}
+    である。\\
+    分配関数$Z$は
+    \begin{align}
+        Z &= \left( \sum_n e^{-\beta E_n} \right)^N \notag \\
+        &= \left( e^{-\beta \epsilon} + e^{\beta \epsilon} \right)^N \notag 
+    \end{align}
+    となる。
+\subsubsection{Helmholtzの自由エネルギー}
+    したがってHelmholtzの自由エネルギーは
+    \begin{align}
+        F &= - \frac{1}{\beta} \log Z \notag \\
+        &= -\frac{1}{\beta} \log \left( e^{-\beta \epsilon} + e^{\beta \epsilon} \right)^N \notag \\
+        &= -\frac{1}{\beta} \log \left( e^{-\beta \epsilon} + e^{\beta \epsilon} \right)^N \notag \\
+        &= -\frac{N}{\beta} \log \left( e^{-\beta \epsilon} + e^{\beta \epsilon} \right) 
+    \end{align}
+    となる。
+\subsubsection{エネルギー}
+    エネルギー期待値は
+    \begin{align}
+        E &= -\frac{\partial }{\partial \beta} \log Z \notag \\
+        &= -\frac{\partial }{\partial \beta} \log \left( e^{-\beta \epsilon} + e^{\beta \epsilon} \right)^N \notag \\
+        &= -N \epsilon \frac{-e^{-\beta \epsilon} + e^{\beta \epsilon} }{e^{-\beta \epsilon} + e^{\beta \epsilon} } \notag \\
+        &= -N \epsilon \tanh \beta \epsilon
+    \end{align}
+    となる。
+\subsubsection{定積熱容量}
+    定積熱容量は
+    \begin{align}
+        C_V &= \frac{\partial E}{\partial T} \\
+        &= \frac{\partial}{\partial T} \left\{ -N \epsilon \tanh \beta \epsilon \right\} \notag \\
+        &= - \frac{1}{k_\beta T^2} \frac{\partial }{\partial \beta} \left\{ -N \epsilon \tanh \beta \epsilon \right\} \notag \\
+        &= \frac{N \epsilon}{k_\beta T^2} \left( \epsilon \frac{1}{\cosh^2 \beta \epsilon} \right) \notag \\
+        &= Nk_\beta \left( \frac{\beta \epsilon}{\cosh \beta \epsilon} \right)^2
+    \end{align}
+    となる。
+\subsubsection{エントロピー}
+    \begin{align}
+        \frac{\partial F}{\partial T} &= \frac{\partial}{\partial T} \left\{ -\frac{N}{\beta} \log \left( e^{-\beta \epsilon} + e^{\beta \epsilon} \right)  \right\} \notag \\
+        &= -\frac{1}{k_\beta T^2} \frac{\partial }{\partial \beta} \left\{ -\frac{N}{\beta} \log \left( e^{-\beta \epsilon} + e^{\beta \epsilon} \right)  \right\} \notag \\
+        &= -\frac{N}{k_\beta T^2} \left( \frac{1}{\beta^2}  \log \left( e^{-\beta \epsilon} + e^{\beta \epsilon} \right) - \frac{\epsilon}{\beta} \tanh \beta \epsilon \right) \notag \\
+        &= -Nk_\beta \left( \log \left( e^{-\beta \epsilon} + e^{\beta \epsilon} \right) - \beta \epsilon \tanh \beta \epsilon \right) \notag \\
+        &= -Nk_\beta \left( \log \left( 2\cosh \beta \epsilon \right) - \beta \epsilon \tanh \beta \epsilon \right) \\
+        &= -Nk_\beta \left( \log \left( \frac{2}{\sqrt{1 - \tanh^2 \beta \epsilon }} \right) - \beta \epsilon \tanh \beta \epsilon \right) \notag \\
+        &= -Nk_\beta \left( -\log \left( \frac{\sqrt{1 - \tanh^2 \beta \epsilon }}{2} \right) - \beta \epsilon \tanh \beta \epsilon \right) \notag \\
+        &= -Nk_\beta \left( -\frac{1}{2}\log \left( \frac{(1 - \tanh \beta \epsilon)(1 + \tanh \beta \epsilon) }{4} \right) - \beta \epsilon \tanh \beta \epsilon \right) \notag \\
+        &= -Nk_\beta \left( -\frac{1}{2}\log \left( \frac{1 - \tanh \beta \epsilon}{2} \right) -\frac{1}{2}\log \left( \frac{1 + \tanh \beta \epsilon }{2} \right) - \beta \epsilon \tanh \beta \epsilon \right) \notag \\
+        &= -Nk_\beta \left( -\frac{1}{2}\log \left( \frac{1}{2} + \frac{E}{2N\epsilon} \right) -\frac{1}{2}\log \left( \frac{1}{2} - \frac{E}{2N\epsilon} \right) + \beta \epsilon \frac{E}{N\epsilon} \right) \notag \\
+        &= -Nk_\beta \left( -\frac{1}{2}\log \left( \frac{1}{2} + \frac{E}{2N\epsilon} \right) -\frac{1}{2}\log \left( \frac{1}{2} - \frac{E}{2N\epsilon} \right) - \left\{ \frac{1}{2} \log \left( \frac{1}{2} + \frac{E}{2N\epsilon} \right) - \frac{1}{2} \log \left( \frac{1}{2} - \frac{E}{2N\epsilon} \right) \right\} \frac{E}{N\epsilon} \right) \notag \\
+        &= -Nk_\beta \left\{ -\left( \frac{1}{2} + \frac{E}{2N\epsilon} \right) \log \left( \frac{1}{2} + \frac{E}{2N\epsilon} \right) - \left( \frac{1}{2} - \frac{E}{2N\epsilon} \right) \log \left( \frac{1}{2} - \frac{E}{2N\epsilon} \right) \right\} 
+    \end{align}
+    よってエントロピー$S$は
+    \begin{align}
+        S &= -\frac{\partial F}{\partial T} \notag \\
+        &= Nk_\beta \left( \log \left( 2\cosh \beta \epsilon \right) - \beta \epsilon \tanh \beta \epsilon \right) \\
+        &= -Nk_\beta \left\{ \left( \frac{1}{2} + \frac{E}{2N\epsilon} \right) \log \left( \frac{1}{2} + \frac{E}{2N\epsilon} \right) - \left( \frac{1}{2} + \frac{E}{2N\epsilon} \right) \log \left( \frac{1}{2} - \frac{E}{2N\epsilon} \right) \right\} 
+    \end{align}
+    となる。
+\subsection{Debyeモデル}
+\subsubsection{N粒子連成振動}
+    お互いに自然長$a$、ばね定数$\kappa$のばねで一次元的につながれたN個の粒子を考える。ラグランジアンは
+    \begin{align}
+        L = \sum_{n=0}^{N+1} \frac{m}{2}\dot{x}^2_n - \sum_{n=0}^{N} \frac{\kappa}{2}(x_{n+1} - x_n)^2 \notag 
+    \end{align}
+    となる。ただし$x_0 = y_0 = z_0 = x_{N+1} =  y_{N+1} = z_{N+1} = 0$とする。\\
+    ら以下の行列を考える
+    \begin{align}
+        &\hat{K} := \left(
+        \begin{matrix}
+            1&0&\cdots&0\\
+            0&1&\cdots&0\\
+            \vdots&\vdots&&\vdots\\
+            0&0&\cdots&1
+        \end{matrix}
+        \right)\notag \\
+        &\hat{U} := \left( 
+        \begin{matrix}
+            2&-1&0&\cdots&0\\
+            -1&2&-1&\cdots&0\\
+            0&-1&2&\cdots&0\\
+            \vdots&\vdots&\vdots&&\vdots\\
+            0&0&0&\cdots&2
+        \end{matrix}
+        \right) \notag 
+    \end{align}
+    ただし、行列はどちらも$N+2$正方行列とする。これらの行列を用いてらグラランジアンを書き換えると
+    \begin{align}
+        L = \frac{m}{2} \dot{\bm{x}}^T \hat{K} \dot{\bm{x}} - \frac{\kappa}{2} \bm{x}^T \hat{U} \bm{x} 
+    \end{align}
+    となる。ただし、$\bm{x}$ は全ての粒子の座標をたてに並べたベクトルである。$\hat{U}$の固有ベクトルは
+    \begin{align}
+        \bm{P}_n = \left(
+        \begin{matrix}
+            \sin k_nx\\
+            \sin 2k_nx\\
+            \vdots \\
+            \sin (N-1)k_nx\\
+            \sin N k_nx
+        \end{matrix}
+        \right),\quad k_n = \frac{n \pi}{(N+1)a}
+    \end{align}
+    となる。固有値は
+    \begin{align}
+        &-a_n^{(i+1)}+2a_n^{(i)} - a_n^{(i-1)} \notag  \\
+        &= -\sin (i+1) k_n +2 \sin i k_n - \sin (i-1) k_n \notag \\
+        &= -2\cos k_n \sin i k_n + 2 \sin i k_n \notag \\
+        &= 2 (1-\cos k_n)\sin i k_n \notag \\
+        &= 4 \sin^2 \frac{k_n}{2}\sin i k_n \notag 
+    \end{align}
+    より
+    \begin{align}
+        \lambda_n = 4 \sin^2 \frac{k_n}{2} 
+    \end{align}
+    となる。\\
+    固有ベクトルを並べた行列$\hat{Q}$で座標をの変数を行う
+    \begin{align}
+        \bm{q}_{x} = \hat{Q} \bm{x} \notag 
+    \end{align}
+    するとラグランジアンは
+    \begin{align}
+        L = \frac{m}{2} \dot{\bm{q}}_x^T \hat{K} \dot{\bm{q}}_x  - \frac{\kappa}{2} \bm{q}_x^T \hat{O} \bm{q}_x \notag 
+    \end{align}
+    となる。ただし$\hat{O}$は固有値を成分とする対角行列である。
+    \begin{align}
+        \hat{O} := \hat{Q}^T \hat{U} \hat{Q} = \left( 
+        \begin{matrix}
+            \lambda_1&0&\cdots&0\\
+            0&\lambda_2&\cdots&0 \\
+            \vdots &\vdots &&\vdots \\
+            0&0&\cdots&\lambda_n
+        \end{matrix}
+        \right)
+    \end{align}
+    となる。
+\subsubsection{格子振動}
+    $N(=M^3)$個の粒子がお互いに自然長$a$、ばね定数$\kappa$のばねでつながれた三次元結晶格子を考える。ただしx,y,z成分は独立に振動するとする。系のハミルトニアンは
+    \begin{align}
+        \hat{H} = \sum_n \frac{\hat{\bm{p}}_n^2}{2m} + \sum_{\{ n\ n' \}} \frac{\kappa}{2} (\bm{r}_n -\bm{r}_n')^2 \notag 
+    \end{align}
+    となる。ただし$\{ n,n' \}$最近接粒子に関しての和を表す。この系は1次元N粒子連成振動の集まりとみなせる。1振動子のエネルギー固有値は
+    \begin{align}
+        E_n = \left( n + \frac{1}{2} \right)\hbar \omega(\bm{k})
+    \end{align}
+    ただし$\omega (\bm{k})$は
+    \begin{align}
+        &\omega (\bm{k}) = 2 \sqrt{\frac{\kappa}{m}} \sqrt{\left( \sin \frac{ak_x}{2} \right)^2 + \left( \sin \frac{ak_y}{2} \right)^2 + \left( \sin \frac{ak_z}{2} \right)^2} \\
+        &k_{x,y,z} = \frac{n_{x,y,z}\pi}{(M+1)a},\quad n_{x,y,z} = 1,2,\cdots M \notag 
+    \end{align}
+    である。\\
+    分配関数は
+    \begin{align}
+        Z &= \left( \sum_{\{n\}} e^{-\beta E_n} \right)^{3} \notag \\
+        &= \left( \sum_{\bm{k}}\sum_n \exp\left[ {-\beta \left( n + \frac{1}{2} \right)\hbar \omega(\bm{k})} \right] \right)^{3} \notag \\
+        &= \left( \sum_{\bm{k}} \exp\left[ -\frac{\beta \hbar \omega(\bm{k})}{2} \right]  \sum_{n=0}^{\infty} \exp\left[ {-\beta \hbar \omega(\bm{k})} n\right] \right)^{3} \notag \\
+        &= \left( \sum_{\bm{k}} \exp\left[ -\frac{\beta \hbar \omega(\bm{k})}{2} \right]  \frac{1}{1 - e^{-\beta \hbar \omega (\bm{k})}}\right)^{3} \notag \\
+        &= \left( \sum_{\bm{k}} \frac{1}{2 \sinh \frac{\beta \hbar \omega (\bm{k})}{2}}\right)^{3} 
+    \end{align}
+    となる。\\
+    エネルギーの期待値は
+    \begin{align}
+        E &= -\frac{\partial }{\partial \beta} \log Z \notag \\
+        &= -\frac{\partial }{\partial \beta} \log \left\{ \left( \sum_{\bm{k}} \frac{1}{2 \sinh \frac{\beta \hbar \omega (\bm{k})}{2}}\right)^{3}  \right\} \notag \\
+        &= -3 \left( \sum_{\bm{k}} \frac{1}{2 \sinh \frac{\beta \hbar \omega (\bm{k})}{2}}\right)^{-1} \frac{\partial }{\partial \beta}  \left( \sum_{\bm{k}} \frac{1}{2 \sinh \frac{\beta \hbar \omega (\bm{k})}{2}}\right)  \notag \\
+        &= -3 \left( \sum_{\bm{k}} \frac{1}{2 \sinh \frac{\beta \hbar \omega (\bm{k})}{2}}\right)^{-1} \frac{\partial }{\partial \beta}  \left( \sum_{\bm{k}} \frac{1}{2 \sinh \frac{\beta \hbar \omega (\bm{k})}{2}}\right)  \notag \\
+        &= -3 \left( \sum_{\bm{k}} \frac{1}{2 \sinh \frac{\beta \hbar \omega (\bm{k})}{2}}\right)^{-1} \sum_{\bm{k}} \frac{\partial }{\partial \beta} \frac{1}{2 \sinh \frac{\beta \hbar \omega (\bm{k})}{2}}  \notag \\
+        &= 3 \left( \sum_{\bm{k}} \frac{1}{2 \sinh \frac{\beta \hbar \omega (\bm{k})}{2}}\right)^{-1} \sum_{\bm{k}} \frac{\cosh \frac{\beta \hbar \omega (\bm{k})}{2}}{ \sinh^2 \frac{\beta \hbar \omega (\bm{k})}{2}} \frac{\hbar \omega (\bm{k})}{2}  \notag \\
+        &= 3 \sum_{\bm{k}} \frac{\cosh \frac{\beta \hbar \omega (\bm{k})}{2}}{ \sinh \frac{\beta \hbar \omega (\bm{k})}{2}} \frac{\hbar \omega (\bm{k})}{2}  \notag \\
+        &= 3 \sum_{\bm{k}} \frac{e^{\frac{\beta \hbar \omega (\bm{k})}{2}} + e^{-\frac{\beta \hbar \omega (\bm{k})}{2}}}{ e^{\frac{\beta \hbar \omega (\bm{k})}{2}} - e^{-\frac{\beta \hbar \omega (\bm{k})}{2}}} \frac{\hbar \omega (\bm{k})}{2}  \notag \\
+        &= 3 \sum_{\bm{k}} \frac{e^{\beta \hbar \omega (\bm{k})} + 1}{ e^{\beta \hbar \omega (\bm{k})} - 1} \frac{\hbar \omega (\bm{k})}{2}  \notag \\
+        &=3 \sum_{\bm{k}} \left\{ \frac{\hbar \omega (\bm{k})}{2}  +\frac{\hbar \omega (\bm{k})}{ e^{\beta \hbar \omega (\bm{k})} - 1} \right\}
+    \end{align}
+    となる。\\
+    ・高温極限\\
+    $\beta \hbar \omega_{max}(\bm{k}) << 1$のとき、エネルギーの期待値は
+    \begin{align}
+        E &= 3 \sum_{\bm{k}} \left\{ \frac{\hbar \omega (\bm{k})}{2}  +\frac{\hbar \omega (\bm{k})}{ e^{\beta \hbar \omega (\bm{k})} - 1} \right\} \notag \\
+        &\sim  3 \sum_{\bm{k}}  \left\{ \frac{\hbar \omega (\bm{k})}{2}  +\frac{1}{\beta} \right\} \notag \\
+        &\sim  3 \sum_{\bm{k}}  \left\{ \frac{1}{\beta} \right\} \notag \\
+        &\sim 3Nk_\beta T
+    \end{align}
+    となる。したがって熱容量は
+    \begin{align}
+        C = 3Nk_\beta 
+    \end{align}
+    となり、Dulong-Petitの法則と一致する。\\
+    ・低温極限\\
+    エネルギーの期待値は
+    \begin{align}
+        E &= 3 \sum_{\bm{k}} \left\{ \frac{\hbar \omega (\bm{k})}{2}  +\frac{\hbar \omega (\bm{k})}{ e^{\beta \hbar \omega (\bm{k})} - 1} \right\} \notag \\ 
+        &= 3 \sum_{\bm{k}} \left\{ \frac{\hbar \omega (\bm{k})}{2}  \right\} + 3 \sum_{\bm{k}} \left\{ \frac{\hbar \omega (\bm{k})}{ e^{\beta \hbar \omega (\bm{k})} - 1} \right\} \notag \\ 
+        &= E_0 + 3 \sum_{\bm{k}} \left\{ \frac{\hbar \omega (\bm{k})}{ e^{\beta \hbar \omega (\bm{k})} - 1} \right\} \notag 
+    \end{align}
+    となる。温度に関係のない値は$E_0$で置き換えた。\\
+    ここで波数の間隔が$\pi / (M+1)a$であり、十分小さい値となることを利用し和を積分に置き換えると
+    \begin{align}
+        E &= E_0 + 3 \sum_{\bm{k}} \left\{ \frac{\hbar \omega (\bm{k})}{ e^{\beta \hbar \omega (\bm{k})} - 1} \right\} \notag  \notag \\
+        &\approx E_0 + 3\left( \frac{(M+1)a}{\pi} \right)^3 \int_0^{\frac{\pi}{a}} dk_x \int_0^{\frac{\pi}{a}} dk_y \int_0^{\frac{\pi}{a}} dk_z \frac{\hbar \omega (\bm{k})}{ e^{\beta \hbar \omega (\bm{k})} - 1}  
+    \end{align}
+    となる。\\
+    $\beta \hbar \omega_{max}(\bm{k}) >> 1$のとき、$\omega (\bm{k})$が極端に小さい値ではない範囲では積分の寄与はほぼ0となる。したがって$\omega (\bm{k})$が小さい値
+    \begin{align}
+        \omega (\bm{k}) &= 2 \sqrt{\frac{\kappa}{m}} \sqrt{\left( \sin \frac{ak_x}{2} \right)^2 + \left( \sin \frac{ak_y}{2} \right)^2 + \left( \sin \frac{ak_z}{2} \right)^2} \notag \\
+        &\approx 2 \sqrt{\frac{\kappa}{m}} \sqrt{\left( \frac{ak_x}{2} \right)^2 + \left( \frac{ak_y}{2} \right)^2 + \left( \frac{ak_z}{2} \right)^2} \notag \\
+        &= \sqrt{\frac{\kappa}{m}} a \sqrt{ k_x^2 + k_y^2 + k_z^2} \notag \\
+        &= v_0 |\bm{k}| , \quad v_0 := a\sqrt{\frac{\kappa}{m}} 
+    \end{align}
+    となる。$v_0$は結晶中の音速である。\\
+    したがって低温極限でのエネルギーの期待値は
+    \begin{align}
+        E \approx E_0 + 3\left( \frac{(M+1)a}{\pi} \right)^3 \int_0^{\frac{\pi}{a}} dk_x \int_0^{\frac{\pi}{a}} dk_y \int_0^{\frac{\pi}{a}} dk_z \frac{\hbar  v_0 |\bm{k}| }{ e^{\beta \hbar  v_0 |\bm{k}|} - 1} \notag 
+    \end{align}
+    $|\bm{k}|$の大きいところは積分に寄与しないので、積分範囲を広げると
+    \begin{align}
+        \approx E_0 + 3\left( \frac{(M+1)a}{2\pi} \right)^3 \int_{-\infty}^{\infty} dk_x \int_{-\infty}^{\infty} dk_y \int_{-\infty}^{\infty} dk_z \frac{\hbar  v_0 |\bm{k}| }{ e^{\beta \hbar  v_0 |\bm{k}|} - 1} \notag 
+    \end{align}
+    極座標に変換すると
+    \begin{align}
+        &= E_0 + 3\left( \frac{(M+1)a}{2\pi} \right)^3 \int_0^{2\pi} d\phi \int_0^{\pi} d\theta \int_0^{\infty} d|k| \frac{\hbar  v_0 |\bm{k}| }{ e^{\beta \hbar  v_0 |\bm{k}|} - 1} \notag \\
+        &= E_0 + 3\left( \frac{(M+1)a}{2\pi} \right)^3 \int_0^{2\pi} d\phi \int_0^{\pi} d\theta \sin \theta \int_0^{\infty} d|k| \frac{\hbar  v_0 |\bm{k}|^3 }{ e^{\beta \hbar  v_0 |\bm{k}|} - 1} \notag \\
+        &=E_0 + 12\pi \left( \frac{(M+1)a}{2\pi} \right)^3 \int_0^{\infty} d|k| \frac{\hbar  v_0 |\bm{k}|^3 }{ e^{\beta \hbar  v_0 |\bm{k}|} - 1} \notag \\
+        &=E_0 + \left( \frac{(M+1)a}{2\pi} \right)^3  \frac{12\pi}{(\hbar v_0)^3} \frac{1}{\beta^4} \int_0^{\infty} dx \frac{x^3 }{ e^{x} - 1} \notag \\
+        &=E_0 + \left( \frac{(M+1)a}{\pi} \right)^3  \frac{3\pi}{2(\hbar v_0)^3} \frac{1}{\beta^4} \frac{\pi^4}{15} \notag \\
+        &=E_0 + \frac{V_0 \pi^2 k_\beta^4}{10(\hbar v_0)^3} T^4  
+    \end{align}
+    となる。
+    ただし$V_0 := \left( {(M+1)a} \right)^3 $とおいた。
+    よって熱容量は
+    \begin{align}
+        C = \frac{2V_0 \pi^2 k_\beta^4}{5(\hbar v_0)^3} T^3  
+    \end{align}
+    となり、$T^3$に比例する。\\
+    \begin{align}
+        E =  E_0 + 3\left( \frac{(M+1)a}{\pi} \right)^3 \int_0^{\frac{\pi}{a}} dk_x \int_0^{\frac{\pi}{a}} dk_y \int_0^{\frac{\pi}{a}} dk_z \frac{\hbar \omega (\bm{k})}{ e^{\beta \hbar \omega (\bm{k})} - 1} \notag 
+    \end{align}
+    より、熱容量は
+    \begin{align}
+        C &= \frac{\partial}{\partial T} 3\left( \frac{(M+1)a}{\pi} \right)^3 \int_0^{\frac{\pi}{a}} dk_x \int_0^{\frac{\pi}{a}} dk_y \int_0^{\frac{\pi}{a}} dk_z \frac{\hbar \omega (\bm{k})}{ e^{\beta \hbar \omega (\bm{k})} - 1} \notag \\
+        &= 3\frac{V_0}{\pi^3} \int_0^{\frac{\pi}{a}} dk_x \int_0^{\frac{\pi}{a}} dk_y \int_0^{\frac{\pi}{a}} dk_z  \frac{\partial}{\partial T} \frac{\hbar \omega (\bm{k})}{ e^{\beta \hbar \omega (\bm{k})} - 1} \notag \\
+        &= 3\frac{V_0}{\pi^3} \int_0^{\frac{\pi}{a}} dk_x \int_0^{\frac{\pi}{a}} dk_y \int_0^{\frac{\pi}{a}} dk_z \frac{-1}{k_\beta T^2} \frac{\partial}{\partial \beta} \frac{\hbar \omega (\bm{k})}{ e^{\beta \hbar \omega (\bm{k})} - 1} \notag \\
+        &= 3\frac{V_0}{\pi^3} \int_0^{\frac{\pi}{a}} dk_x \int_0^{\frac{\pi}{a}} dk_y \int_0^{\frac{\pi}{a}} dk_z \frac{1}{k_\beta T^2} \frac{\hbar^2 \omega^2 (\bm{k}) e^{\beta \hbar \omega (\bm{k})}}{ (e^{\beta \hbar \omega (\bm{k})} - 1)^2} \notag 
+    \end{align}
+    以前と同様に積分範囲を広げ、極座標に変換すると
+    \begin{align}
+        = \frac{3V_0}{8\pi^3 k_\beta} \frac{1}{T^2} \int_0^{k_{max}} dk\ 4\pi k^2 \frac{\hbar^2 \omega^2 (k)e^{\beta \hbar \omega (\bm{k})}}{ (e^{\beta \hbar \omega (k)} - 1)^2} \notag 
+    \end{align}
+    となる。ただし$k_{max}$は
+    \begin{align}
+         \int_0^{\frac{\pi}{a}} dk_x \int_0^{\frac{\pi}{a}} dk_y \int_0^{\frac{\pi}{a}} dk_z = \int_0^{k_{max}} dk\ 4\pi k^2 \notag 
+    \end{align}
+    となるように定義した。($k_{max} = (6\pi^2)^{1/3} / a$)\\
+    $\omega (k) = v_0 k$とすると、熱容量は
+    \begin{align}
+        C &= \frac{3V_0}{8\pi^3 k_\beta} \frac{1}{T^2} \int_0^{k_{max}} dk\ 4\pi k^2 \frac{\hbar^2 v_0^2 k^2 e^{\beta \hbar v_0 k}}{ (e^{\beta \hbar v_0 k} - 1)^2} \notag \\
+        &= \frac{12V_0(\hbar v_0 )^2}{8\pi^2 k_\beta} \frac{1}{T^2} \int_0^{k_{max}} dk\ \frac{k^4 e^{\beta \hbar v_0 k}}{(e^{\beta \hbar v_0 k} - 1)^2} 
+    \end{align}
+    となり、Debyeの比熱式と呼ばれる。\\
+    ここでDebye温度を
+    \begin{align}
+        T_D := \frac{\hbar v_0 k_{max}}{k_\beta}
+    \end{align}
+    と定義し、$x = \beta \hbar v_0 k$で比熱式の積分を置換すると
+    \begin{align}
+        C &= \frac{12V_0(\hbar v_0)^2}{8\pi^2 k_\beta} \frac{1}{T^2} \int_0^{k_{max}} dk\ \frac{k^4 e^{\beta \hbar v_0 k}}{(e^{\beta \hbar v_0 k} - 1)^2} \notag \\
+        &= \frac{3V_0(\hbar v_0)^2}{2\pi^2 k_\beta} \frac{1}{T^2} \int_0^{\frac{T}{T_D}} dx\ \frac{1}{\beta \hbar v_0} \frac{1}{(\beta \hbar v_0)^4}\frac{ x^4e^x}{(e^x - 1)^2} \notag \\
+        &= \frac{3V_0(\hbar v_0)^2}{2\pi^2 k_\beta} \frac{1}{T^2} \frac{1}{(\beta \hbar v_0)^5} \int_0^{\frac{T}{T_D}} dx\ \frac{ x^4e^x}{(e^x - 1)^2} \notag \\
+        &= \frac{3V_0 k_\beta k_{max}^3}{2\pi^2} \frac{T^3}{\frac{(\hbar v_0 k_{max})^3}{k_\beta^3}} \int_0^{\frac{T}{T_D}} dx\ \frac{ x^4e^x}{(e^x - 1)^2} \notag \\ 
+        &= \frac{3\left( {(M+1)a} \right)^3  k_\beta k_{max}^3}{2\pi^2} \left( \frac{T}{T_D} \right)^3 \int_0^{\frac{T}{T_D}} dx\ \frac{ x^4e^x}{(e^x - 1)^2} \notag \\
+        &= \frac{3R a^3  k_{max}^3}{2\pi^2} \left( \frac{T}{T_D} \right)^3 \int_0^{\frac{T}{T_D}} dx\ \frac{ x^4e^x}{(e^x - 1)^2} \notag \\
+        &= \frac{3R 6\pi^2}{2\pi^2} \left( \frac{T}{T_D} \right)^3 \int_0^{\frac{T}{T_D}} dx\ \frac{ x^4e^x}{(e^x - 1)^2} \notag \\
+        &= 9R \left( \frac{T}{T_D} \right)^3 \int_0^{x_{max}} dx\ \frac{ x^4e^x}{(e^x - 1)^2} \notag 
+    \end{align}
+    となる。
+\subsection{Isingモデル}
+\subsubsection{独立なスピン系}
+    N個のスピンが上か下かの二通りの原子が1次元上に等間隔に束縛され、原子の並ぶ方向と垂直な方向に磁場$H$がかけられている系を考える。ハミルトニアンは
+    \begin{align}
+        \hat{H} = - \mu_0 H \sum_n \hat{\sigma}_n
+    \end{align}
+    となる。ただし$\hat{\sigma}$は$1,-1$の値をとり、それぞれスピン上下に対応している。\\
+    分配関数は
+    \begin{align}
+        Z &= (Z_1)^N \\
+        &= \left( \sum_n e^{-\beta E_n} \right)^N \notag \\
+        &= \left( e^{\beta \mu_0 H} + e^{-\beta \mu_0 H} \right)^N \notag 
+    \end{align}
+    となる。\\
+    スピン1つ当たりの自由エネルギーは
+    \begin{align}
+        f(\beta,H) &= -\frac{1}{N\beta} \log Z \notag \\
+        &= -\frac{1}{N\beta} \log \left( e^{\beta \mu_0 H} + e^{-\beta \mu_0 H} \right)^N \notag \\
+        &= -\frac{1}{\beta} \log \left( e^{\beta \mu_0 H} + e^{-\beta \mu_0 H} \right) 
+    \end{align}
+    となる。\\
+    磁化(1つのスピンの期待値)は
+    \begin{align}
+        \langle \hat{m} \rangle &:= \frac{1}{N} \sum_n \mu_0 \langle \hat{\sigma}_n \rangle \notag \\
+        &= - \frac{\partial }{\partial H} f(\beta,H) \notag \\
+        &= -\frac{\partial}{\partial H} \left\{ -\frac{1}{\beta} \log \left( e^{\beta \mu_0 H} + e^{-\beta \mu_0 H} \right)  \right\} \notag \\
+        &= \mu_0 \tanh (\beta \mu_0 H)
+    \end{align}
+    となる。\\
+    磁化率(外部磁場をかけ始めたときの磁化のしやすさ)は
+    \begin{align}
+        \chi(\beta) &:= \left. \frac{\partial }{\partial H } \langle \hat{m} \rangle \right|_{H=0} \notag \\
+        &= \left. \frac{\partial }{\partial H } \left\{ \mu_0 \tanh (\beta \mu_0 H) \right\} \right|_{H=0} \notag \\
+        &= \beta \mu_0^2 =\frac{\mu_0^2}{k_\beta T}
+    \end{align}
+    となる。高温の場合磁化率が温度に反比例する法則をCurieの法則という。
+\subsubsection{最近接相互作用スピン系(エッジあり)}
+    前節と同様の一次元スピンモデルを考える。ただし、隣同士の原子のスピンは相互作用することにする。ハミルトニアンは
+    \begin{align}
+        \hat{H} = -J\sum_i \hat{\sigma}_i \hat{\sigma}_{i+1} - \mu_0 H \sum_n \hat{\sigma}_n
+    \end{align}
+    となり、隣り合うスピンが同じ向きであればエネルギーが低い状態となる。\\
+    分配関数は
+    \begin{align}
+        Z &= \sum_n e^{-\beta E_n} \notag \\
+        &= \sum_{\sigma_1, \cdots \sigma_N} \exp \left[ -\beta J\sum_{i=1}^{N-1} \sigma_i \sigma_{i+1} - \beta \mu_0 H \sum_{n=1}^N \sigma_i \right] \notag \\
+        &= \sum_{\sigma_1, \cdots \sigma_N} \exp \left[ -\beta J\sum_{i=1}^{N-1} \sigma_i \sigma_{i+1} \right] + \sum_{\sigma_1, \cdots \sigma_N} \exp \left[ - \beta \mu_0 H \sum_{n=1}^N \sigma_i \right] \notag \\
+        &= \sum_{\sigma_1, \cdots \sigma_N} \exp \left[ -\beta J\sum_{i=1}^{N-1} \sigma_i \sigma_{i+1} \right] + \left( \sum_{\sigma_1} \exp \left[ - \beta \mu_0 H \sigma_i \right] \right)^N \notag \\
+        &= \sum_{\sigma_1, \cdots \sigma_N} \exp \left[ -\beta J\sum_{i=1}^{N-1} \sigma_i \sigma_{i+1} \right] + \left( e^{\beta \mu_0 H} + e^{-\beta \mu_0 H}\right)^N \notag \\
+        &= \sum_{\sigma_1, \cdots \sigma_N} \exp \left[ -\beta J \left\{ \sigma_1 \sigma_2 + \sum_{i=2}^{N-1} + \sigma_i \sigma_{i+1}  \right\} \right] + \left( e^{\beta \mu_0 H} + e^{-\beta \mu_0 H}\right)^N \notag \\
+        &= \sum_{\sigma_2, \cdots \sigma_N} \left( e^{\beta J\sigma_2} + e^{-\beta J\sigma_2} \right) \exp \left[ -\beta J \left\{ \sum_{i=2}^{N-1}  \sigma_i \sigma_{i+1}  \right\} \right] + \left( e^{\beta \mu_0 H} + e^{-\beta \mu_0 H}\right)^N \notag \\
+        &= \sum_{\sigma_2, \cdots \sigma_N} \left( e^{\beta J\sigma_2} + e^{-\beta J\sigma_2} \right) \exp \left[ -\beta J \left\{ \sigma_2 \sigma_3 + \sum_{i=3}^{N-1} \sigma_i \sigma_{i+1}  \right\} \right] + \left( e^{\beta \mu_0 H} + e^{-\beta \mu_0 H}\right)^N \notag \\
+        &= \sum_{\sigma_3, \cdots \sigma_N} \left( e^{\beta J} + e^{-\beta J} \right) \left( e^{\beta J\sigma_3} + e^{-\beta J\sigma_3} \right) \exp \left[ -\beta J \left\{ \sum_{i=3}^{N-1} \sigma_i \sigma_{i+1}  \right\} \right] + \left( e^{\beta \mu_0 H} + e^{-\beta \mu_0 H}\right)^N \notag \\
+        &\ \ \vdots \notag \\
+        &= \sum_{\sigma_N} \left( e^{\beta J} + e^{-\beta J} \right)^{N-1} \left( e^{\beta J\sigma_{N}} + e^{-\beta J\sigma_{N}} \right) + \left( e^{\beta \mu_0 H} + e^{-\beta \mu_0 H}\right)^N \notag \\
+        &= 2\left( e^{\beta J} + e^{-\beta J} \right)^N + \left( e^{\beta \mu_0 H} + e^{-\beta \mu_0 H}\right)^N
+    \end{align}
+    となる。\\
+    スピン1つ当たりの自由エネルギーは
+    \begin{align}
+        f(\beta,H) &= -\frac{1}{N\beta} \log Z \notag \\
+        &= -\frac{1}{N\beta} \log \left\{ 2\left( e^{\beta J} + e^{-\beta J} \right)^N +  \left( e^{\beta \mu_0 H} + e^{-\beta \mu_0 H}\right)^N\right\} 
+    \end{align}
+    となる。外部磁場が0ならば
+    \begin{align}
+        &= -\frac{1}{\beta} \log \left( e^{\beta J} + e^{-\beta J} \right) \notag 
+    \end{align}
+    となる。
+\subsubsection{最近接相互作用スピン系(周期境界条件)}
+    前節と同様のモデルに周期境界条件を課す。ハミルトニアンは
+    \begin{align}
+        \hat{H} = -J\sum_{i = 0}^{N} \hat{\sigma}_i \hat{\sigma}_{i+1} - \mu_0 H \sum_{i=0}^{N}  \hat{\sigma}_n
+    \end{align}
+    ただし、$\sigma_0 = \sigma_{N+1}$である。
+    分配関数を計算するために、転送行列$\hat{M}$を
+    \begin{align}
+        \hat{M} := \left\{  
+        \begin{matrix}
+            e^{\beta J + \beta \mu_0 H}& e^{-\beta J} \\
+            e^{-\beta J}&e^{\beta J - \beta \mu_0 H}
+        \end{matrix}
+        \right\}
+    \end{align}
+    と定義する。転送行列を用いて分配関数は
+    \begin{align}
+        Z &= \sum_n e^{-\beta E_n} \notag \\
+        &= \sum_n \exp \left[ -J\sum_{i = 0}^{N} \hat{\sigma}_i \hat{\sigma}_{i+1} - \mu_0 H \sum_{i=0}^{N}  \hat{\sigma}_n \right] \notag \\
+        &= \sum_n \exp \left[ \sum_{i = 0}^{N} -J\hat{\sigma}_i \hat{\sigma}_{i+1} - \mu_0 H \frac{\hat{\sigma}_n + \hat{\sigma}_{n+1}}{2} \right] \notag \\
+        &= Tr[ (\hat{M})^N] 
+    \end{align}
+    となる。実際に転送行列のトレースを計算してみれば、エネルギー状態の全パターンを表現できていることがわかる。\\
+    トレースを計算するために、転送行列の対角化を行う
+    \begin{align}
+        &\hat{M}\bm{x} = \lambda \bm{x} \notag \\
+        &\Leftrightarrow \left\{  
+        \begin{matrix}
+            e^{\beta J + \beta \mu_0 H}& e^{-\beta J} \\
+            e^{-\beta J}&e^{\beta J - \beta \mu_0 H}
+        \end{matrix}
+        \right\}
+        \bm{x} = \lambda \bm{x} \notag \\
+        &\Leftrightarrow \left\{  
+        \begin{matrix}
+            e^{\beta J} + e^{\beta \mu_0 H} - \lambda & e^{-\beta J} \\
+            e^{-\beta J}&e^{\beta J} + e^{- \beta \mu_0 H} - \lambda 
+        \end{matrix}
+        \right\} \bm{x} = 0
+    \end{align}
+    0でない固有ベクトルが存在するための条件より
+    \begin{align}
+        &\left|
+        \begin{matrix}
+            e^{\beta J + \beta \mu_0 H} - \lambda & e^{-\beta J} \\
+            e^{-\beta J}&e^{\beta J - \beta \mu_0 H} - \lambda 
+        \end{matrix}
+        \right| = 0 \notag \\
+        &\Leftrightarrow \left( e^{\beta J + \beta \mu_0 H} - \lambda \right) \left( e^{\beta J - \beta \mu_0 H} - \lambda \right) - e^{-2\beta J} = 0 \notag \\
+        &\Leftrightarrow \lambda^2 - \left( e^{\beta J + \beta \mu_0 H} + e^{\beta J - \beta \mu_0 H} \right) \lambda + e^{2\beta J} - e^{-2\beta J} = 0 \notag \\
+        \Rightarrow \lambda_{\pm} &= \frac{e^{\beta J + \beta \mu_0 H} + e^{\beta J - \beta \mu_0 H} \pm \sqrt{\left( e^{\beta J + \beta \mu_0 H} + e^{\beta J - \beta \mu_0 H} \right)^2 -4\left( e^{2\beta J} - e^{-2\beta J} \right)}}{2} \notag \\
+        &= \frac{e^{\beta J + \beta \mu_0 H} + e^{\beta J - \beta \mu_0 H} \pm \sqrt{ e^{2\beta J + 2\beta \mu_0 H} + e^{2\beta J - 2\beta \mu_0 H}  -2 e^{2\beta J} - 4e^{-2\beta J} }}{2} \notag \\
+        &= \frac{e^{\beta J + \beta \mu_0 H} + e^{\beta J - \beta \mu_0 H} \pm \sqrt{ \left( e^{\beta J + \beta \mu_0 H} - e^{\beta J - \beta \mu_0 H} \right)^2 - 4e^{-2\beta J} }}{2} \notag \\
+        &= e^{\beta J} \left\{ \cosh(\beta \mu_0 H) \pm \sqrt{\sinh^2(\beta \mu_0 H) - 4e^{-\beta J}} \right\}
+    \end{align}
+    得られた固有値に対する固有ベクトルを並べた行列$\hat{O}$を用いると転送行列のトレースは
+    \begin{align}
+        &Tr\left[ \hat{M} \right] \notag \\
+        &= Tr[\hat{O}^T \hat{O} \hat{M}] \notag \\
+        &= Tr \left[ \hat{O}^T \hat{M} \hat{O} \right] \notag \\
+        &= Tr \left[ \left\{
+        \begin{matrix}
+            \lambda_+ &0\\
+            0&\lambda_-
+        \end{matrix} 
+        \right\} \right]
+    \end{align}
+    となるので、分配関数は
+    \begin{align}
+        Z &= Tr\left[ \hat{M}^N \right] \notag \\
+        &= Tr \left[ \left\{
+        \begin{matrix}
+            \lambda_+ &0\\
+            0&\lambda_-
+        \end{matrix} 
+        \right\}^N \right] \notag \\
+        &= Tr \left[ \left\{
+        \begin{matrix}
+            (\lambda_+)^N &0\\
+            0&(\lambda_-)^N
+        \end{matrix} 
+        \right\} \right] \notag \\
+        &= (\lambda_+)^N + (\lambda_-)^N
+    \end{align}
+    となる。
+\subsection{黒体放射-Plankの法則}
+\section{古典カノニカル分布}
+\subsection{一様重力場中の理想気体}
+\subsubsection{分配関数}
+    一様な重力場中にある質量$m$の$N$個の粒子が$0 \le x \le L, 0 \le y \le L, 0 \le z \le H $の容器に閉じ込められている系を考える。ただし粒子間相互作用は無いとする。\\
+    ハミルトニアンは
+    \begin{align}
+        H = \sum_n \frac{\bm{p}_n^2}{2m} + mgz_n \notag
+    \end{align}
+    となる。\\
+    分配関数$Z$は
+    \begin{align}
+        Z &= \frac{1}{(2\pi \hbar)^{3N} N!} \int dx^3_1 \cdots dx^3_N \int dp^3_1 \cdots d p^3_N e^{-\beta H} \notag \\
+        &= \frac{1}{(2\pi \hbar)^{3N} N!} \left( \int dx^3 \int dp^3\ \exp\left[ -\beta \left( \frac{\bm{p}^2}{2m} + mgz \right) \right] \right)^N \notag \\
+        &= \frac{1}{(2\pi \hbar)^{3N} N!} \left( \int dx^3\ e^{ -\beta  mgz } \right)^N \left( \int dp^3\ \exp\left[ -\beta \frac{\bm{p}^2}{2m} \right] \right)^N \notag \\ 
+        &= \frac{1}{(2\pi \hbar)^{3N} N!} \left( \int_0^L dx \int_0^L dy\int_0^H dz\ e^{ -\beta  mgz } \right)^N \left( \int_{-\infty}^\infty dp\ \exp\left[ -\beta \frac{p^2}{2m} \right] \right)^{3N} \notag \\
+        &= \frac{1}{N!} \left( \int_0^L dx \int_0^L dy\int_0^H dz\ e^{ -\beta  mgz } \right)^N \left( \frac{2m\pi}{\beta (2\pi \hbar)^{2}} \right)^{\frac{3N}{2}} \notag \\
+        &= \frac{1}{N!} \left( \frac{m}{ 2\pi \beta \hbar^2} \right)^{\frac{3N}{2}} \left( \int_0^L dx \int_0^L dy\int_0^H dz\ e^{ -\beta  mgz } \right)^N  \notag \\
+        &= \frac{1}{N!} \left( \frac{m}{ 2\pi \beta \hbar^2} \right)^{\frac{3N}{2}} \left( L^2\left[ -\frac{1}{\beta mg} e^{ -\beta  mgz } \right]_0^H\right)^N  \notag \\
+        &= \frac{1}{N!} \left( \frac{m}{ 2\pi \beta \hbar^2} \right)^{\frac{3N}{2}} \left(L^2 \frac{1 - e^{ -\beta  mgH } }{\beta mg} \right)^N  \notag \\
+        &= \frac{1}{N!} \left( \frac{m}{ 2\pi \beta \hbar^2} \right)^{\frac{3N}{2}} \left( 
+        \frac{L^2}{\beta mg} \right)^N \left(1 - e^{ -\beta  mgH} \right)^N  \notag \\
+        &= \frac{1}{N!} \left( \frac{m}{ 2\pi \hbar^2} \right)^{\frac{3N}{2}} \left( 
+        \frac{L^2}{mg} \right)^N \left(1 - e^{ -\beta  mgH} \right)^N \beta^{-\frac{5N}{2}} 
+    \end{align}
+    となる。
+\subsubsection{エネルギー期待値}
+    エネルギー期待値は
+    \begin{align}
+        E &= -\frac{\partial }{\partial \beta} \log Z \notag \\
+        &= -\frac{\partial }{\partial \beta} \left\{ \frac{1}{N!} \left( \frac{m}{ 2\pi \hbar^2} \right)^{\frac{3N}{2}} \left( 
+        \frac{L^2}{mg} \right)^N \left(1 - e^{ -\beta  mgH} \right)^N \beta^{-\frac{5N}{2}} \right\} \notag \\
+        &= -\frac{\partial }{\partial \beta} \log \left\{\left(1 - e^{ -\beta  mgH} \right)^N \beta^{-\frac{5N}{2}} \right\} \notag \\
+        &=  -N \frac{mgH e^{-\beta mgH}}{1 - e^{-\beta mgH}} + \frac{5}{2} \frac{N}{\beta} \notag \\
+        &=  \frac{5}{2} \frac{N}{\beta} - N \frac{mgH }{e^{\beta mgH} - 1}
+    \end{align}
+    となる。\\ 
+    $\large{・高温極限}$\\
+    $\ \ $高温では
+    \begin{align}
+        e^{\beta mgH} \approx 1 + mgH \beta \notag 
+    \end{align}
+    と近似できるので、エネルギー期待値は
+    \begin{align}
+        E &=  \frac{5}{2} \frac{N}{\beta} - N \frac{mgH }{e^{\beta mgH} - 1} \notag \\
+        &\approx \frac{5}{2} \frac{N}{\beta} - N \frac{mgH }{1 + mgH \beta  - 1} \notag \\
+        &= \frac{5}{2} \frac{N}{\beta} - \frac{N}{\beta} \notag \\
+        &=\frac{3}{2} \frac{N}{\beta} = \frac{3}{2} Nk_\beta T
+    \end{align}
+    となり、理想気体のエネルギーと一致する。これは高温領域では一様重力場の影響が無視されることで自由粒子としてふるまうことを意味している。
+    \\
+    $\large{・低温極限}$\\
+    $\ \ $低温では
+    \begin{align}
+        \frac{1}{e^{\beta mgH}-1} \approx 0 \notag 
+    \end{align}
+    と近似できるので、エネルギー期待値は
+    \begin{align}
+        E &=  \frac{5}{2} \frac{N}{\beta} - N \frac{mgH }{e^{\beta mgH} - 1} \notag \\
+        &\approx \frac{5}{2}\frac{N}{\beta} = \frac{5}{2} Nk_\beta T
+    \end{align}
+    となる。低温よりエネルギーが高くなるのは、粒子の運動エネルギーが増加すると、粒子の分布も上に移動し、ポテンシャルエネルギーが高くなるためである。
+\subsection{鎖錠高分子}
+\subsubsection{分配関数}
+    鎖錠高分子のモデルを考える。$N$個の粒子が互いに一定の距離$L$を保ちつながれている状態を考える。粒子$0$は原点に固定されていて、粒子$N$は外力$f$で引っ張られているとする。ハミルトニアンは
+    \begin{align}
+        H = \sum_{i=1}^N \frac{\bm{p}^2_i}{2m} + \sum_{i=1}^N v(|\bm{r}_i - \bm{r}_{i-1}|) - f \cdot x_N \notag 
+    \end{align}
+    $v(\bm{r})$は$|\bm{r}|=l$で鋭い負のピークを持つポテンシャルである。またハミルトニアンが位置と運動量の項で分離されていて、最終的に求めたのは高分子の長さであるので、分配関数の運動量の寄与は(期待値の計算で約分されるため)計算しなくてよい。したがって求めるべき分配関数は
+    \begin{align}
+        \tilde{Z} &= \int dx^N\ \exp \left[ -\beta \left( \sum_{i=1}^N v(|\bm{r}_i - \bm{r}_{i-1}|) - f \cdot x_N \right) \right] \notag 
+    \end{align}
+    となる。ここで新たに座標を$\bm{s}_i = \bm{r}_i - \bm{r}_{i-1}$と置き換えると、分配関数は
+    \begin{align}
+        \tilde{Z} &\overset{?}{=} \int ds_1^3 \cdots ds^3_N\  \exp \left[ -\beta \left( \sum_{i=1}^N v(|\bm{s}_i|) - \sum_{i=1}^Nf \cdot s^{(x)}_{i} \right) \right] \notag \\
+        &= \int ds_1^3 \cdots ds^3_N\  \prod_i^N \exp \left[ -\beta \left( v(|\bm{s}_i|) - f \cdot s^{(x)}_{i} \right) \right] \notag \\ 
+        &\overset{?}{=} \left( \int ds^3 \exp \left[ -\beta \left( v(|\bm{s}|) - f \cdot s^{(x)} \right) \right] \right)^N \notag 
+    \end{align}
+    となる。極座標に変換すると
+    \begin{align}
+        \tilde{Z} &= \left( \int ds^3 \exp \left[ -\beta \left( v(|\bm{s}|) - f \cdot s^{(x)} \right) \right] \right)^N \notag \\
+        &= \left( \int_0^{2\pi} d\varphi \int_0^{\pi} d\theta \sin \theta \int_0^{\infty} ds\ s^2 e^{-\beta \left( v(s) - f \cdot s\cos \theta \right)} \right)^N \notag \\
+        &= \left( 2\pi \int_0^{\pi} d\theta \sin \theta \int_0^{\infty} ds\ s^2e^{-\beta \left( v(s) - f \cdot s\cos \theta \right)} \right)^N \notag 
+    \end{align}
+    となる。ここでポテンシャル$v$は$s=l$で鋭い負のピークを持つので
+    \begin{align}
+        \exp \left[ -\beta v(s) \right] \rightarrow A\delta (s - l) \notag 
+    \end{align}
+    と置き換えらえる。すると分配関数は
+    \begin{align}
+        \tilde{Z} &= \left( 2\pi \int_0^{\pi} d\theta \sin \theta \int_0^{\infty} ds\ s^2e^{-\beta \left( v(s) - f \cdot s\cos \theta \right)} \right)^N \notag \\
+        &= \left( 2\pi \int_0^{\pi} d\theta \sin \theta \int_0^{\infty} ds\ s^2 A\delta (s - l) e^{\beta f  s\cos \theta} \right)^N \notag \\
+        &= \left( 2\pi \int_0^{\pi} d\theta \sin \theta\ l^2 A e^{\beta f  l\cos \theta} \right)^N \notag \\
+        &= \left( 2\pi A l^2 \int_0^{\pi} d\theta \sin \theta\ e^{\beta f  l\cos \theta} \right)^N \notag \\
+        &= \left( 2\pi A l^2 \left[  -\frac{1}{\beta f l}e^{\beta f  l\cos \theta} \right]_0^{\pi} \right)^N \notag \\
+        &= \left(  \frac{4\pi A l}{\beta f} \sinh (\beta f l) \right)^N 
+    \end{align}
+    となる。
+\subsubsection{高分子鎖の長さの期待値}
+    鎖の長さの期待値はハミルトニアンから
+    \begin{align}
+        \langle \hat{X} \rangle = \frac{1}{\beta} \frac{\partial}{\partial f} \log \tilde{Z} \notag 
+    \end{align}
+    で求められることが分かる。実際に計算すると
+    \begin{align}
+        \langle \hat{X} \rangle &= \frac{1}{\beta} \frac{\partial}{\partial f} \log \tilde{Z} \notag \\
+        &= \frac{1}{\beta} \frac{\partial}{\partial f} \log \left\{ \left(  \frac{4\pi A l}{\beta f} \sinh (\beta f l) \right)^N \right\} \notag \\
+        &= \frac{N}{\beta} \frac{\partial}{\partial f} \log \left\{ \frac{4\pi A l}{\beta f} \sinh (\beta f l) \right\} \notag \\
+        &= \frac{N}{\beta} \left[ -\log \left\{ \frac{\beta f}{4\pi A l} \right\} + \log \left\{ \sinh (\beta f l) \right\}\right] \notag \\
+        &= \frac{N}{\beta} \left[ -\frac{1}{f} + \frac{\beta l}{\tanh (\beta f l)}\right] \notag \\
+        &= Nl \left[ \frac{1}{\tanh (\beta f l)} - \frac{1}{\beta f l}\right] 
+    \end{align}
+    となる。\\
+    $\ \ $ここでLangevin関数を
+    \begin{align}
+        L(x) := \frac{1}{\tanh x} - \frac{1}{x} \notag 
+    \end{align}
+    で定義する。この関数は$x \to \pm \infty$で$\pm1$に漸近する奇関数で、$x=0$まわりで
+    \begin{align}
+        L(x) = \frac{x}{3} - \frac{x^3}{45} + \frac{2x^5}{945} + O(x^7) \notag 
+    \end{align}
+    と展開できる。このLengevin関数を用いると、長さの期待値は
+    \begin{align}
+        \langle \hat{X}\rangle &= Nl\ L(\beta f l) \notag \\
+        &\approx Nl \frac{\beta f l}{3} + O(f^3)\notag \\
+        &= \frac{Nl^2}{3k_\beta T} + O(f^3)
+    \end{align}
+    となり、高分子鎖がばねのようにふるまい、フックの法則が再現されている。またばね定数が温度に対して比例していることもわかる。これは温度が上がると、エントロピーが大きい状態をとろうとし、粒子が動ける範囲を大きくするために高分子鎖全体が縮もうとすることに起因する。このようなエントロピーによる弾性効果をエントロピー弾性という。
+\subsection{二原子分子理想気体}
+\subsubsection{分配関数}
+    二原子分子を考える、ただし粒子間相互作用は無いとする。1粒子の重心座標と相対座標で変数分離されたハミルトニアンは
+    \begin{align}
+        \hat{H}_{cm} &= \frac{\bm{\hat{P}}^2}{2M} \notag \\
+        \hat{H}_{rel} &= \frac{\bm{\hat{p}}^2}{2m} + V(r) \notag 
+    \end{align}
+    である。ハミルトニアンが変数分離されているので、分配関数も同様に分離される。したがって
+    \begin{align}
+        Z = Z_{cm}Z_{rel} \notag 
+    \end{align}
+    重心座標ハミルトニアンは、自由粒子理想気体と同じなので
+    \begin{align}
+        Z_{cm} = \frac{1}{N!} \left( \frac{ML^2}{2\pi \beta \hbar^2 } \right)^{\frac{3N}{2}} \notag 
+    \end{align}
+    となる。\\
+    $\ \ $次に一粒子の相対座標ハミルトニアンのエネルギー固有値を考える。\\
+    シュレーディンガー方程式は
+    \begin{align}
+        &\hat{H}_{rel} \varphi(\bm{r}) = E\varphi(\bm{r}) \notag \\
+        &\Leftrightarrow \left\{ -\frac{\hbar^2}{2m}\nabla^2 + V(r)\right\} \varphi(\bm{r}) = E\varphi(\bm{r}) \notag 
+    \end{align}
+    波動関数を動径方向$\chi_l(r) / r$と角度方向$Y^l_m(\theta,\varphi)$で変数分離をおこなうと
+    \begin{align}
+        -\frac{\hbar^2}{2m} \frac{d^2}{dr^2} \chi_l(r) + \frac{\hbar^2}{2m} \frac{l(l+1)}{r^2} \chi_l(r) + V(r) \chi_l(r) = E\chi_l(r) \notag 
+    \end{align}
+    となる。ここでポテンシャル$V$が
+    \begin{align}
+        V(r) \approx \frac{m\omega^2}{2}(r-a)^2 \notag
+    \end{align}
+    と近似できるとする(粒子の距離が$a$付近であることに対応する)。すると遠心力ポテンシャルの項の$r$を$a$で置き換えることができ、波動関数を$\psi(r) := \chi(r+a)$と置き換えると
+    \begin{align}
+        -\frac{\hbar^2}{2m} \frac{d^2}{dr^2} \psi_l(r) + \frac{m\omega^2}{2}r^2 \psi_l(r) + \frac{\hbar^2}{2m} \frac{l(l+1)}{a^2} \psi_l(r) = E\psi_l(r) \notag 
+    \end{align}
+    となる。したがってエネルギー固有値は
+    \begin{align}
+        E_{nlm} = \left( n + \frac{1}{2} \right) \hbar \omega + \frac{\hbar^2}{2m} \frac{l(l+1)}{a^2} \notag 
+    \end{align}
+    となる。したがって相対座標の分配関数は
+    \begin{align}
+        Z_{rel} &= \sum_{nlm} \exp \left[ -\beta \left\{ \left( n + \frac{1}{2} \right) \hbar \omega + \frac{\hbar^2}{2m} \frac{l(l+1)}{a^2} \right\} \right] \notag \\
+        &= \sum_{nl} (2l + 1)\exp \left[ -\beta \left\{ \left( n + \frac{1}{2} \right) \hbar \omega + \frac{\hbar^2}{2m} \frac{l(l+1)}{a^2} \right\} \right] \notag \\
+        &= \sum_n \exp \left[ -\beta \left( n + \frac{1}{2} \right) \hbar \omega \right] \sum_l (2l + 1) \exp \left[ -\beta \frac{\hbar^2}{2m} \frac{l(l+1)}{a^2} \right] \notag \\
+        &= \frac{\exp \left[ -\frac{\beta \hbar \omega}{2} \right]}{1 - e^{-\beta \hbar \omega }} \sum_l (2l + 1) \exp \left[ -\beta \frac{\hbar^2}{2m} \frac{l(l+1)}{a^2} \right]
+    \end{align}
+    となる。\\
+    $\large{・低温極限}$\\
+    $\ \ $低温極限では
+    \begin{align}
+        \beta \frac{\hbar^2}{2m} \frac{1}{a^2} \gg 1 \notag 
+    \end{align}
+    となるので、和を$l=1$で打ち切る近似ができる
+    \begin{align}
+        \sum_l (2l + 1) \exp \left[ -\beta \frac{\hbar^2}{2m} \frac{l(l+1)}{a^2} \right] \sim  1 + 3\exp \left[ -\beta \frac{\hbar^2}{ma^2}  \right] \notag 
+    \end{align}
+    すると分配関数は
+    \begin{align}
+        Z_{rel} &\sim \frac{\exp \left[ -\frac{\beta \hbar \omega}{2} \right]}{1 - e^{-\beta \hbar \omega }} \left( 1 + 3\exp \left[ -\beta \frac{\hbar^2}{ma^2}  \right] \right)
+    \end{align}
+    と評価できる。\\
+    $\large{・高温極限}$\\
+    $\ \ $高温極限では指数のかたの数が大きい部分の寄与が強いので$l(l+1) \approx l^2$と近似でき、和を積分で置き換えられるので
+    \begin{align}
+        \sum_l (2l + 1) \exp \left[ -\beta \frac{\hbar^2}{2m} \frac{l(l+1)}{a^2} \right] &\approx  \sum_l 2l\exp \left[ -\beta \frac{\hbar^2}{2m} \frac{l^2}{a^2} \right] \notag \\
+        &\sim \int_0^{\infty} dl\ 2l \exp \left[ -\beta \frac{\hbar^2}{2m} \frac{l^2}{a^2} \right] \notag \\
+        &= -2\frac{ma^2}{\beta \hbar^2} \left[ \exp \left[ -\beta \frac{\hbar^2}{2m} \frac{l^2}{a^2} \right] \right]_0^{\infty} \notag \\
+        &= \frac{2ma^2}{\beta \hbar^2}
+    \end{align}
+    となる。\\
+    したがって分配関数は
+    \begin{align}
+        一般解:& Z = \left[ \frac{1}{N!}\left( \frac{ML^2}{2\pi \beta \hbar^2 } \right)^{\frac{3}{2}} \frac{\exp \left[ -\frac{\beta \hbar \omega}{2} \right]}{1 - e^{-\beta \hbar \omega }} \sum_l (2l + 1) \exp \left[ -\beta \frac{\hbar^2}{2m} \frac{l(l+1)}{a^2} \right] \right]^N \\
+        低温極限:& Z = \left[ \frac{1}{N!} \left( \frac{ML^2}{2\pi \beta \hbar^2 } \right)^{\frac{3}{2}} \frac{\exp \left[ -\frac{\beta \hbar \omega}{2} \right]}{1 - e^{-\beta \hbar \omega }} \left( 1 + 3\exp \left[ -\beta \frac{\hbar^2}{ma^2}  \right] \right) \right]^N \\
+        高温極限:& Z =  \left[ \frac{1}{N!} \left( \frac{ML^2}{2\pi \beta \hbar^2 } \right)^{\frac{3}{2}}  \frac{\exp \left[ -\frac{\beta \hbar \omega}{2} \right]}{1 - e^{-\beta \hbar \omega }} \frac{2ma^2}{\beta \hbar^2} \right]^N
+    \end{align}
+    となる。
+\subsubsection{熱容量(回転成分)}
+    $\large{・低温極限}$\\
+    低温極限での熱容量は
+    \begin{align}
+        C &= -\frac{\partial }{\partial T} \frac{\partial }{\partial \beta} \log Z \notag \\
+        &= -\frac{\partial }{\partial T} \frac{\partial }{\partial \beta} \log \left( 1 + 3\exp \left[ -\beta \frac{\hbar^2}{ma^2}  \right] \right)^N \notag \\
+        &\sim \frac{\partial }{\partial T} \frac{3\hbar^2}{ma^2} \exp \left[ -\beta \frac{\hbar^2}{ma^2}  \right] \notag \\
+        &= -\frac{1}{k_\beta T^2} \frac{\partial }{\partial \beta} \frac{3\hbar^2}{ma^2} \exp \left[ -\beta \frac{\hbar^2}{ma^2}  \right] \notag \\
+        &= \frac{1}{k_\beta T^2} \frac{3\hbar^4}{m^2a^4} \exp \left[ -\beta \frac{\hbar^2}{ma^2}  \right] \notag \\
+    \end{align}
+    となる。\\
+    $\large{・高温極限}$\\
+    $\ \ $高温極限での熱容量は
+    \begin{align}
+        C_{rot} &\approx -\frac{\partial }{\partial T} \frac{\partial }{\partial \beta} \log Z \notag \\
+        &= -\frac{\partial }{\partial T} \frac{\partial }{\partial \beta} \log  \left( \frac{2ma^2}{\beta \hbar^2} \right)^N \notag \\
+        &= N\frac{\partial }{\partial T} k_\beta T \notag \\
+        &= Nk_\beta 
+    \end{align}
+    となる。
+\subsubsection{不完全気体}
+\section{グランドカノニカル分布}
+\subsection{理想気体}
+\subsubsection{大分配関数}
+    相互作用のない$N$個の粒子の理想気体を考える。1粒子のハミルトニアンは
+    \begin{align}
+        \hat{H} = \frac{\hat{\bm{p}}^2}{2m} \notag
+    \end{align}
+    である。\\
+    大分配関数は
+    \begin{align}
+        \Xi &= \sum_i e^{-\beta (E_i - \mu N_i)} \notag \\
+        &= \sum_{N = 0}^{\infty} Z_{N} e^{\beta \mu N} \notag \\
+        &= \sum_{N=0}^{\infty} \frac{1}{N!} \left( \frac{mL^2}{2\pi \beta \hbar^2 } \right)^{\frac{3N}{2}} e^{\beta \mu N} \notag \\
+        &= \sum_{N=0}^{\infty} \frac{1}{N!} \left( \left( \frac{mL^2}{2\pi \beta \hbar^2 } \right)^{\frac{3}{2}} e^{\beta \mu} \right)^N \notag \\
+        &= \exp \left[ \left( \frac{mL^2}{2\pi \beta \hbar^2 } \right)^{\frac{3}{2}} e^{\beta \mu} \right]
+    \end{align}
+    となる。
+\subsubsection{グランドポテンシャル}
+    グランドポテンシャルは
+    \begin{align}
+        J &= -\frac{1}{\beta} \log \Xi \notag \\
+        &= -\frac{1}{\beta} \log  \exp \left[ \left( \frac{mL^2}{2\pi \beta \hbar^2 } \right)^{\frac{3}{2}} e^{\beta \mu} \right] \notag \\
+        &= - \frac{1}{\beta} \left( \frac{mL^2}{2\pi \beta \hbar^2 } \right)^{\frac{3}{2}} e^{\beta \mu} \notag \\ 
+        &= -V \left( \frac{mL}{2\pi \hbar^2 } \right)^{\frac{3}{2}} \frac{e^{\beta \mu}}{\beta^{\frac{5}{2}}}
+    \end{align}
+    となる。
+\subsubsection{粒子数の期待値}
+    粒子数の期待値は
+    \begin{align}
+        \langle \hat{N} \rangle &= \frac{1}{\beta} \frac{\partial }{\partial \mu} \log \Xi \notag \\
+        &= \frac{1}{\beta} \frac{\partial }{\partial \mu} \log \exp \left[ \left( \frac{mL^2}{2\pi \beta \hbar^2 } \right)^{\frac{3}{2}} e^{\beta \mu} \right] \notag \\
+        &= \frac{\partial }{\partial \mu} \left( \frac{mL^2}{2\pi \hbar^2 } \right)^{\frac{3}{2}} \frac{e^{\beta \mu}}{\beta^{\frac{5}{2}}} \notag \\
+        &= \left( \frac{mL^2}{2\pi \hbar^2 } \right)^{\frac{3}{2}} \frac{e^{\beta \mu}}{\beta^{\frac{3}{2}}} = \log \Xi
+    \end{align}
+\subsubsection{エントロピー}
+    \begin{align}
+        &\frac{\partial J}{\partial T} = -\frac{1}{k_\beta T^2} \frac{\partial }{\partial \beta} \left\{ -V \left( \frac{m}{2\pi \hbar^2 } \right)^{\frac{3}{2}} \frac{e^{\beta \mu}}{\beta^{\frac{5}{2}}} \right\}
+    \end{align}
+\subsubsection{圧力}
+    \begin{align}
+        \frac{\partial J}{\partial V} &= \frac{\partial }{\partial V} \left\{ -V \left( \frac{m}{2\pi \hbar^2 } \right)^{\frac{3}{2}} \frac{e^{\beta \mu}}{\beta^{\frac{5}{2}}} \right\} \notag \\
+        &= - \left( \frac{m}{2\pi \hbar^2 } \right)^{\frac{3}{2}} \frac{e^{\beta \mu}}{\beta^{\frac{5}{2}}} \notag \\
+    \end{align}
+    より圧力$p$は
+    \begin{align}
+        &\frac{\partial J}{\partial V} = -p \notag \\
+        &\Leftrightarrow  - \left( \frac{m}{2\pi \hbar^2 } \right)^{\frac{3}{2}} \frac{e^{\beta \mu}}{\beta^{\frac{5}{2}}}  = -p \notag \\
+        &\Leftrightarrow p = \left( \frac{m}{2\pi \hbar^2 } \right)^{\frac{3}{2}} \frac{e^{\beta \mu}}{\beta^{\frac{5}{2}}} = \frac{\langle \hat{N} \rangle k_\beta}{V} 
+    \end{align}
+    となる。
+\subsection{表面吸着}
+\subsubsection{大分配関数}
+    粒子が一つくっつくことのできる吸着サイトが$N$個あり、理想気体と接している系を考える。この理想気体が粒子浴の役割を果たす。またサイト同士の相互作用はないとする。\\
+    一つのサイトのハミルトニアンは
+    \begin{align}
+        \hat{H} = -v \hat{N_s},\quad \hat{N_s} = 0,1
+    \end{align}
+    となる。\\
+    大分配関数は
+    \begin{align}
+        \Xi &= \sum_i e^{-\beta (E_i - \mu N_i) } \notag \\
+        &= \left( 1 + e^{-\beta (-v - \mu)} \right)^{N_s} \notag \\
+        &= \left( 1 + e^{\beta (v + \mu)} \right)^{N_s}
+    \end{align}
+    となる。
+\subsubsection{粒子数の期待値}
+    粒子数の期待値は
+    \begin{align}
+        \langle \hat{N} \rangle &= \frac{1}{\beta} \frac{\partial}{\partial \mu} \log \Xi \notag \\ 
+        &= \frac{1}{\beta} \frac{\partial}{\partial \mu} \log \left( 1 + e^{\beta (v + \mu)} \right)^{N_s} \notag \\
+        &= \frac{N_s}{\beta} \frac{\beta e^{\beta(v + \mu)}}{ 1 + e^{\beta (v + \mu)}} \notag \\
+        &= \frac{N_s e^{\beta(v + \mu)}}{ 1 + e^{\beta (v + \mu)}}
+    \end{align}
+    となる。\\
+    ここで理想気体の圧力と化学ポテンシャルの関係式
+    \begin{align}
+        &p = \left( \frac{m}{2\pi \hbar^2 } \right)^{\frac{3}{2}} \frac{e^{\beta \mu}}{\beta^{\frac{5}{2}}} \notag \\
+        &\Leftrightarrow e^{\beta \mu} = p \beta^{\frac{5}{2}} \left( \frac{2\pi \hbar^2}{m} \right)^{\frac{3}{2}}
+    \end{align}
+    を用いて粒子数の期待値を書き直すと
+    \begin{align}
+        &\langle \hat{N} \rangle = \frac{N_s e^{v + \mu}}{ 1 + e^{\beta (v + \mu)}} \notag \\
+        &\Leftrightarrow \frac{\langle \hat{N} \rangle}{N_s} = \frac{ e^{\beta \mu}}{ e^{-\beta v} + e^{\beta \mu}} \notag \\
+        &\Leftrightarrow \frac{\langle \hat{N} \rangle}{N_s} = \frac{p}{p + p_0(\beta)} ,\quad p_0(\beta) := \frac{e^{-\beta v}}{\beta^{\frac{5}{2}}}  \left( \frac{m}{2\pi \hbar^2 } \right)^{\frac{3}{2}}
+    \end{align}
+    となる。$\langle \hat{N} \rangle / N_s$は吸着サイトの被覆率を表しており、この被覆率と圧力の関係式をLangmuirの等温吸着式と呼ばれる。 
+\section{Fermi分布}
+\subsubsection{大分配関数}
+    あるエネルギー準位$\epsilon_n$に属する粒子の個数を$N_n$とすると、大分配関数は
+    \begin{align}
+        \Xi &= \prod_n \sum_{N_n = 0}^{1} e^{-\beta N_n (\epsilon_n - \mu)} \notag \\
+        &= \prod_n \left( 1 + e^{-\beta (\epsilon_n - \mu )} \right)
+    \end{align}
+    となる。
+\subsubsection{グランドポテンシャル}
+    グランドポテンシャルは
+    \begin{align}
+        J &= -\frac{1}{\beta} \log \Xi \notag \\
+        &= -\frac{1}{\beta} \log \left\{ \prod_n \left( 1 + e^{-\beta (\epsilon_n - \mu )} \right) \right\} \notag \\
+        &= -\frac{1}{\beta} \sum_n \log \left( 1 + e^{-\beta (\epsilon_n - \mu )} \right)
+    \end{align}
+    となる。
+\subsubsection{粒子数の期待値}
+    粒子数の期待値は
+    \begin{align}
+        \langle \hat{N} \rangle &= \frac{1}{\beta} \frac{\partial}{\partial \mu} \log \Xi \notag \\
+        &= \frac{1}{\beta} \frac{\partial}{\partial \mu} \log \left\{ \prod_n \left( 1 + e^{-\beta (\epsilon_n - \mu )} \right) \right\} \notag \\
+        &= \frac{1}{\beta} \sum_n \frac{\partial}{\partial \mu} \log \left( 1 + e^{-\beta (\epsilon_n - \mu )} \right) \notag \\
+        &= \sum_n \frac{e^{-\beta (\epsilon_n - \mu )}}{1 + e^{-\beta (\epsilon_n - \mu )}} \notag \\
+        &= \sum_n \frac{1}{e^{\beta (\epsilon_n - \mu)} + 1}
+    \end{align}
+    となる。\\
+    Fermi粒子の分布関数は
+    \begin{align}
+        f_F (\epsilon) := \frac{1}{e^{\beta (\epsilon - \mu)} + 1}
+    \end{align}
+    となる。\\
+    Fermi分布関数を用いるとグランドポテンシャルは
+    \begin{align}
+        J = -\frac{1}{\beta} \sum_n \log \frac{1}{1 - f_F (\epsilon_n)}
+    \end{align}
+    とかける。
+\subsubsection{状態密度を用いた表現}
+    1粒子のエネルギー状態密度$\nu (\epsilon)$を用いると、グランドポテンシャル、粒子数・エネルギーの期待値は
+    \begin{align}
+        J &= -\frac{1}{\beta} \int_{0}^{\infty} d\epsilon\ \nu (\epsilon) \log \frac{1}{1 - f_F (\epsilon_n)} \\
+        \langle \hat{N} \rangle &= \int_0^{\infty} d\epsilon\ \nu (\epsilon) f_F(\epsilon) \\
+        \langle \hat{E} \rangle &= \int_0^{\infty} d\epsilon\  \nu (\epsilon) \epsilon f_F(\epsilon)
+    \end{align}
+    と表される。
+\subsection{Fermi理想気体}
+    理想気体の1粒子のエネルギー状態密度$\nu (\epsilon)$は
+    \begin{align}
+        \nu (\epsilon) &= \frac{d}{d\epsilon} \Omega (\epsilon) \notag \\
+        &= \frac{d}{d\epsilon} \left\{ \frac{V}{6 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{\frac{3}{2}} \epsilon^\frac{3}{2} \right\} \notag \\
+        &= \frac{V}{4 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{\frac{3}{2}} \epsilon^\frac{1}{2} 
+    \end{align}
+    となるので、グランドポテンシャル、粒子数・エネルギーの期待値は
+    \begin{align}
+        J &= -\frac{1}{\beta} \int_{0}^{\infty} d\epsilon\ \frac{V}{4 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{\frac{3}{2}} \epsilon^\frac{1}{2} \log \frac{1}{1 - f_F (\epsilon_n)} \\
+        \langle \hat{N} \rangle &= \int_0^{\infty} d\epsilon\ \frac{V}{4 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{\frac{3}{2}} \epsilon^\frac{1}{2} f_F(\epsilon) \\
+        \langle \hat{E} \rangle &= \int_0^{\infty} d\epsilon\  \frac{V}{4 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{\frac{3}{2}} \epsilon^\frac{3}{2} f_F(\epsilon)
+    \end{align}
+    となる。
+\subsubsection{絶対零度極限}
+    $T \rightarrow 0$の絶対零度極限を考える。絶対零度極限では$f_F (\epsilon) \rightarrow \theta (\mu - \epsilon)$となるので、粒子数の期待値は
+    \begin{align}
+        \langle \hat{N} \rangle &\rightarrow \int_0^{\infty} d\epsilon\ \frac{V}{4 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{\frac{3}{2}} \epsilon^\frac{1}{2} \theta (\mu - \epsilon) \notag \\
+        &= \int_0^{\mu} d\epsilon\ \frac{V}{4 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{\frac{3}{2}} \epsilon^\frac{1}{2} \notag \\
+        &= \frac{V}{6 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{\frac{3}{2}} \mu^\frac{3}{2}
+    \end{align}
+    となる。同様にエネルギーの期待値は
+    \begin{align}
+        \langle \hat{E} \rangle &\rightarrow \int_0^{\infty} d\epsilon\  \frac{V}{4 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{\frac{3}{2}} \epsilon^\frac{3}{2} \theta (\mu - \epsilon) \notag \\
+        &= \int_0^{\mu} d\epsilon\  \frac{V}{4 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{\frac{3}{2}} \epsilon^\frac{3}{2} \notag \\
+        &= \frac{V}{10 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{\frac{3}{2}} \mu^\frac{5}{2} 
+    \end{align}
+    となる。ただしこの時$\mu > 0$でなければならない。\\
+    化学ポテンシャルは
+    \begin{align}
+        \mu =  \frac{\hbar^2}{2m} \left( 6\pi^2 \frac{\langle\hat{N} \rangle}{V} \right)^\frac{2}{3} =: \epsilon_F 
+    \end{align}
+    となり、このエネルギー値をFermiエネルギーという。\\
+    また
+    \begin{align}
+        \frac{\langle \hat{E} \rangle}{\langle \hat{N} \rangle } = \frac{3}{5} \epsilon_F
+    \end{align}
+    となり、絶対零度でエネルギーが$E>0$であることが分かる。\\
+    圧力は
+    \begin{align}
+        J = -pV &= E - \mu N \notag \\
+        &= \frac{3}{5} \epsilon_F \langle \hat{N} \rangle  - \langle \hat{N} \rangle \notag \\
+        &= -\frac{2}{5} \epsilon_F \langle \hat{N} \rangle \notag \\
+        &\Leftrightarrow p = \frac{2}{5} \frac{ \langle \hat{N} \rangle}{V} \epsilon_F
+    \end{align}
+    となる。絶対零度の圧力は$\ne 0 $となり、これを縮退圧という。
+\subsubsection{低温展開}
+    Fermi分布関数を$f_{\beta,\mu} (\epsilon)$、任意のエネルギーの関数$h (\epsilon)$とし、低温のとき
+    \begin{align}
+        \int_0^{\infty} d\epsilon\ h(\epsilon) f_{\beta,\mu} (\epsilon) = \int_0^{\epsilon_F} h(\epsilon) d\epsilon &+ (\mu - \epsilon_F)h(\epsilon_F) + \frac{\pi^2}{6} h'(\epsilon_F)(k_\beta T)^2 \notag \\
+        &+ O((\mu - \epsilon_F)^2) +O((\mu - \epsilon_F)(k_\beta T)^2) + O((k_\beta T)^4)
+    \end{align}
+    と展開される。\\
+    $\ \ $低温での化学ポテンシャル漸近形を求めるために、粒子数の期待値を低温展開すると
+    \begin{align}
+        \langle \hat{N} \rangle &= \int_0^{\infty} d\epsilon\ \nu (\epsilon) f_F(\epsilon) \notag \\
+        &= \int_0^{\epsilon_F} \nu (\epsilon) d\epsilon + (\mu - \epsilon_F)\nu(\epsilon_F) + \frac{\pi^2}{6} \nu'(\epsilon_F)(k_\beta T)^2 \notag \\
+        &\ \ \ \ + O((\mu - \epsilon_F)^2) +O((\mu - \epsilon_F)(k_\beta T)^2) + O((k_\beta T)^4) \notag 
+    \end{align}
+    となる。十分低温では$\langle \hat{N} \rangle \approx \int d\epsilon\ \nu(\epsilon)$となるので
+    \begin{align}
+        (\mu - \epsilon_F)\nu(\epsilon_F) + \frac{\pi^2}{6} \nu'(\epsilon_F)(k_\beta T)^2 + O((\mu - \epsilon_F)^2) +O((\mu - \epsilon_F)(k_\beta T)^2) + O((k_\beta T)^4) \approx 0\notag 
+    \end{align}
+    と近似できる。したがって化学ポテンシャルは
+    \begin{align}
+        &(\mu - \epsilon_F)\nu(\epsilon_F) + \frac{\pi^2}{6} \nu'(\epsilon_F)(k_\beta T)^2 \approx 0\notag \\
+        &\Leftrightarrow \mu \approx \epsilon_F - \frac{\pi^2}{6} \frac{\nu'(\epsilon_F)}{\nu(\epsilon_F)}(k_\beta T)^2
+    \end{align}
+    となり、低温での化学ポテンシャルのFermiエネルギーからのずれは$T^2$のオーダーとなる。\\
+    $\ \ $次にエネルギー期待値の低温でのふるまいを調べる。
+    \begin{align}
+        \langle \hat{E} \rangle &= \int_0^{\infty} d\epsilon\ \nu (\epsilon) \epsilon f_F(\epsilon) \notag \\
+        &= \int_0^{\epsilon_F} \nu (\epsilon) \epsilon d\epsilon + (\mu - \epsilon_F)\epsilon_F \nu(\epsilon_F)  + \frac{\pi^2}{6} (\epsilon \nu(\epsilon))'|_{\epsilon = \epsilon_F}(k_\beta T)^2 \notag \\
+        &\ \ \ \ + O((\mu - \epsilon_F)^2) +O((\mu - \epsilon_F)(k_\beta T)^2) + O((k_\beta T)^4) \notag \\
+        &= \int_0^{\epsilon_F} \nu (\epsilon) \epsilon d\epsilon + (\mu - \epsilon_F)\epsilon_F \nu(\epsilon_F)  + \frac{\pi^2}{6} \nu(\epsilon_F)(k_\beta T)^2 + \frac{\pi^2}{6} \epsilon_F \nu'(\epsilon_F)(k_\beta T)^2 \notag \\
+        &\ \ \ \ + O((\mu - \epsilon_F)^2) +O((\mu - \epsilon_F)(k_\beta T)^2) + O((k_\beta T)^4) \notag 
+    \end{align}
+    となり、化学ポテンシャルの低温展開の式から第二項と第四項が打ち消し、低温でのエネルギーは
+    \begin{align}
+        \langle \hat{E} \rangle \approx \int_0^{\epsilon_F} \nu (\epsilon) \epsilon d\epsilon  + \frac{\pi^2}{6} \nu(\epsilon)(k_\beta T)^2 
+    \end{align}
+    となり、$T^2$のオーダーとなる。\\
+    また熱容量は
+    \begin{align}
+        C &= \frac{\partial E}{\partial T} \notag \\
+        &\approx  \frac{\pi^2}{3} \nu(\epsilon_F)k_\beta^2  T
+    \end{align}
+    となり、$T$に比例し、その係数はFermiエネルギーにおけるエネルギー状態密度によってきまる。
+\subsubsection{Pauli常磁性}
+\section{Bose分布}
+\subsubsection{大分配関数}
+    あるエネルギー準位$\epsilon_n$に属する粒子の個数を$N_n$とすると、大分配関数は
+    \begin{align}
+        \Xi &= \prod_n \sum_{N_n = 0}^{\infty} e^{-\beta N_n (\epsilon_n - \mu)} \notag \\
+        &= \prod_n \left( 1 + e^{-\beta (\epsilon_n - \mu )} + e^{-2\beta (\epsilon_n - \mu )} + \cdots \right) \notag \\
+        &= \prod_n \frac{1}{1 - e^{-\beta (\epsilon_n - \mu)}}
+    \end{align}
+    となる。ただし、$\epsilon_n > \mu$ とする。
+\subsubsection{グランドポテンシャル}
+    グランドポテンシャルは
+    \begin{align}
+        J &= -\frac{1}{\beta} \log \Xi \notag \\
+        &= -\frac{1}{\beta} \log \left\{  \prod_n \frac{1}{1 - e^{-\beta (\epsilon_n - \mu)}} \right\} \notag \\
+        &= -\frac{1}{\beta} \sum_n \log \left( \frac{1}{1 - e^{-\beta (\epsilon_n - \mu)}} \right)
+    \end{align}
+    となる。
+\subsubsection{粒子数の期待値}
+    粒子数の期待値は
+    \begin{align}
+        \langle \hat{N} \rangle &= \frac{1}{\beta} \frac{\partial }{\partial \mu} \log \Xi \notag \\
+        &= \frac{1}{\beta} \frac{\partial }{\partial \mu} \log \left\{ \prod_n \frac{1}{1 - e^{-\beta (\epsilon_n - \mu)}} \right\} \notag \\
+        &= \frac{1}{\beta} \sum_n \frac{\partial }{\partial \mu} \log \left\{ \frac{1}{1 - e^{-\beta (\epsilon_n - \mu)}} \right\} \notag \\
+        &= \sum_n \frac{e^{-\beta (\epsilon_n - \mu)}}{1 - e^{-\beta (\epsilon_n - \mu)}} \notag \\
+        &= \sum_n \frac{1}{e^{\beta (\epsilon_n - \mu)} - 1}
+    \end{align}
+    となる。\\
+    Bose分布関数は
+    \begin{align}
+        f_B (\epsilon) := \frac{1}{e^{\beta (\epsilon - \mu)} - 1}
+    \end{align}
+    となる。\\
+    Bose分布関数を用いるとグランドポテンシャルは
+    \begin{align}
+        J = -\frac{1}{\beta} \sum_n \log (1 + f_B (\epsilon_n))
+    \end{align}
+    とかける。
+\subsubsection{状態密度を用いた表現}
+    1粒子のエネルギー状態密度$\nu (\epsilon)$を用いると、グランドポテンシャル、粒子数・エネルギーの期待値は
+    \begin{align}
+        J &= -\frac{1}{\beta} \int_{0}^{\infty} d\epsilon\ \nu (\epsilon) \log \left\{ 1 + f_B (\epsilon_n) \right\} \\
+        \langle \hat{N} \rangle &= \int_0^{\infty} d\epsilon\ \nu (\epsilon) f_B(\epsilon) \\
+        \langle \hat{E} \rangle &= \int_0^{\infty} d\epsilon\  \nu (\epsilon) \epsilon f_B(\epsilon)
+    \end{align}
+    と表される。
+\subsection{Bose理想気体}
+    Bose理想気体におけるグランドポテンシャル、粒子数・エネルギーの期待値は
+    \begin{align}
+        J &= -\frac{1}{\beta} \int_{0}^{\infty} d\epsilon\ \frac{V}{4 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{\frac{3}{2}} \epsilon^\frac{1}{2} \log \left\{ 1 + f_B (\epsilon_n) \right\} \\
+        \langle \hat{N} \rangle &= \int_0^{\infty} d\epsilon\ \frac{V}{4 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{\frac{3}{2}} \epsilon^\frac{1}{2} f_B(\epsilon) \\
+        \langle \hat{E} \rangle &= \int_0^{\infty} d\epsilon\  \frac{V}{4 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{\frac{3}{2}} \epsilon^\frac{1}{2} \epsilon f_B(\epsilon)
+    \end{align}
+    と表される。ただし、$\mu < \epsilon$である。これらの低温でのふるまいを調べる。
+\subsubsection{粒子数の期待値}
+    $\ \ $粒子数の期待値は
+    \begin{align}
+        \langle \hat{N} \rangle &= \int_0^{\infty} d\epsilon\ \frac{V}{4 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{\frac{3}{2}} \epsilon^\frac{1}{2} f_B(\epsilon) \notag \\
+        &= cV \int_0^{\infty} d\epsilon\  \frac{\epsilon^\frac{1}{2}}{e^{\beta (\epsilon - \mu)} - 1}, \quad c := \frac{1}{4 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{\frac{3}{2}} \notag 
+    \end{align}
+    となり、粒子数密度の期待値を$\langle \hat{n} \rangle := \langle \hat{N} \rangle / V$とすると
+    \begin{align}
+        \langle \hat{n} \rangle = c \int_0^{\infty} d\epsilon\  \frac{\sqrt{\epsilon}}{e^{\beta (\epsilon - \mu)} - 1} \notag 
+    \end{align}
+    となる。積分を解析しやすいように、$u = \beta \epsilon$と置換すると
+    \begin{align}
+                \langle \hat{n} \rangle &= c \int_0^{\infty} d\epsilon\  \frac{\sqrt{\epsilon}}{e^{\beta (\epsilon - \mu)} - 1}  \notag \\
+                &= c \int_0^{\infty} du\ \frac{1}{\beta} \frac{\sqrt{\frac{u}{\beta}}}{e^{u - \beta \mu} - 1} \notag \\
+                &= c \beta^{-\frac{3}{2}}\int_0^{\infty} du\ \frac{\sqrt{u}}{e^{u - \beta \mu} - 1} \notag 
+    \end{align}
+    となり、積分を新たに関数として
+    \begin{align}
+        \eta (x) := \int_0^{\infty} du\ \frac{\sqrt{u}}{e^{u - x} - 1},\quad x \le 0
+    \end{align}
+    と定義すると、粒子数密度の期待値は
+    \begin{align}
+        \langle \hat{n} \rangle = c \beta^{-\frac{3}{2}} \eta (\beta \mu)
+    \end{align}
+    と表される。\\
+    $\ \ $次に積分関数$\eta(x)$を詳しく調べる。$\eta (x)$は$x$に関して単調増加関数となっていることが分かる。$x =0$の時を考える。
+    \begin{align}
+        \eta (0) = \int_0^{\infty} du\ \frac{\sqrt{u}}{e^{u} - 1}
+    \end{align}
+    この積分が収束することを示す。\\
+    $\eta(0)$が発散する可能性がある$u \rightarrow 0,u \rightarrow \infty$での積分値を調べる。それぞれの極限での非積分関数の漸近形は
+    \begin{align}
+        &u \rightarrow 0: \frac{\sqrt{u}}{e^{u} - 1} \rightarrow \frac{1}{\sqrt{u}} \notag \\
+        &u \rightarrow \infty: \frac{\sqrt{u}}{e^{u} - 1} \rightarrow \sqrt{u} e^{-u} \notag
+    \end{align}
+    となる。よって、$u$が$0$付近での積分値は
+    \begin{align}
+        \int_0^{\delta} du\ \frac{\sqrt{u}}{e^{u} - 1} &\sim \int_0^{\delta} du\ \frac{1}{\sqrt{u}} \notag \\
+        &= \left[ 2\sqrt{u} \right]_0^{\delta} = 2\sqrt{\delta} = const.
+    \end{align}
+    となり積分値は収束する。\\
+    $u$が十分大きい値$L$付近での積分値は
+    \begin{align}
+        \int_L^{\infty} du\ \frac{\sqrt{u}}{e^{u} - 1} &\sim \int_L^{\infty} du\ \sqrt{u} e^{-u} \notag \\
+        &= \int_{\sqrt{L}}^{\infty} dt\ \frac{1}{2} t^2 e^{-t^2} \notag \\
+        &= \left[ -\frac{1}{4} t e^{-t^2} \right]_{\sqrt{L}}^{\infty} + \frac{1}{4} \int_{\sqrt{L}}^{\infty} dt\ e^{-t^2} = const.
+    \end{align}
+    となり積分値は収束する。\\
+    以上より
+    \begin{align}
+        \eta (0) = const.
+    \end{align}
+    となる。\\
+    $\ \ $$\eta (x)$を解析的に解くことはできないが、数値的に計算すると$\eta (0) \approx 2.315157$となる。
+\subsubsection{化学ポテンシャル}
+    化学ポテンシャルの値は、粒子数密度を表す式を$\mu$について解くことで得られる。Bose理想気体の粒子数密度は積分関数$\eta (\beta \mu)$で表されていて解析的に計算することは難しい。\\
+    $x \le 0$の範囲で$\eta (x)$を計算すると図のようになる。\\ここで粒子数密度の式を思い出すと
+    \begin{align}
+        \langle \hat{n} \rangle = c \beta^{-\frac{3}{2}} \eta (\beta \mu) \notag 
+    \end{align}
+    であった。$y = \eta (x)$と$y = \langle \hat{n} \rangle / c \beta^{-\frac{3}{2}} $の交点の$x$の値が$\beta \mu$に対応する。したがってその交点の$x$の値を$\beta$で割ることで化学ポテンシャルが得られる。\\
+    $\ \ $しかしここで問題が発生する。$\langle \hat{n} \rangle \beta^{\frac{3}{2}} / c\le \eta (0)$の範囲ではその交点が存在するが、$\langle \hat{n} \rangle \beta^{\frac{3}{2}}  / c  > \eta (0)$では交点が存在しなくなってしまい、化学ポテンシャルが定義できなくなってしまう。ある温度・密度を境に化学ポテンシャルが定義できなくなるのは不自然なことであるので、これまでの議論のどこかに間違いがあるはずである。はじめの粒子数の計算に遡ると
+    \begin{align}
+        \langle \hat{N} \rangle = \sum_n \frac{1}{e^{\beta (\epsilon_n - \mu)} - 1} \notag 
+    \end{align}
+    であった。この式を積分近似する過程を振り替える\\
+    まず、$n$に関する和を微小なエネルギー幅$\Delta \epsilon$で分割すると
+    \begin{align}
+        \langle \hat{N} \rangle &= \sum_n \frac{1}{e^{\beta (\epsilon_n - \mu)} - 1} \notag \\
+        &= \sum_{l=0}^{\infty} \sum_{l\Delta \epsilon \le \epsilon_n < (l+1)\Delta \epsilon} \frac{1}{e^{\beta (\epsilon_n - \mu)} - 1} \notag 
+    \end{align}
+    ここで幅$\Delta \epsilon$での関数の変化が小さいと仮定し、$\epsilon$以下のエネルギー準位数を$\Omega(\epsilon)$と表すと
+    \begin{align}
+        = \sum_{l=0}^{\infty} (\Omega((l+1)\Delta \epsilon) - \Omega(l \Delta \epsilon)) \frac{1}{e^{\beta (l\Delta \epsilon - \mu)} - 1} \notag 
+    \end{align}
+    とかける。またエネルギー準位密度を
+    \begin{align}
+        \nu (\epsilon) := \frac{d\Omega(\epsilon) }{d \epsilon} \approx \frac {\Omega (\epsilon + \Delta \epsilon) - \Omega (\epsilon) }{\Delta \epsilon} \notag 
+    \end{align}
+    と定義すると
+    \begin{align}
+        \langle \hat{N} \rangle = \sum_{l=0}^{\infty} \nu (\epsilon) \Delta \epsilon   \frac{1}{e^{\beta (l\Delta \epsilon - \mu)} - 1} \approx \int_0^{\infty} d\epsilon\ \frac{\nu (\epsilon)}{e^{\beta (\epsilon - \mu)} - 1} \notag 
+    \end{align}
+    となる。和を積分に変える際、$\Delta \epsilon$が十分小さく、準位密度が十分大きくなければならないが一般に準位密度は系の体積に比例するので問題なく積分に置き換えることができる。\\
+    しかし、「幅$\Delta \epsilon$での関数の変化が小さい」という仮定はある密度・温度を越えると成り立たなくなることがある。実際$\mu \rightarrow \epsilon_0$の時、基底状態の粒子数は発散するが積分値は収束した。したがって積分では基底状態の粒子数が含まれていない可能性が高い。\\
+    $\ \ $以上の理由から基底状態の粒子数期待値を特別扱いし、積分の外に出して計算をする。粒子数の期待値は
+    \begin{align}
+        \langle \hat{N} \rangle = \frac{1}{e^{\beta (\epsilon_1 - \mu)} - 1} + \sum_{n=2}^{\infty} \frac{1}{e^{\beta (\epsilon_n - \mu)} - 1}
+    \end{align}
+    となる。粒子数密度を積分で表すと
+    \begin{align}
+        \langle \hat{n} \rangle = \frac{1}{V} \frac{1}{e^{\beta (\epsilon_1 - \mu)} - 1} + c \beta^{-\frac{3}{2}}\int_{\epsilon_2}^{\infty} du\ \frac{\sqrt{u}}{e^{u - \beta \mu} - 1}
+    \end{align}
+    ここで、積分範囲の下限の寄与は十分小さいので$0$とすると
+    \begin{align}
+        \langle \hat{n} \rangle &= \frac{1}{V} \frac{1}{e^{\beta (\epsilon_1 - \mu)} - 1} + c \beta^{-\frac{3}{2}}\int_{\epsilon_2}^{\infty} du\ \frac{\sqrt{u}}{e^{u - \beta \mu} - 1} \notag \\
+        &= \frac{1}{V} \frac{1}{e^{\beta (\epsilon_1 - \mu)} - 1} + c \beta^{-\frac{3}{2}}\int_{0}^{\infty} du\ \frac{\sqrt{u}}{e^{u - \beta \mu} - 1} \notag \\
+        &= \frac{1}{V} \frac{1}{e^{\beta (\epsilon_1 - \mu)} - 1} + c \beta^{-\frac{3}{2}} \eta (\beta \mu)
+    \end{align}
+    となる。\\
+    $\langle \hat{n} \rangle \beta^{\frac{3}{2}} / c> \eta (0)$の範囲では、基底状態の粒子数の期待値を$\langle \hat{N}_1 \rangle$とすると
+    \begin{align}
+        \langle \hat{N}_1 \rangle = V \left( \langle \hat{n} \rangle - c \beta^{-\frac{3}{2}} \eta (0) \right)
+    \end{align}
+    となり、基底状態の粒子数が体積に比例することが分かる。これはマクロな数の粒子が基底状態をとっている状態を表している。このような現象をBose-Einstein凝縮という。
+\subsubsection{Bose-Einstein凝縮}
+    Bose理想気体の粒子数密度の期待値は$\langle \hat{n} \rangle \beta^{\frac{3}{2}} / c\le \eta (0)$が満たされるとき
+    \begin{align}
+        \langle \hat{n} \rangle = c \beta^{-\frac{3}{2}} \eta (\beta \mu), \quad \eta (x) := \int_0^{\infty} du\ \frac{\sqrt{u}}{e^{u - x} - 1}
+    \end{align}
+    で与えられた。$\langle \hat{n} \rangle \beta^{\frac{3}{2}} / c> \eta (0)$の範囲では
+    \begin{align}
+        \langle \hat{n} \rangle &= \frac{1}{V} \frac{1}{e^{\beta (\epsilon_1 - \mu)} - 1} + c \beta^{-\frac{3}{2}} \eta (0)
+    \end{align}
+    となった。したがって転移点は
+    \begin{align}
+        \beta_c := \left( \frac{c \eta (0)}{\langle \hat{n} \rangle } \right)^{\frac{2}{3}}
+    \end{align}
+    となる。点移転を用いて基底状態の粒子数密度の期待値を表すと
+    \begin{align}
+        \langle \hat{N}_1 \rangle &= V \left( \langle \hat{n} \rangle - c \beta^{-\frac{3}{2}} \eta (0) \right) \notag \\
+        &= V \langle \hat{n} \rangle \left( 1 - \frac{c \beta^{-\frac{3}{2}} \eta (0)}{\langle \hat{n} \rangle} \right) \notag \\
+        &= V \langle \hat{n} \rangle \left( 1 - \left( \frac{\beta_c}{\beta} \right)^{\frac{3}{2}} \right) = V \langle \hat{n} \rangle \left( 1 - \left( \frac{T}{T_c} \right)^{\frac{3}{2}} \right) 
+    \end{align}
+    となる。
+\end{document}

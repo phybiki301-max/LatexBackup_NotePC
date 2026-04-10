@@ -1,0 +1,202 @@
+\documentclass[dvipdfmx, 11pt, a4paper]{jsarticle}
+
+% --- 基本パッケージ ---
+\usepackage[T1]{fontenc}
+\usepackage{mathrsfs}
+\usepackage{lmodern}
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\usepackage{bm}           % ベクトルなどの太字 \bm{}
+\usepackage{graphicx}     % 画像の挿入
+\usepackage{hyperref}     % リンク機能
+\usepackage{footnotehyper}
+
+
+\usepackage{url}
+
+% --- 物理・数式用便利パッケージ ---
+\usepackage{physics}      % \pdv, \dd, \bra, \ket などが使える神パッケージ
+\usepackage{braket}
+\usepackage{siunitx}      % 単位の記述 \si{\meter}
+
+% --- 見た目の調整 (tcolorbox) ---
+\usepackage[most]{tcolorbox}
+
+% 定理・定義などの枠デザイン
+\tcbset{
+    common/.style={
+        enhanced,
+        colback=white,
+        boxrule=0.5mm,
+        sharp corners,
+        fonttitle=\bfseries
+    }
+}
+
+% 定理・公式（深いネイビー）
+\newtcolorbox{definition}[1][定義]{
+    common,
+    colframe=blue!40!gray!75,    % グレーがかった青
+    colback=blue!5!gray!5!white,
+    title={#1}
+}
+
+% 補題・定義（濃いシアン・ティール）
+\newtcolorbox{formula}[1][定理]{
+    common,
+    colframe=cyan!30!black,  % 黒に近い水色（青緑）
+    colback=cyan!3!white,
+    title={#1}
+}
+
+
+% 補足（モノトーンで邪魔しない）
+\newtcolorbox{note}[1][Note]{
+    common,
+    colframe=black!40,        % 濃いグレー
+    colback=gray!5!white,
+    title={#1},
+    borderline west={1mm}{0mm}{black!60}
+}
+
+
+% --- 証明環境の設定 ---
+\renewcommand{\proofname}{\textbf{証明}}
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}{補題}
+
+% --- 余白の設定（少し広めに取る） ---
+\usepackage[top=25mm, bottom=25mm, left=20mm, right=20mm]{geometry}
+
+% --- 証明用の新しい環境定義 (左線スタイル) ---
+\newtcolorbox{derivation}[1][導出]{
+    empty,                  % 背景や枠を無効化
+    breakable,              % ページまたぎOK
+    title={#1},             % タイトル（デフォルトは「証明」）
+    coltitle=black,         % タイトルの色
+    fonttitle=\bfseries,    % タイトルのフォント
+    left=5mm,               % 左の余白
+    parbox=false,           % 通常の段落として扱う
+    borderline west={1mm}{0pt}{gray!60}, % 左側に太さ1mmのグレー線
+    before upper={\setlength{\parindent}{1em}}, % インデントを保持
+}
+
+\newtcolorbox{derivationBox}[1][\textbf{導出}]{
+    enhanced,
+    breakable,
+    frame hidden,
+    colback=gray!10!white,
+    coltitle=black,
+    fonttitle=\bfseries,
+    title={#1},
+    attach title to upper,       % タイトルを本文領域に埋め込む
+    after title={\par\smallskip},% ★ 改行(\par)と、少しの隙間(\smallskip)を入れる
+    left=3mm, right=3mm, top=3mm, bottom=3mm,
+    parbox=false
+}
+
+
+
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} % 一旦リセット
+\lhead{\leftmark} % 左上にセクション名
+\rhead{\thepage}  % 右上にページ番号
+\cfoot{}          % 中央下は空にする
+% jsarticleの場合、章の始まりなどでstyleが変わることがあるので微調整が必要ですが、基本はこれでOK
+
+\hypersetup{
+    colorlinks=true,       % 枠ではなく文字に色をつける
+    linkcolor=blue!70!black, % 内部リンク（式番号など）の色
+    citecolor=green!60!black, % 文献引用の色
+    urlcolor=magenta,      % URLの色
+    setpagesize=false      % 用紙サイズ設定の競合を防ぐ（jsarticle対策）
+}
+
+
+\renewcommand{\headfont}{\bfseries\rmfamily}
+\renewcommand{\baselinestretch}{1.15}
+\allowdisplaybreaks[1] % [1]～[4]で許容度を指定。1くらいが安全。
+% 脚注を記号 (*, †, ‡, §, ¶...) にする
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\makesavenoteenv{derivationBox}
+
+\numberwithin{equation}{section}
+
+
+% --- タイトル情報 ---
+%タイトル
+\title{ゼミノート \\ \large 物性物理のための場の理論・グリーン関数 \\ 小形正男} %タイトル
+\author{田中響}%著者
+
+\date{\today}  %任意の補足データ(\todayと入れれば今日の日付が出る)
+
+%本文開始
+\begin{document}
+\maketitle %タイトル
+\tableofcontents %目次
+
+\maketitle
+
+\newpage
+\section{第二量子化}
+\subsection{多体問題のSchrödinger方程式}
+    同種N粒子系のSchrödinger方程式は
+    \begin{align}
+        &i\hbar \frac{\partial}{\partial t} \Psi(\bm{r}_1,\cdots,\bm{r_N;t}) = \hat{H} \Psi(\bm{r}_1,\cdots,\bm{r_N;t}) \label{NryuShiSyuredi}\\
+        &\hat{H} = \sum_{i=1}^N \left( -\frac{\hbar^2}{2m_i} \nabla_i^2 + V_i(\bm{r}_i) \right) + \frac{1}{2}\sum_{i\ne j}U_{ij}(\bm{r}_i-\bm{r}_j)
+    \end{align}
+    となる。同種粒子波動関数$\Psi$は以下のいずれかの関係式を満たす
+    \begin{align}
+        \Psi(\bm{r}_1,\cdots, \bm{r}_i,\cdots \bm{r}_j,\cdots,\bm{r_N;t}) &= \Psi(\bm{r}_1,\cdots, \bm{r}_j,\cdots \bm{r}_i,\cdots,\bm{r_N;t}) \label{BoseTaisyouKansu} \\
+        \Psi(\bm{r}_1,\cdots, \bm{r}_i,\cdots \bm{r}_j,\cdots,\bm{r_N;t}) &= -\Psi(\bm{r}_1,\cdots, \bm{r}_j,\cdots \bm{r}_i,\cdots,\bm{r_N;t})\label{FermiTaisyouKansu}
+    \end{align}
+    前者の式に従う粒子をBoson、後者をFermionという。
+\subsection{完全対象関数と完全反対称関数}
+    \eqref{BoseTaisyouKansu}、\eqref{FermiTaisyouKansu}式を満たす波動関数を表現するために、置換という考えを導入する。$\{1,2,\cdots,N\}$の数列を並び替えた数列を$\{P1,P2,\cdots,PN \}$と書くことにする。このような並び替えはすべてで$N!$通りある。これらすべての並び替えを足し合わせる記号を$\sum_P$とするとBosonの波動関数は
+    \begin{align}
+        \Psi_{\textbf{Bose}}(\bm{r}_1,\cdots,\bm{r}_N) = \sum_{P} \Psi(\bm{r}_{P1},\cdots,\bm{r}_{PN})
+    \end{align}
+    と書ける。\footnote{ここでは波動関数の規格化定数は無視する}Fermionの波動関数は
+    \begin{align}
+        \Psi_{\textbf{Fermi}}(\bm{r}_1,\cdots,\bm{r}_N) = \sum_{P} (-1)^P\Psi(\bm{r}_{P1},\cdots,\bm{r}_{PN})
+    \end{align}
+    となる。ここで$(-1)^P$のPは$\{1,2,\cdots,N\}$を$\{ P1,P2,\cdots,PN \}$に並び替える際に何回の数字の入れ替えを行ったかを表す値である。\\
+    $\ \ $相互作用がない場合、一体のSchrödinger方程式
+    \begin{align}
+        \left\{ -\frac{\hbar^2}{2m} \nabla^2 + V(\bm{r})  \right\} \phi_n(\bm{r}) = \varepsilon_n \phi_n(\bm{r})
+    \end{align}
+    を満たす波動関数$\phi_n(\bm{r})$を用いると、相互作用がないN粒子ハミルトニアン
+    \begin{align}
+        \hat{H}_0 = \sum_{i=1}^N \left( -\frac{\hbar^2}{2m_i} \nabla_i^2 + V_i(\bm{r}_i) \right)
+    \end{align}
+    の固有状態は
+    \begin{align}
+        \phi_1(\bm{r}_1)\phi_2(\bm{r}_2)\cdots \phi_N(\bm{r}_N)
+    \end{align}
+    と書ける。したがってFermi粒子の波動関数は
+    \begin{align}
+        \Psi_{\textbf{Fermi}}(\bm{r}_1,\cdots,\bm{r}_N) = \sum_{P}(-1)^P \phi_1(\bm{r}_{P1})\phi_2(\bm{r}_{P2})\cdots\phi_N(\bm{r}_{PN})
+    \end{align}
+    となり、さらに行列式の定義より
+    \begin{align}
+        =\textrm{det} 
+        \left\{
+        \begin{matrix}
+            \phi_1(\bm{r}_1)&\phi_2(\bm{r}_1)&\phi_3(\bm{r}_1)&\cdots&\phi_N(\bm{r}_1)\\
+            \phi_1(\bm{r}_2)&\phi_2(\bm{r}_2)&\phi_3(\bm{r}_2)&\cdots&\phi_N(\bm{r}_2)\\
+            \vdots&\vdots&\vdots&&\vdots\\
+            \phi_1(\bm{r}_N)&\phi_2(\bm{r}_N)&\phi_3(\bm{r}_N)&\cdots&\phi_N(\bm{r}_N)
+        \end{matrix}
+        \right\}
+    \end{align}
+    とも表せる。この行列式をスレーター行列式という。
+\subsection{第二量子化への準備}
+    以下の交換関係を満たす演算子を定義する
+    \begin{align}
+        \{ \hat{\psi}(\bm{r}),\hat{\psi}(\bm{r}') \} &= 0 \\
+        \{ \hat{\psi}^\dagger(\bm{r}),\hat{\psi}^\dagger(\bm{r}') \} &= 0\\
+        \{ \hat{\psi}(\bm{r}),\hat{\psi}^\dagger(\bm{r}') \}  &= \delta(\bm{r}-\bm{r}')
+    \end{align}
+\end{document}
