@@ -124,6 +124,14 @@
 
 \numberwithin{equation}{section}
 
+% derivationBoxの注釈関連
+\usepackage{footmisc}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\renewcommand{\thempfootnote}{\fnsymbol{footnote}}
+% カウンタを共有
+\makeatletter
+\let\c@mpfootnote\c@footnote
+\makeatother
 
 % --- タイトル情報 ---
 %タイトル
@@ -144,23 +152,23 @@
 \subsection{多体問題のSchrödinger方程式}
     同種N粒子系のSchrödinger方程式は
     \begin{align}
-        &i\hbar \frac{\partial}{\partial t} \Psi(\bm{r}_1,\cdots,\bm{r_N;t}) = \hat{H} \Psi(\bm{r}_1,\cdots,\bm{r_N;t}) \label{NryuShiSyuredi}\\
+        &i\hbar \frac{\partial}{\partial t} \Psi(\bm{r}_1,\cdots,\bm{r}_N;t) = \hat{H} \Psi(\bm{r}_1,\cdots,\bm{r}_N;t) \label{NryuShiSyuredi}\\
         &\hat{H} = \sum_{i=1}^N \left( -\frac{\hbar^2}{2m_i} \nabla_i^2 + V_i(\bm{r}_i) \right) + \frac{1}{2}\sum_{i\ne j}U_{ij}(\bm{r}_i-\bm{r}_j)
     \end{align}
     となる。同種粒子波動関数$\Psi$は以下のいずれかの関係式を満たす
     \begin{align}
-        \Psi(\bm{r}_1,\cdots, \bm{r}_i,\cdots \bm{r}_j,\cdots,\bm{r_N;t}) &= \Psi(\bm{r}_1,\cdots, \bm{r}_j,\cdots \bm{r}_i,\cdots,\bm{r_N;t}) \label{BoseTaisyouKansu} \\
-        \Psi(\bm{r}_1,\cdots, \bm{r}_i,\cdots \bm{r}_j,\cdots,\bm{r_N;t}) &= -\Psi(\bm{r}_1,\cdots, \bm{r}_j,\cdots \bm{r}_i,\cdots,\bm{r_N;t})\label{FermiTaisyouKansu}
+        \Psi(\bm{r}_1,\cdots, \bm{r}_i,\cdots, \bm{r}_j,\cdots,\bm{r}_N;t) &= \Psi(\bm{r}_1,\cdots, \bm{r}_j,\cdots, \bm{r}_i,\cdots,\bm{r}_N;t) \label{BoseTaisyouKansu} \\
+        \Psi(\bm{r}_1,\cdots, \bm{r}_i,\cdots \bm{r}_j,\cdots,\bm{r}_N;t) &= -\Psi(\bm{r}_1,\cdots, \bm{r}_j,\cdots, \bm{r}_i,\cdots,\bm{r}_N;t)\label{FermiTaisyouKansu}
     \end{align}
     前者の式に従う粒子をBoson、後者をFermionという。
 \subsection{完全対象関数と完全反対称関数}
     \eqref{BoseTaisyouKansu}、\eqref{FermiTaisyouKansu}式を満たす波動関数を表現するために、置換という考えを導入する。$\{1,2,\cdots,N\}$の数列を並び替えた数列を$\{P1,P2,\cdots,PN \}$と書くことにする。このような並び替えはすべてで$N!$通りある。これらすべての並び替えを足し合わせる記号を$\sum_P$とするとBosonの波動関数は
     \begin{align}
-        \Psi_{\textbf{Bose}}(\bm{r}_1,\cdots,\bm{r}_N) = \sum_{P} \Psi(\bm{r}_{P1},\cdots,\bm{r}_{PN})
+        \Psi_{\textrm{Bose}}(\bm{r}_1,\cdots,\bm{r}_N) = \sum_{P} \Psi(\bm{r}_{P1},\cdots,\bm{r}_{PN})
     \end{align}
     と書ける。\footnote{ここでは波動関数の規格化定数は無視する}Fermionの波動関数は
     \begin{align}
-        \Psi_{\textbf{Fermi}}(\bm{r}_1,\cdots,\bm{r}_N) = \sum_{P} (-1)^P\Psi(\bm{r}_{P1},\cdots,\bm{r}_{PN})
+        \Psi_{\textrm{Fermi}}(\bm{r}_1,\cdots,\bm{r}_N) = \sum_{P} (-1)^P\Psi(\bm{r}_{P1},\cdots,\bm{r}_{PN})
     \end{align}
     となる。ここで$(-1)^P$のPは$\{1,2,\cdots,N\}$を$\{ P1,P2,\cdots,PN \}$に並び替える際に何回の数字の入れ替えを行ったかを表す値である。\\
     $\ \ $相互作用がない場合、一体のSchrödinger方程式
@@ -177,7 +185,7 @@
     \end{align}
     と書ける。したがってFermi粒子の波動関数は
     \begin{align}
-        \Psi_{\textbf{Fermi}}(\bm{r}_1,\cdots,\bm{r}_N) = \sum_{P}(-1)^P \phi_1(\bm{r}_{P1})\phi_2(\bm{r}_{P2})\cdots\phi_N(\bm{r}_{PN})
+        \Psi_{\textrm{Fermi}}(\bm{r}_1,\cdots,\bm{r}_N) = \sum_{P}(-1)^P \phi_1(\bm{r}_{P1})\phi_2(\bm{r}_{P2})\cdots\phi_N(\bm{r}_{PN})
     \end{align}
     となり、さらに行列式の定義より
     \begin{align}
@@ -194,9 +202,80 @@
     とも表せる。この行列式をスレーター行列式という。
 \subsection{第二量子化への準備}
     以下の交換関係を満たす演算子を定義する
+    \begin{definition}[場の生成・消滅演算子]
+        \begin{equation}
+            \begin{aligned}
+                \{ \hat{\psi}(\bm{r}),\hat{\psi}(\bm{r}') \} &= 0\\
+                \{ \hat{\psi}^\dagger(\bm{r}),\hat{\psi}^\dagger(\bm{r}') \} &= 0\\
+                \{ \hat{\psi}(\bm{r}),\hat{\psi}^\dagger(\bm{r}') \} &= \delta(\bm{r}-\bm{r}') \label{BanoKoukanKeiFermi}
+            \end{aligned}
+        \end{equation}
+    \end{definition}
+    粒子が全くいない真空を$\ket{0}$とすると、この演算子を用いて一つの粒子がいる状態を
     \begin{align}
-        \{ \hat{\psi}(\bm{r}),\hat{\psi}(\bm{r}') \} &= 0 \\
-        \{ \hat{\psi}^\dagger(\bm{r}),\hat{\psi}^\dagger(\bm{r}') \} &= 0\\
-        \{ \hat{\psi}(\bm{r}),\hat{\psi}^\dagger(\bm{r}') \}  &= \delta(\bm{r}-\bm{r}')
+        \hat{\psi}^\dagger(\bm{r}_1)\ket{0}
     \end{align}
+    と書くことにする。また二つの粒子がいる状態を
+    \begin{align}
+        \frac{1}{\sqrt{2}}\hat{\psi}^\dagger(\bm{r}_1)\hat{\psi}^\dagger(\bm{r}_2)\ket{0}
+    \end{align}
+    と書け、N個の粒子がりる状態は
+    \begin{align}
+        \ket{\bm{r}_1,\cdots,\bm{r}_N}:=\frac{1}{\sqrt{N!}}\hat{\psi}^\dagger(\bm{r}_1)\cdots\hat{\psi}^\dagger(\bm{r}_N)\ket{0} \label{JyouTaiBectorK}
+    \end{align}
+    と書ける。この状態ベクトルのブラベクトルは
+    \begin{align}
+        \bra{\bm{r}_1,\cdots,\bm{r}_N} = \frac{1}{\sqrt{N!}}\bra{0}\hat{\psi}(\bm{r}_N)\cdots\hat{\psi}(\bm{r}_1)\label{JyouTaiBectorB}
+    \end{align}
+    となる。この状態ベクトルに対して以下が成り立つ
+    \begin{formula}[状態ベクトルの内積]
+        \begin{equation}
+            \braket{\bm{r}_1,\cdots,\bm{r}_N|{\bm{r}'_1,\cdots,\bm{r}'_{N'}}} = \frac{\delta_{NN'}}{N!}\sum_P (-1)^P \delta(\bm{r}_1-\bm{r}'_{P1})\cdots\delta(\bm{r}_N-\bm{r}'_{PN}) \label{JyouTaiNaisek}
+        \end{equation}
+    \end{formula}
+    \begin{derivationBox}
+        \eqref{BanoKoukanKeiFermi}式の交換関係から得られる式
+        \begin{align}
+            \hat{\psi}(\bm{r})\hat{\psi}^\dagger(\bm{r})=-\hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r}) + \delta(\bm{r}-\bm{r}')
+        \end{align}
+        を用いると
+        \begin{align}
+            &\hat{\psi}(\bm{r}'_1) \hat{\psi}^\dagger(\bm{r}_1)\cdots\hat{\psi}(\bm{r}_N) \notag \\
+            &= (-\hat{\psi}^\dagger(\bm{r}_1)\hat{\psi}(\bm{r}_1') + \delta(\bm{r}_1-\bm{r}'_1))\hat{\psi}^\dagger(\bm{r}_2)\cdots\hat{\psi}(\bm{r}_N) \notag \\
+            &= -\hat{\psi}^\dagger(\bm{r}_1)\hat{\psi}(\bm{r}_1') \hat{\psi}^\dagger(\bm{r}_2)\cdots\hat{\psi}(\bm{r}_N) +  \delta(\bm{r}_1-\bm{r}'_1)\hat{\psi}^\dagger(\bm{r}_2)\cdots\hat{\psi}(\bm{r}_N) \notag  \\
+            &= -\hat{\psi}^\dagger(\bm{r}_1)( -\hat{\psi}^\dagger(\bm{r}_2)\hat{\psi}(\bm{r}_1') + \delta(\bm{r}_2-\bm{r}'_1))\hat{\psi}^\dagger(\bm{r}_3)\cdots\hat{\psi}(\bm{r}_N) +  \delta(\bm{r}_1-\bm{r}'_1)\hat{\psi}^\dagger(\bm{r}_2)\cdots\hat{\psi}(\bm{r}_N) \notag \\
+            &= (-1)^2\hat{\psi}^\dagger(\bm{r}_1)\hat{\psi}^\dagger(\bm{r}_2)\hat{\psi}(\bm{r}_1') \hat{\psi}^\dagger(\bm{r}_3)\cdots\hat{\psi}(\bm{r}_N) \notag \\
+            &\ \ \ \ +(-1)\hat{\psi}^\dagger(\bm{r}_1)\delta(\bm{r}_2-\bm{r}'_1)\hat{\psi}^\dagger(\bm{r}_3)\cdots\hat{\psi}(\bm{r}_N) + (-1)^0 \delta(\bm{r}_1-\bm{r}'_1)\hat{\psi}^\dagger(\bm{r}_2)\cdots\hat{\psi}(\bm{r}_N) \notag \\
+            &= (-1)^N \hat{\psi}^\dagger(\bm{r}_1)\cdots \hat{\psi}^\dagger(\bm{r}_N)\hat{\psi}(\bm{r}'_1) + \sum_{i=1}^{N} \left\{ \prod_{j=1}^{i-1} \hat{\psi}^\dagger(\bm{r}_j)\right\}\delta(\bm{r}_i - \bm{r}'_1) \left\{ \prod_{k=i+1}^{N} \hat{\psi}^\dagger(\bm{r}_k) \right\}
+        \end{align}
+        となる。第一項目は右端に消滅演算子があるため後に真空ケットに作用させると0となる。第二項目は数列$\{1,\cdots,N\}$を1に関しての並び替えを全て足し合わせ、元々$\hat{\psi}^\dagger(\bm{r}_1)$の代わりに$\delta(\bm{r}_1-\bm{r}'_1)$にしたものとなって、元の数列からの置換の回数に応じて$-1$の係数がかけられている。さらに左端に$\hat{\psi}(\bm{r}_2)$を作用させると、数列$\{1,\cdots,N\}$を1,2に関しての並び替えを全て足し合わせたものが得られる。したがって$\hat{psi}(\bm{r}_1),\cdots,\hat{\psi}(\bm{r}_N)$を順に左端から作用させると1~Nまでの並び替えを全て足したものが得られるので
+        \begin{align}
+            &\hat{\psi}(\bm{r}_N)\cdots\hat{\psi}(\bm{r}_1) \hat{\psi}^\dagger(\bm{r}'_1)\cdots\hat{\psi}^\dagger(\bm{r}'_{N'})\ket{0} \notag \\
+            &= \delta_{NN'}\ket{0}\sum_P (-1)^P \delta(\bm{r}_1-\bm{r}'_{P1})\cdots \delta(\bm{r}_N-\bm{r}'_{P1})
+        \end{align}
+        となり\footnote{$N\ne N'$の場合は計算を行うと、生成演算子か消滅演算子のどちらかがあまり、それらが直接状態ベクトルに作用するので0となる}、\eqref{JyouTaiBectorK}、\eqref{JyouTaiBectorB}の定義式より
+        \begin{align}
+            \braket{\bm{r}_1,\cdots,\bm{r}_N|{\bm{r}'_1,\cdots,\bm{r}'_N}} = \frac{\delta_{NN'}}{N!}\sum_P (-1)^P \delta(\bm{r}_1-\bm{r}'_{P1})\cdots\delta(\bm{r}_N-\bm{r}'_{PN})
+        \end{align}
+        が成り立つ。
+    \end{derivationBox}
+\subsection{第二量子化の定式化}
+    \begin{definition}[波動関数の状態ベクトル]
+        \begin{equation}
+            \ket{\Psi_N(t)} = \int d\bm{r}_1\cdots d\bm{r}_N\ \Psi(\bm{r}_1,\cdots,\bm{r}_N) \ket{\bm{r}_1, \cdots ,\bm{r}_N}
+        \end{equation}
+    \end{definition}
+    この波動関数と、\eqref{JyouTaiBectorK}式との内積をとると\eqref{JyouTaiNaisek}より
+    \begin{align}
+        \braket{\bm{r}_1,\cdots ,\bm{r}_N| \Psi_N(t)} &= \bra{\bm{r}_1,\cdots ,\bm{r}_N} \int d\bm{r}'_1\cdots d\bm{r}'_N\ \Psi(\bm{r}'_1,\cdots,\bm{r}'_N) \ket{\bm{r}'_1, \cdots ,\bm{r}'_N} \notag \\
+        &= \int d\bm{r}'_1\cdots d\bm{r}'_N\ \Psi(\bm{r}'_1,\cdots,\bm{r}'_N)  \braket{\bm{r}_1,\cdots ,\bm{r}_N|\bm{r}'_1, \cdots ,\bm{r}'_N} \notag \\
+        &= \int d\bm{r}'_1\cdots d\bm{r}'_N\ \Psi(\bm{r}'_1,\cdots,\bm{r}'_N) \left\{ \frac{\delta_{NN'}}{N!}\sum_P (-1)^P \delta(\bm{r}_1-\bm{r}'_{P1})\cdots\delta(\bm{r}_N-\bm{r}'_{PN}) \right\} \notag \\
+        &=\frac{1}{N!} \sum_{P} (-1)^P \Psi(\bm{r}_{P1},\cdots,\bm{r}_{PN}) =: \Psi_{\textrm{AS}}(\bm{r}_1,\cdots,\bm{r}_N)
+    \end{align}
+    となり、Fermi粒子の反対称性をもった波動関数が得られる。\footnote{ASはantisymmertrizedの略記である}\\
+    $\ \ $次に波動関数の状態ベクトルがSchrödinger方程式
+    \begin{align}
+        i\hbar \frac{\partial}{\partial t}\ket{\Psi_N(t)} = \hat{\mathscr{H}} \ket{\Psi_N(t)} 
+    \end{align}
+    に従うとしたとき、ハミルトニアン$\mathscr{H}$はどのように置けばよいのかを考える。
 \end{document}
