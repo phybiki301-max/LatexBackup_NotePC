@@ -9,6 +9,7 @@
 \usepackage{graphicx}     % 画像の挿入
 \usepackage{hyperref}     % リンク機能
 \usepackage{footnotehyper}
+\usepackage{ulem}         %斜線
 
 
 \usepackage{url}
@@ -275,7 +276,139 @@
     となり、Fermi粒子の反対称性をもった波動関数が得られる。\footnote{ASはantisymmertrizedの略記である}\\
     $\ \ $次に波動関数の状態ベクトルがSchrödinger方程式
     \begin{align}
-        i\hbar \frac{\partial}{\partial t}\ket{\Psi_N(t)} = \hat{\mathscr{H}} \ket{\Psi_N(t)} 
+        i\hbar \frac{\partial}{\partial t}\ket{\Psi_N(t)} = \hat{\mathscr{H}} \ket{\Psi_N(t)} \label{JyouTaiSyureding}
     \end{align}
-    に従うとしたとき、ハミルトニアン$\mathscr{H}$はどのように置けばよいのかを考える。
+    に従うとしたとき、ハミルトニアン$\mathscr{H}$はどのように置けばよいのかを考える。ハミルトニアン$\hat{\mathscr{H}}$を一粒子ハミルトニアン$\hat{\mathscr{H}}_0$と相互作用ハミルトニアン$\hat{\mathscr{H}}_{\text{int}}$の和で書くと以下で与えられる。
+    \begin{definition}[第二量子化ハミルトニアン]
+        \begin{equation}
+            \begin{aligned}
+                \hat{\mathscr{H}}_0 &= \int d\bm{r}\left\{ \frac{\hbar^2}{2m} \bm{\nabla}\hat{\psi}^\dagger(\bm{r})\cdot \bm{\nabla}\hat{\psi}(\bm{r}) + V(\bm{r}) \hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r}) \right\}\\
+                \hat{\mathscr{H}}_{\text{int}} &= \frac{1}{2} \int \int d\bm{r}d\bm{r}'\ \hat{\psi}^\dagger (\bm{r})\hat{\psi}(\bm{r}') U(\bm{r}-\bm{r}')\hat{\psi}(\bm{r}')\hat{\psi}(\bm{r})
+            \end{aligned}
+            \label{DaiNIryouSikaHmiru}
+        \end{equation}
+    \end{definition}
+    \begin{derivationBox}
+        ハミルトニアンが\eqref{DaiNIryouSikaHmiru}式で与えられ、波動関数の状態ベクトルが\eqref{JyouTaiSyureding}式に従うと仮定すると、波動関数のSchrödinger方程式が再現されること確認する。\\
+        $\ \ $まずは簡単な一粒子ポテンシャル項から計算をする
+        \begin{align}
+            &\bra{\bm{r}'_1,\cdots,\bm{r}'_N}\int d\bm{r}\ V(\bm{r}) \hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r}) \ket{\Psi_N(t)}\notag \\
+            &= \bra{\bm{r}'_1,\cdots,\bm{r}'_N}\int d\bm{r}\ V(\bm{r}) \hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r}) \left\{ \int d\bm{r}_1\cdots d\bm{r}_N\ \Psi(\bm{r}_1,\cdots,\bm{r}_N) \ket{\bm{r}_1, \cdots ,\bm{r}_N} \right\} \notag \\
+            &= \int d\bm{r}\ \int d\bm{r}_1\cdots d\bm{r}_N\  V(\bm{r}) \Psi(\bm{r}_1,\cdots,\bm{r}_N) \bra{\bm{r}'_1,\cdots,\bm{r}'_N}\hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r})\ket{\bm{r}_1, \cdots ,\bm{r}_N} 
+        \end{align}
+        となり、ここで状態ベクトルの定義式\eqref{JyouTaiBectorK}より
+        \begin{align}
+            \hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r})\ket{\bm{r}_1, \cdots ,\bm{r}_N} 
+            &= \hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r})\left\{ \frac{1}{\sqrt{N!}}\hat{\psi}^\dagger(\bm{r}_1)\cdots\hat{\psi}^\dagger(\bm{r}_N)\ket{0} \right\} \notag \\
+            &= \frac{1}{\sqrt{N!}}\hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r}) \hat{\psi}^\dagger(\bm{r}_1)\cdots\hat{\psi}^\dagger(\bm{r}_N)\ket{0}
+        \end{align}
+        となり、ここで
+        \begin{align}
+            [ \hat{\psi}^\dagger(\bm{r}) \hat{\psi}(\bm{r}), \hat{\psi}^\dagger(\bm{r}')] &=  \hat{\psi}^\dagger(\bm{r}) \hat{\psi}(\bm{r})\hat{\psi}^\dagger(\bm{r}') - \hat{\psi}^\dagger(\bm{r}')\hat{\psi}^\dagger(\bm{r}) \hat{\psi}(\bm{r}) \notag \\
+            &=  \hat{\psi}^\dagger(\bm{r}) \left\{ -\hat{\psi}^\dagger(\bm{r}')\hat{\psi}(\bm{r}) + \delta(\bm{r}-\bm{r'}) \right\} - \hat{\psi}^\dagger(\bm{r}')\hat{\psi}^\dagger(\bm{r}) \hat{\psi}(\bm{r}) \notag \\
+            &=  \hat{\psi}^\dagger(\bm{r}')\hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r}) + \hat{\psi}^\dagger(\bm{r}) \delta(\bm{r}-\bm{r'}) - \hat{\psi}^\dagger(\bm{r}')\hat{\psi}^\dagger(\bm{r}) \hat{\psi}(\bm{r})\notag \\
+            &=\hat{\psi}^\dagger(\bm{r}) \delta(\bm{r}-\bm{r'}) =\hat{\psi}^\dagger(\bm{r}') \delta(\bm{r}-\bm{r'}) 
+        \end{align}
+        の結果を用いると
+        \begin{align}
+            \frac{1}{\sqrt{N!}}\hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r}) \hat{\psi}^\dagger(\bm{r}_1)\cdots\hat{\psi}^\dagger(\bm{r}_N)\ket{0} &= \frac{1}{\sqrt{N!}}\left\{ \hat{\psi}^\dagger(\bm{r}_1)\hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r}) + \hat{\psi}^\dagger(\bm{r}) \delta(\bm{r}-\bm{r}_1)  \right\}\cdots\hat{\psi}^\dagger(\bm{r}_N)\ket{0} \notag \\
+            &= \frac{1}{\sqrt{N!}} \hat{\psi}^\dagger(\bm{r}_1)\ \hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r})\ \hat{\psi}^\dagger(\bm{r}_2)\cdots\hat{\psi}^\dagger(\bm{r}_N)\ket{0} \notag \\
+            &\ \ \ \ + \frac{1}{\sqrt{N!}} \delta(\bm{r}-\bm{r}_1)\hat{\psi}^\dagger(\bm{r}_1)\hat{\psi}^\dagger(\bm{r}_2)\cdots\hat{\psi}^\dagger(\bm{r}_N)\ket{0} \notag \\
+            &= \frac{1}{\sqrt{N!}} \hat{\psi}^\dagger(\bm{r}_1)\ \hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r})\ \hat{\psi}^\dagger(\bm{r}_2)\cdots\hat{\psi}^\dagger(\bm{r}_N)\ket{0} \notag \\
+            &\ \ \ \ + \delta(\bm{r}-\bm{r}_1)\ket{\bm{r}_1,\cdots,\bm{r}_N} \notag \\
+            &= \frac{1}{\sqrt{N!}} \hat{\psi}^\dagger(\bm{r}_1)\hat{\psi}^\dagger(\bm{r}_2)\ \hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r})\ \hat{\psi}^\dagger(\bm{r}_3)\cdots\hat{\psi}^\dagger(\bm{r}_N)\ket{0} \notag \\
+            &\ \ \ \ + \sum_{i=1}^2\delta(\bm{r}-\bm{r}_i)\ket{\bm{r}_1,\cdots,\bm{r}_N} \notag \\
+            &= \frac{1}{\sqrt{N!}} \hat{\psi}^\dagger(\bm{r}_1)\cdots \hat{\psi}(\bm{r}_N) \hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r})\ket{0} \notag \\
+            &\ \ \ \ + \sum_{i=1}^N\delta(\bm{r}-\bm{r}_i)\ket{\bm{r}_1,\cdots,\bm{r}_N} \notag \\
+            &= \sum_{i=1}^N\delta(\bm{r}-\bm{r}_i)\ket{\bm{r}_1,\cdots,\bm{r}_N}
+        \end{align}
+        となる。したがって
+        \begin{align}
+            &\int d\bm{r}\ \int d\bm{r}_1\cdots d\bm{r}_N\   V(\bm{r})\Psi(\bm{r}_1,\cdots,\bm{r}_N)\bra{\bm{r}'_1,\cdots,\bm{r}'_N}\hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r})\ket{\bm{r}_1, \cdots ,\bm{r}_N} \notag \\
+            &= \int d\bm{r}\ \int d\bm{r}_1\cdots d\bm{r}_N\   V(\bm{r})\Psi(\bm{r}_1,\cdots,\bm{r}_N)\bra{\bm{r}'_1,\cdots,\bm{r}'_N} \left\{  \sum_{i=1}^N\delta(\bm{r}-\bm{r}_i)\ket{\bm{r}_1,\cdots,\bm{r}_N} \right\} \notag \\
+            &= \sum_{i=1}^N \int d\bm{r}\ \int d\bm{r}_1\cdots d\bm{r}_N\   V(\bm{r}) \Psi(\bm{r}_1,\cdots,\bm{r}_N) \delta(\bm{r}-\bm{r}_i) \braket{\bm{r}'_1,\cdots,\bm{r}'_N| \bm{r}_1,\cdots,\bm{r}_N} \notag \\
+            &= \sum_{i=1}^N \int d\bm{r}_1\cdots d\bm{r}_N\  V(\bm{r}_i) \Psi(\bm{r}_1,\cdots,\bm{r}_N)  \braket{\bm{r}'_1,\cdots,\bm{r}'_N| \bm{r}_1,\cdots,\bm{r}_N} \notag \\
+            &= \sum_{i=1}^N \int d\bm{r}_1\cdots d\bm{r}_N\   V(\bm{r}_i)\Psi(\bm{r}_1,\cdots,\bm{r}_N)  \left\{ \frac{1}{N!}\sum_P (-1)^P \delta(\bm{r}_1-\bm{r}'_{P1})\cdots\delta(\bm{r}_N-\bm{r}'_{PN})  \right\} \notag \\
+            &= \sum_{i=1}^N \left\{ \frac{1}{N!} \sum_{P}V(\bm{r}'_{Pi})(-1)^P \Psi(\bm{r}'_{P1},\cdots,\bm{r}'_{PN}) \right\} \notag \\
+            &= \frac{1}{N!} \sum_{P}\left\{ \sum_{i=1}^NV(\bm{r}'_{Pi})\right\} (-1)^P \Psi(\bm{r}'_{P1},\cdots,\bm{r}'_{PN})  \notag \\
+            &= \frac{1}{N!} \sum_{P}\left\{ \sum_{i=1}^NV(\bm{r}'_i)\right\} (-1)^P \Psi(\bm{r}'_{P1},\cdots,\bm{r}'_{PN})  \notag \\
+            &= \left\{ \sum_{i=1}^NV(\bm{r}'_i)\right\} \frac{1}{N!} \sum_{P} (-1)^P \Psi(\bm{r}'_{P1},\cdots,\bm{r}'_{PN})  \notag \\
+            &= \sum_{i=1}^N V(\bm{r}'_i) \Psi_{\text{AS}}(\bm{r}'_1,\cdots,\bm{r}'_N)
+        \end{align}
+        となる。\\
+        $\ \ $次に運動エネルギー項を計算する。
+        \begin{align}
+            &\bra{\bm{r}'_1,\cdots,\bm{r}'_N}\int d\bm{r}\              \frac{\hbar^2}{2m}\bm{\nabla}\hat{\psi}^\dagger(\bm{r})\cdot \bm{\nabla}\hat{\psi}(\bm{r}) \ket{\Psi_N(t)}\notag \\
+            &= \bra{\bm{r}'_1,\cdots,\bm{r}'_N}\int d\bm{r}\  \frac{\hbar^2}{2m}\bm{\nabla}\hat{\psi}^\dagger(\bm{r})\cdot \bm{\nabla}\hat{\psi}(\bm{r}) \left\{ \int d\bm{r}_1\cdots d\bm{r}_N\ \Psi(\bm{r}_1,\cdots,\bm{r}_N) \ket{\bm{r}_1, \cdots ,\bm{r}_N} \right\} \notag \\
+            &= \frac{\hbar^2}{2m}\int d\bm{r} \int d\bm{r}_1\cdots d\bm{r}_N\   \Psi(\bm{r}_1,\cdots,\bm{r}_N) \bra{\bm{r}'_1,\cdots,\bm{r}'_N}\bm{\nabla}\hat{\psi}^\dagger(\bm{r})\cdot\bm{\nabla}\hat{\psi}(\bm{r})\ket{\bm{r}_1, \cdots ,\bm{r}_N} 
+        \end{align}
+        となる。ここで
+        \begin{align}
+            [\bm{\nabla}\hat{\psi}^\dagger(\bm{r})\cdot\bm{\nabla}\hat{\psi}(\bm{r}), \hat{\psi}^\dagger(\bm{r}')]&= \bm{\nabla}\hat{\psi}^\dagger(\bm{r})\cdot\bm{\nabla}\hat{\psi}(\bm{r}) \hat{\psi}^\dagger(\bm{r}') - \hat{\psi}^\dagger(\bm{r}')\bm{\nabla}\hat{\psi}^\dagger(\bm{r})\cdot\bm{\nabla}\hat{\psi}(\bm{r}) \notag \\
+            &= \bm{\nabla}\hat{\psi}^\dagger(\bm{r})\cdot\bm{\nabla}\left\{- \hat{\psi}^\dagger(\bm{r}')\hat{\psi}(\bm{r}) +\delta(\bm{r}-\bm{r}') \right\} - \bm{\nabla}\left\{ -\hat{\psi}^\dagger(\bm{r})\hat{\psi}^\dagger(\bm{r}') \right\}\cdot\bm{\nabla}\hat{\psi}(\bm{r}) \notag \\
+            &= -\bm{\nabla}\hat{\psi}^\dagger(\bm{r})\cdot\bm{\nabla} \hat{\psi}^\dagger(\bm{r}')\hat{\psi}(\bm{r}) +\bm{\nabla}\hat{\psi}^\dagger(\bm{r})\cdot\bm{\nabla}\delta(\bm{r}-\bm{r}')  +\bm{\nabla}\hat{\psi}^\dagger(\bm{r})\cdot\bm{\nabla}\hat{\psi}^\dagger(\bm{r}')\hat{\psi}(\bm{r}) \notag \\
+            &= \bm{\nabla}\hat{\psi}^\dagger(\bm{r})\cdot\bm{\nabla}\delta(\bm{r}-\bm{r}') 
+        \end{align}
+        の結果を用いると、一粒子ポテンシャルのときと比べ、生成演算子とデルタ関数にナブラ演算子がつくことしか変わらないので、同様の計算により
+        \begin{align}
+            &\frac{1}{\sqrt{N!}}\bm{\nabla}\hat{\psi}^\dagger(\bm{r})\cdot \bm{\nabla}\hat{\psi}(\bm{r}) \hat{\psi}^\dagger(\bm{r}_1)\cdots\hat{\psi}^\dagger(\bm{r}_N)\ket{0} \notag \\
+            &= \frac{1}{\sqrt{N!}}\left\{ \hat{\psi}^\dagger(\bm{r}_1)\bm{\nabla}\hat{\psi}^\dagger(\bm{r})\cdot\bm{\nabla}\hat{\psi}(\bm{r}) + \bm{\nabla}\hat{\psi}^\dagger(\bm{r})\cdot\bm{\nabla} \delta(\bm{r}-\bm{r}_1)  \right\}\cdots\hat{\psi}^\dagger(\bm{r}_N)\ket{0} \notag \\
+            &= \frac{1}{\sqrt{N!}} \hat{\psi}^\dagger(\bm{r}_1)\ \bm{\nabla}\hat{\psi}^\dagger(\bm{r})\cdot \bm{\nabla}\hat{\psi}(\bm{r})\ \hat{\psi}^\dagger(\bm{r}_2)\cdots\hat{\psi}^\dagger(\bm{r}_N)\ket{0} \notag \\
+            &\ \ \ \ + \frac{1}{\sqrt{N!}} \bm{\nabla}\delta(\bm{r}-\bm{r}_1)\cdot \bm{\nabla}\hat{\psi}^\dagger(\bm{r})\hat{\psi}^\dagger(\bm{r}_2)\cdots\hat{\psi}^\dagger(\bm{r}_N)\ket{0} \notag \\
+            &= \frac{1}{\sqrt{N!}} \hat{\psi}^\dagger(\bm{r}_1)\ \bm{\nabla}\hat{\psi}^\dagger(\bm{r})\cdot \bm{\nabla}\hat{\psi}(\bm{r})\ \hat{\psi}^\dagger(\bm{r}_2)\cdots\hat{\psi}^\dagger(\bm{r}_N)\ket{0} \notag \\
+            &\ \ \ \ + \bm{\nabla}\delta(\bm{r}-\bm{r}_1)\cdot \bm{\nabla}\ket{\bm{r},\bm{r}_2,\cdots,\bm{r}_N} \notag \\
+            &= \frac{1}{\sqrt{N!}} \hat{\psi}^\dagger(\bm{r}_1)\cdots\hat{\psi}^\dagger(\bm{r}_N)\ \bm{\nabla}\hat{\psi}^\dagger(\bm{r})\cdot \bm{\nabla}\hat{\psi}(\bm{r})\ket{0} \notag \\
+            &\ \ \ \ + \sum_{i=1}^N \bm{\nabla}\delta(\bm{r}-\bm{r}_i)\cdot \bm{\nabla}\ket{\bm{r},\cdots,\bm{r}_i{=\bm{r}},\cdots,\bm{r}_N} \notag \\
+            &= \sum_{i=1}^N \bm{\nabla}\delta(\bm{r}-\bm{r}_i)\cdot \bm{\nabla}\ket{\bm{r},\cdots,\bm{r}_i{=\bm{r}},\cdots,\bm{r}_N}
+        \end{align}
+        となるので
+        \begin{align}
+            &\frac{\hbar^2}{2m}\int d\bm{r} \int d\bm{r}_1\cdots d\bm{r}_N\   \Psi(\bm{r}_1,\cdots,\bm{r}_N) \bra{\bm{r}'_1,\cdots,\bm{r}'_N}\bm{\nabla}\hat{\psi}^\dagger(\bm{r})\cdot\bm{\nabla}\hat{\psi}(\bm{r})\ket{\bm{r}_1, \cdots ,\bm{r}_N} \notag \\
+            &=\frac{\hbar^2}{2m}\int d\bm{r} \int d\bm{r}_1\cdots d\bm{r}_N\   \Psi(\bm{r}_1,\cdots,\bm{r}_N) \bra{\bm{r}'_1,\cdots,\bm{r}'_N}\left\{ \sum_{i=1}^N \bm{\nabla}\delta(\bm{r}-\bm{r}_i)\cdot \bm{\nabla}\ket{\bm{r},\cdots,\bm{r}_i{=\bm{r}},\cdots,\bm{r}_N} \right\} \notag \\
+            &= -\frac{\hbar^2}{2m}\int d\bm{r}\int d\bm{r}_1\cdots d\bm{r}_N\   \Psi(\bm{r}_1,\cdots,\bm{r}_N) \bra{\bm{r}'_1,\cdots,\bm{r}'_N}\left\{ \sum_{i=1}^N \delta(\bm{r}-\bm{r}_i) \bm{\nabla}^2\ket{\bm{r},\cdots,\bm{r}_i{=\bm{r}},\cdots,\bm{r}_N} \right\} \notag \\
+            &= -\frac{\hbar^2}{2m}\int d\bm{r}_1\cdots d\bm{r}_N\   \Psi(\bm{r}_1,\cdots,\bm{r}_N) \bra{\bm{r}'_1,\cdots,\bm{r}'_N}\left\{ \sum_{i=1}^N \bm{\nabla}^2_{\bm{r}_i}\ket{\bm{r}_1,\cdots,\bm{r}_N} \right\} \notag \\
+            &= \sum_{i=1}^N\int d\bm{r}_1\cdots d\bm{r}_N\   \left( -\frac{\hbar^2}{2m} \bm{\nabla}^2_{\bm{r}_i}\right)\Psi(\bm{r}_1,\cdots,\bm{r}_N) \braket{\bm{r}'_1,\cdots,\bm{r}'_N|\bm{r}_1,\cdots,\bm{r}_N} \notag \\
+            &= \sum_{i=1}^N\int d\bm{r}_1\cdots d\bm{r}_N\   \left( -\frac{\hbar^2}{2m} \bm{\nabla}^2_{\bm{r}_i}\right)\Psi(\bm{r}_1,\cdots,\bm{r}_N) \left\{ \frac{1}{N!}\sum_P (-1)^P \delta(\bm{r}_1-\bm{r}'_{P1})\cdots\delta(\bm{r}_N-\bm{r}'_{PN})  \right\} \notag \\
+            &= \sum_{i=1}^N \frac{1}{N!}\sum_P \left( -\frac{\hbar^2}{2m} \bm{\nabla}^2_{\bm{r}'_{Pi}}\right)(-1)^P \Psi(\bm{r}'_{P1},\cdots,\bm{r}'_{PN})  \notag \\
+            &=  \frac{1}{N!}\sum_P \left\{ \sum_{i=1}^N\left( -\frac{\hbar^2}{2m} \bm{\nabla}^2_{\bm{r}'_{Pi}}\right)\right\} (-1)^P \Psi(\bm{r}'_{P1},\cdots,\bm{r}'_{PN})  \notag \\
+            &=  \frac{1}{N!}\sum_P \left\{ \sum_{i=1}^N\left( -\frac{\hbar^2}{2m} \bm{\nabla}^2_{\bm{r}'_i}\right)\right\} (-1)^P \Psi(\bm{r}'_{P1},\cdots,\bm{r}'_{PN})  \notag \\
+            &= \left\{ \sum_{i=1}^N\left( -\frac{\hbar^2}{2m} \bm{\nabla}^2_{\bm{r}'_i}\right)\right\} \Psi_{\text{AS}}(\bm{r}'_1,\cdots,\bm{r}_N)
+        \end{align}
+        となる。\\
+        $\ \ $最後に相互作用項を計算する。
+        \begin{align}
+            &\bra{\bm{r}'_1,\cdots,\bm{r}'_N}\frac{1}{2}\int d\bm{r}\ U(\bm{r}-\bm{r}') \hat{\psi}^\dagger(\bm{r})\hat{\psi}^\dagger(\bm{r}')\hat{\psi}(\bm{r}')\hat{\psi}(\bm{r}) \ket{\Psi_N(t)}\notag \\
+            &= \bra{\bm{r}'_1,\cdots,\bm{r}'_N}\frac{1}{2}\int d\bm{r}\ U(\bm{r}-\bm{r}') \hat{\psi}^\dagger(\bm{r})\hat{\psi}^\dagger(\bm{r}')\hat{\psi}(\bm{r}')\hat{\psi}(\bm{r})  \left\{ \int d\bm{r}_1\cdots d\bm{r}_N\ \Psi(\bm{r}_1,\cdots,\bm{r}_N) \ket{\bm{r}_1, \cdots ,\bm{r}_N} \right\} \notag \\
+            &= \frac{1}{2}\int d\bm{r}\ \int d\bm{r}_1\cdots d\bm{r}_N\  U(\bm{r}-\bm{r}') \Psi(\bm{r}_1,\cdots,\bm{r}_N) \bra{\bm{r}'_1,\cdots,\bm{r}'_N}\hat{\psi}^\dagger(\bm{r})\hat{\psi}^\dagger(\bm{r}')\hat{\psi}(\bm{r}')\hat{\psi}(\bm{r}) \ket{\bm{r}_1, \cdots ,\bm{r}_N} 
+        \end{align}
+        となり
+        \begin{align}
+            &\hat{\psi}^\dagger(\bm{r})\hat{\psi}^\dagger(\bm{r}')\hat{\psi}(\bm{r}')\hat{\psi}(\bm{r}) \ket{\bm{r}_1, \cdots ,\bm{r}_N} \notag \\
+            &= \hat{\psi}^\dagger(\bm{r})\hat{\psi}^\dagger(\bm{r}')\hat{\psi}(\bm{r}')\sum_{i=1}^N(-1)^{i-1}\delta(\bm{r}-\bm{r_i}) \ket{\bm{r}_1,\cdots,{\color{lightgray}{\bm{r}_i}}, \cdots ,\bm{r}_N} \notag \\
+            &= \hat{\psi}^\dagger(\bm{r})\hat{\psi}^\dagger(\bm{r}')2\sum_{j> i}(-1)^{i-1+j-2}\delta(\bm{r}-\bm{r_i}) \delta(\bm{r}'-\bm{r_j}) \ket{\bm{r}_1,\cdots,{\color{lightgray}{\bm{r}_i}},\cdots,{\color{lightgray}{\bm{r}_j}}, \cdots ,\bm{r}_N}  \notag \\
+            &= \hat{\psi}^\dagger(\bm{r})2\sum_{j> i}(-1)^{i-1+j-2+j-2}\delta(\bm{r}-\bm{r_i}) \delta(\bm{r}'-\bm{r_j}) \ket{\bm{r}_1,\cdots,{\color{lightgray}{\bm{r}_i}},\cdots,{\color{lightgray}{\bm{r}_j}}, \cdots ,\bm{r}_N} \notag \\
+            &= 2\sum_{j> i}(-1)^{i-1+j-2+j-2+ i-1}\delta(\bm{r}-\bm{r_i}) \delta(\bm{r}'-\bm{r_j}) \ket{\bm{r}_1,\cdots,{\bm{r}},\cdots,\bm{r}_j, \cdots ,\bm{r}_N} \notag \\
+            &= 2\sum_{j> i}\delta(\bm{r}-\bm{r_i}) \delta(\bm{r}'-\bm{r_j}) \ket{\bm{r}_1,\cdots,\bm{r}_i=\bm{r},\cdots,\bm{r}_j=\bm{r}', \cdots ,\bm{r}_N} 
+        \end{align}
+        となるので
+        \begin{align}
+            &\frac{1}{2}\int d\bm{r}\ \int d\bm{r}_1\cdots d\bm{r}_N\  U(\bm{r}-\bm{r}') \Psi(\bm{r}_1,\cdots,\bm{r}_N) \bra{\bm{r}'_1,\cdots,\bm{r}'_N}\hat{\psi}^\dagger(\bm{r})\hat{\psi}^\dagger(\bm{r}')\hat{\psi}(\bm{r}')\hat{\psi}(\bm{r}) \ket{\bm{r}_1, \cdots ,\bm{r}_N}  \notag \\
+            &=\frac{1}{2}\int d\bm{r}\ \int d\bm{r}_1\cdots d\bm{r}_N\  U(\bm{r}-\bm{r}') \Psi(\bm{r}_1,\cdots,\bm{r}_N) \notag \\
+            &\ \ \ \ \ \ \ \ \bra{\bm{r}'_1,\cdots,\bm{r}'_N}\left\{ 2\sum_{j> i}\delta(\bm{r}-\bm{r_i}) \delta(\bm{r}'-\bm{r_j}) \ket{\bm{r}_1,\cdots,\bm{r}_i=\bm{r},\cdots,\bm{r}_j=\bm{r}', \cdots ,\bm{r}_N}  \right\} \notag \\
+            &=\sum_{j> i}\int d\bm{r}\ \int d\bm{r}_1\cdots d\bm{r}_N\  U(\bm{r}-\bm{r}') \Psi(\bm{r}_1,\cdots,\bm{r}_N) \notag \\
+            &\ \ \ \ \ \ \ \  \delta(\bm{r}-\bm{r_i}) \delta(\bm{r}'-\bm{r_j}) \braket{\bm{r}'_1,\cdots,\bm{r}'_N|\bm{r}_1,\cdots,\bm{r}_i=\bm{r},\cdots,\bm{r}_j=\bm{r}', \cdots ,\bm{r}_N}  \notag \\
+            &=\sum_{j> i} \int d\bm{r}_1\cdots d\bm{r}_N\  U(\bm{r}_i-\bm{r}_j) \Psi(\bm{r}_1,\cdots,\bm{r}_N)\braket{\bm{r}'_1,\cdots ,\bm{r}'_N|\bm{r}_1,\cdots,\bm{r}_N}  \notag \\
+            &=\sum_{j> i} \int d\bm{r}_1\cdots d\bm{r}_N\  U(\bm{r}_i-\bm{r}_j) \Psi(\bm{r}_1,\cdots,\bm{r}_N)\left\{ \frac{1}{N!}\sum_P (-1)^P \delta(\bm{r}_1-\bm{r}'_{P1})\cdots\delta(\bm{r}_N-\bm{r}'_{PN}) \right\} \notag \\
+            &=\sum_{j> i} \frac{1}{N!}\sum_P U(\bm{r}_{Pi}-\bm{r}_{Pj}) (-1)^P \Psi(\bm{r}_{P1},\cdots,\bm{r}_{PN})  \notag \\
+            &= \frac{1}{N!}\sum_P \left\{ \sum_{j> i}U(\bm{r}_{Pi}-\bm{r}_{Pj}) \right\} (-1)^P \Psi(\bm{r}_{P1},\cdots,\bm{r}_{PN})  \notag \\
+            &= \frac{1}{N!}\sum_P \left\{ \sum_{j> i}U(\bm{r}_{i}-\bm{r}_{j}) \right\} (-1)^P \Psi(\bm{r}_{P1},\cdots,\bm{r}_{PN}) \notag \\
+            &= \left\{ \sum_{j> i}U(\bm{r}_{i}-\bm{r}_{j}) \right\}\Psi_{\text{AS}}(\bm{r}_1,\cdots,\bm{r}_N)
+        \end{align}
+        となる。\\
+        $\ \ $したがって
+        \begin{align}
+            \bra{\bm{r}'_1,\cdots,\bm{r}'_N} \hat{\mathscr{H}} \ket{\bm{r}_1,\cdots,\bm{r}_N} = \left[ \sum_{i=1}^N \left\{ -\frac{\hbar^2}{2m}\nabla^2_{\bm{r}_i} + V(\bm{r}_i) \right\} + \sum_{j> i}U(\bm{r}_{i}-\bm{r}_{j}) \right]\Psi_{\text{AS}}(\bm{r}_1,\cdots,\bm{r}_N) 
+        \end{align}
+        となり、Schrödinger方程式が再現される。
+    \end{derivationBox}
 \end{document}
