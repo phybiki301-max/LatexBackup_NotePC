@@ -242,11 +242,11 @@
         を用いると
         \begin{align}
             &\hat{\psi}(\bm{r}'_1) \hat{\psi}^\dagger(\bm{r}_1)\cdots\hat{\psi}(\bm{r}_N) \notag \\
-            &= (-\hat{\psi}^\dagger(\bm{r}_1)\hat{\psi}(\bm{r}_1') + \delta(\bm{r}_1-\bm{r}'_1))\hat{\psi}^\dagger(\bm{r}_2)\cdots\hat{\psi}(\bm{r}_N) \notag \\
-            &= -\hat{\psi}^\dagger(\bm{r}_1)\hat{\psi}(\bm{r}_1') \hat{\psi}^\dagger(\bm{r}_2)\cdots\hat{\psi}(\bm{r}_N) +  \delta(\bm{r}_1-\bm{r}'_1)\hat{\psi}^\dagger(\bm{r}_2)\cdots\hat{\psi}(\bm{r}_N) \notag  \\
-            &= -\hat{\psi}^\dagger(\bm{r}_1)( -\hat{\psi}^\dagger(\bm{r}_2)\hat{\psi}(\bm{r}_1') + \delta(\bm{r}_2-\bm{r}'_1))\hat{\psi}^\dagger(\bm{r}_3)\cdots\hat{\psi}(\bm{r}_N) +  \delta(\bm{r}_1-\bm{r}'_1)\hat{\psi}^\dagger(\bm{r}_2)\cdots\hat{\psi}(\bm{r}_N) \notag \\
-            &= (-1)^2\hat{\psi}^\dagger(\bm{r}_1)\hat{\psi}^\dagger(\bm{r}_2)\hat{\psi}(\bm{r}_1') \hat{\psi}^\dagger(\bm{r}_3)\cdots\hat{\psi}(\bm{r}_N) \notag \\
-            &\ \ \ \ +(-1)\hat{\psi}^\dagger(\bm{r}_1)\delta(\bm{r}_2-\bm{r}'_1)\hat{\psi}^\dagger(\bm{r}_3)\cdots\hat{\psi}(\bm{r}_N) + (-1)^0 \delta(\bm{r}_1-\bm{r}'_1)\hat{\psi}^\dagger(\bm{r}_2)\cdots\hat{\psi}(\bm{r}_N) \notag \\
+            &= (-\hat{\psi}^\dagger(\bm{r}_1)\hat{\psi}(\bm{r}_1') + \delta(\bm{r}_1-\bm{r}'_1))\hat{\psi}^\dagger(\bm{r}_2)\cdots\hat{\psi}^\dagger(\bm{r}_N) \notag \\
+            &= -\hat{\psi}^\dagger(\bm{r}_1)\hat{\psi}(\bm{r}_1') \hat{\psi}^\dagger(\bm{r}_2)\cdots\hat{\psi}^\dagger(\bm{r}_N) +  \delta(\bm{r}_1-\bm{r}'_1)\hat{\psi}^\dagger(\bm{r}_2)\cdots\hat{\psi}^\dagger(\bm{r}_N) \notag  \\
+            &= -\hat{\psi}^\dagger(\bm{r}_1)( -\hat{\psi}^\dagger(\bm{r}_2)\hat{\psi}(\bm{r}_1') + \delta(\bm{r}_2-\bm{r}'_1))\hat{\psi}^\dagger(\bm{r}_3)\cdots\hat{\psi}^\dagger(\bm{r}_N) +  \delta(\bm{r}_1-\bm{r}'_1)\hat{\psi}^\dagger(\bm{r}_2)\cdots\hat{\psi}^\dagger(\bm{r}_N) \notag \\
+            &= (-1)^2\hat{\psi}^\dagger(\bm{r}_1)\hat{\psi}^\dagger(\bm{r}_2)\hat{\psi}(\bm{r}_1') \hat{\psi}^\dagger(\bm{r}_3)\cdots\hat{\psi}^\dagger(\bm{r}_N) \notag \\
+            &\ \ \ \ +(-1)\hat{\psi}^\dagger(\bm{r}_1)\delta(\bm{r}_2-\bm{r}'_1)\hat{\psi}^\dagger(\bm{r}_3)\cdots\hat{\psi}^\dagger(\bm{r}_N) + (-1)^0 \delta(\bm{r}_1-\bm{r}'_1)\hat{\psi}^\dagger(\bm{r}_2)\cdots\hat{\psi}^\dagger(\bm{r}_N) \notag \\
             &= (-1)^N \hat{\psi}^\dagger(\bm{r}_1)\cdots \hat{\psi}^\dagger(\bm{r}_N)\hat{\psi}(\bm{r}'_1) + \sum_{i=1}^{N} \left\{ \prod_{j=1}^{i-1} \hat{\psi}^\dagger(\bm{r}_j)\right\}\delta(\bm{r}_i - \bm{r}'_1) \left\{ \prod_{k=i+1}^{N} \hat{\psi}^\dagger(\bm{r}_k) \right\}
         \end{align}
         となる。第一項目は右端に消滅演算子があるため後に真空ケットに作用させると0となる。第二項目は数列$\{1,\cdots,N\}$を1に関しての並び替えを全て足し合わせ、元々$\hat{\psi}^\dagger(\bm{r}_1)$の代わりに$\delta(\bm{r}_1-\bm{r}'_1)$にしたものとなって、元の数列からの置換の回数に応じて$-1$の係数がかけられている。さらに左端に$\hat{\psi}(\bm{r}_2)$を作用させると、数列$\{1,\cdots,N\}$を1,2に関しての並び替えを全て足し合わせたものが得られる。したがって$\hat{psi}(\bm{r}_1),\cdots,\hat{\psi}(\bm{r}_N)$を順に左端から作用させると1~Nまでの並び替えを全て足したものが得られるので
@@ -271,6 +271,7 @@
         \braket{\bm{r}_1,\cdots ,\bm{r}_N| \Psi_N(t)} &= \bra{\bm{r}_1,\cdots ,\bm{r}_N} \int d\bm{r}'_1\cdots d\bm{r}'_N\ \Psi(\bm{r}'_1,\cdots,\bm{r}'_N) \ket{\bm{r}'_1, \cdots ,\bm{r}'_N} \notag \\
         &= \int d\bm{r}'_1\cdots d\bm{r}'_N\ \Psi(\bm{r}'_1,\cdots,\bm{r}'_N)  \braket{\bm{r}_1,\cdots ,\bm{r}_N|\bm{r}'_1, \cdots ,\bm{r}'_N} \notag \\
         &= \int d\bm{r}'_1\cdots d\bm{r}'_N\ \Psi(\bm{r}'_1,\cdots,\bm{r}'_N) \left\{ \frac{\delta_{NN'}}{N!}\sum_P (-1)^P \delta(\bm{r}_1-\bm{r}'_{P1})\cdots\delta(\bm{r}_N-\bm{r}'_{PN}) \right\} \notag \\
+        &= \int d\bm{r}'_1\cdots d\bm{r}'_N\ \Psi(\bm{r}'_1,\cdots,\bm{r}'_N) \left\{ \frac{\delta_{NN'}}{N!}\sum_P (-1)^P \delta(\bm{r}_{P1}-\bm{r}'_1)\cdots\delta(\bm{r}_{PN}-\bm{r}'_N) \right\} \notag \\
         &=\frac{1}{N!} \sum_{P} (-1)^P \Psi(\bm{r}_{P1},\cdots,\bm{r}_{PN}) =: \Psi_{\textrm{AS}}(\bm{r}_1,\cdots,\bm{r}_N)
     \end{align}
     となり、Fermi粒子の反対称性をもった波動関数が得られる。\footnote{ASはantisymmertrizedの略記である}\\
@@ -320,7 +321,7 @@
             &\ \ \ \ + \sum_{i=1}^2\delta(\bm{r}-\bm{r}_i)\ket{\bm{r}_1,\cdots,\bm{r}_N} \notag \\
             &= \frac{1}{\sqrt{N!}} \hat{\psi}^\dagger(\bm{r}_1)\cdots \hat{\psi}(\bm{r}_N) \hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r})\ket{0} \notag \\
             &\ \ \ \ + \sum_{i=1}^N\delta(\bm{r}-\bm{r}_i)\ket{\bm{r}_1,\cdots,\bm{r}_N} \notag \\
-            &= \sum_{i=1}^N\delta(\bm{r}-\bm{r}_i)\ket{\bm{r}_1,\cdots,\bm{r}_N}
+            &= \sum_{i=1}^N\delta(\bm{r}-\bm{r}_i)\ket{\bm{r}_1,\cdots,\bm{r}_N} \label{PotePoteKou}
         \end{align}
         となる。したがって
         \begin{align}
@@ -407,8 +408,207 @@
         となる。\\
         $\ \ $したがって
         \begin{align}
-            \bra{\bm{r}'_1,\cdots,\bm{r}'_N} \hat{\mathscr{H}} \ket{\bm{r}_1,\cdots,\bm{r}_N} = \left[ \sum_{i=1}^N \left\{ -\frac{\hbar^2}{2m}\nabla^2_{\bm{r}_i} + V(\bm{r}_i) \right\} + \sum_{j> i}U(\bm{r}_{i}-\bm{r}_{j}) \right]\Psi_{\text{AS}}(\bm{r}_1,\cdots,\bm{r}_N) 
+            \bra{\bm{r}'_1,\cdots,\bm{r}'_N} \hat{\mathscr{H}} \ket{\Psi_N(t)} = \left[ \sum_{i=1}^N \left\{ -\frac{\hbar^2}{2m}\nabla^2_{\bm{r}_i} + V(\bm{r}_i) \right\} + \sum_{j> i}U(\bm{r}_{i}-\bm{r}_{j}) \right]\Psi_{\text{AS}}(\bm{r}_1,\cdots,\bm{r}_N) 
         \end{align}
         となり、Schrödinger方程式が再現される。
     \end{derivationBox}
+\subsection{物理量の期待値}
+    系のエネルギー$\hat{H}$の期待値は、波動関数を用いて
+    \begin{align}
+        \braket{\hat{H}} &= \int d\bm{r}_1 \cdots d\bm{r}_N\ \Psi_{\text{AS}}^* (\bm{r}_1,\cdots,\bm{r}_N) \hat{H}\Psi_{\text{AS}} (\bm{r}_1,\cdots,\bm{r}_N) \\
+        &\hat{H} = \sum_{i=1}^N \left\{ -\frac{\hbar^2}{2m}\nabla^2_{\bm{r}_i} + V(\bm{r}_i) \right\} + \sum_{j> i}U(\bm{r}_{i}-\bm{r}_{j})
+    \end{align}
+    で表される。前節で導入した波動関数の状態ベクトルを用いて、この期待値がどのように表されるのかを考える
+    \begin{formula}[エネルギーの期待値]
+        \begin{equation}
+            \braket{\hat{H}} = \braket{\Psi_N(t)|\hat{\mathscr{H}}|\Psi_N(t)}
+        \end{equation}
+    \end{formula}
+    \begin{derivationBox}
+        \begin{align}
+            \braket{\hat{H}} &= \int d\bm{r}_1 \cdots d\bm{r}_N\ \Psi_{\text{AS}}^* (\bm{r}_1,\cdots,\bm{r}_N)\hat{H}\Psi_{\text{AS}} (\bm{r}_1,\cdots,\bm{r}_N) \notag \\
+            &= \int d\bm{r}_1 \cdots d\bm{r}_N\ \Psi_{\text{AS}}^* (\bm{r}_1,\cdots,\bm{r}_N)\bra{\bm{r}_1,\cdots,\bm{r}_N} \hat{\mathscr{H}} \ket{\Psi_N(t)} \notag \\ 
+            &= \int d\bm{r}_1 \cdots d\bm{r}_N\ \braket{\Psi_N(t)|\bm{r}_1,\cdots,\bm{r}_N}\bra{\bm{r}_1,\cdots,\bm{r}_N} \hat{\mathscr{H}} \ket{\Psi_N(t)} \notag \\
+            &= \braket{\Psi_N(t)|\hat{\mathscr{H}}|\Psi_N(t)}
+        \end{align}
+    \end{derivationBox}
+    位置$r$での粒子数密度の期待値は
+    \begin{align}
+        \braket{\hat{\bm{r}}} &=\int d\bm{r}_1 \cdots d\bm{r}_N\ \Psi_{\text{AS}}^* (\bm{r}_1,\cdots,\bm{r}_N) \hat{\bm{r}}\Psi_{\text{AS}} (\bm{r}_1,\cdots,\bm{r}_N) \\
+        &\hat{\bm{r}} = \sum_{i=1}^N \delta(\bm{r}-\bm{r}_i)
+    \end{align}
+    と表される。
+    \begin{formula}[粒子数密度の期待値]
+        \begin{equation}
+            \braket{\hat{\bm{r}}} = \braket{\Psi_N(t)|\hat{\rho}(\bm{r})|\Psi_N(t)}
+        \end{equation}
+        ここで密度演算子$\hat{\rho}(\bm{r})$は
+        \begin{equation}
+            \hat{\rho}(\bm{r}):=\hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r})
+        \end{equation}
+        と定義した
+    \end{formula}
+    \begin{derivationBox}
+        \eqref{PotePoteKou}式の計算を思い出すと
+        \begin{align}
+            &\hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r}) \ket{\bm{r}_1,\cdots,\bm{r}_N} \notag \\
+            &=
+            \hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r})\ \hat{\psi}^\dagger(\bm{r}_1)\cdots\hat{\psi}^\dagger(\bm{r}_N)\ket{0} \notag \\
+            &= \sum_{i=1}^N\delta(\bm{r}-\bm{r}_i)\ket{\bm{r}_1,\cdots,\bm{r}_N}
+        \end{align}
+        となるので
+        \begin{align}
+            \bra{\bm{r}_1,\cdots,\bm{r}_N}\hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r}) \ket{\Psi_N(t)} &= \bra{\bm{r}_1,\cdots,\bm{r}_N}\int d\bm{r}_1\cdots d\bm{r}_N\ \Psi_N(\bm{r}_1,\cdots,\bm{r}_N) \hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r})\ket{\bm{r}_1,\cdots,\bm{r}_N} \notag  \\
+            &= \bra{\bm{r}_1,\cdots,\bm{r}_N}\int d\bm{r}_1\cdots d\bm{r}_N\ \Psi_N(\bm{r}_1,\cdots,\bm{r}_N) \sum_{i=1}^N\delta(\bm{r}-\bm{r}_i)\ket{\bm{r}_1,\cdots,\bm{r}_N} \notag \\
+            &= \sum_{i=1}^N\delta(\bm{r}-\bm{r}_i) \braket{\bm{r}_1,\cdots,\bm{r}_N|\Psi_N(t)} \notag \\
+            &= \sum_{i=1}^N\delta(\bm{r}-\bm{r}_i) \Psi_{\text{AS}}(\bm{r}_1,\cdots,\bm{r}_N)
+        \end{align}
+        が成り立ち、これを用いると
+        \begin{align}
+            \braket{\hat{\bm{r}}} &=\int d\bm{r}_1 \cdots d\bm{r}_N\ \Psi_{\text{AS}}^* (\bm{r}_1,\cdots,\bm{r}_N) \sum_{i=1}^N \delta(\bm{r}-\bm{r}_i)\Psi_{\text{AS}} (\bm{r}_1,\cdots,\bm{r}_N) \\
+        &= \int d\bm{r}_1 \cdots d\bm{r}_N\ \Psi_{\text{AS}}^* (\bm{r}_1,\cdots,\bm{r}_N) \bra{\bm{r}_1,\cdots,\bm{r}_N}\hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r}) \ket{\Psi_N(t)} \\
+        &= \int d\bm{r}_1 \cdots d\bm{r}_N\ \braket{\Psi_N(t)|\bm{r}_1,\cdots,\bm{r}_N} \bra{\bm{r}_1,\cdots,\bm{r}_N}\hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r}) \ket{\Psi_N(t)} \\
+        &=\bra{\Psi_N(t)}\hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r}) \ket{\Psi_N(t)} 
+        \end{align}
+        となる。
+    \end{derivationBox}
+\subsection{固有関数による展開}
+    相互作用がない場合、一体のSchrödinger方程式の固有関数$\phi_n(\bm{r})$が求まったとする。この固有関数で場の演算子を展開する
+    \begin{align}
+        \hat{\psi}(\bm{r}) = \sum_n \phi_n(\bm{r}) \hat{c}_n
+    \end{align}
+    逆変換は
+    \begin{align}
+        \hat{c}_n = \int d\bm{r}\ \phi_n^*(\bm{r})\hat{\psi}(\bm{r})
+    \end{align}
+    で与えられる。この新たな演算子を固有状態の生成・消滅演算子という
+    \begin{formula}[固有状態の生成・消滅演算子の交換関係]
+        \begin{equation}
+            \begin{aligned}
+                \{ \hat{c}_n,\hat{c}_m \} &= \{\hat{c}^\dagger_n,\hat{c}_m^\dagger\} = 0 \\
+                \{\hat{c}_n,\hat{c}_m^\dagger\} &= \delta_{nm}
+            \end{aligned}
+        \end{equation}
+    \end{formula}
+    \begin{derivationBox}
+        \begin{align}
+            \{ \hat{c}_n,\hat{c}_m \} &= \left\{ \int d\bm{r}\ \phi_n^*(\bm{r})\hat{\psi}(\bm{r}),\int d\bm{r}'\ \phi_m^*(\bm{r}')\hat{\psi}(\bm{r}')  \right\} \notag \\
+            &= \int d\bm{r}\int d\bm{r}'\phi_n^*(\bm{r}) \phi_m^*(\bm{r}')\left\{ \hat{\psi}(\bm{r}),\hat{\psi}(\bm{r}')  \right\} \notag \\
+            &=0
+        \end{align}
+        \begin{align}
+            \{ \hat{c}^\dagger_n,\hat{c}^\dagger_m \} &= \left\{ \int d\bm{r}\ \phi_n(\bm{r})\hat{\psi}^\dagger(\bm{r}),\int d\bm{r}'\ \phi_m(\bm{r}')\hat{\psi}^\dagger(\bm{r}')  \right\} \notag \\
+            &= \int d\bm{r}\int d\bm{r}'\phi_n(\bm{r}) \phi_m(\bm{r}')\left\{ \hat{\psi}^\dagger(\bm{r}),\hat{\psi}^\dagger(\bm{r}')  \right\} \notag \\
+            &=0
+        \end{align}
+        \begin{align}
+            \{ \hat{c}_n,\hat{c}^\dagger_m \} &= \left\{ \int d\bm{r}\ \phi_n^*(\bm{r})\hat{\psi}(\bm{r}),\int d\bm{r}'\ \phi_m(\bm{r}')\hat{\psi}^\dagger(\bm{r}')  \right\} \notag \\
+            &= \int d\bm{r}\int d\bm{r}'\phi_n^*(\bm{r}) \phi_m(\bm{r}')\left\{ \hat{\psi}(\bm{r}),\hat{\psi}^\dagger(\bm{r}')  \right\} \notag \\
+            &=\int d\bm{r}\int d\bm{r}'\phi_n^*(\bm{r}) \phi_m(\bm{r}')\delta(\bm{r}-\bm{r}') \notag \\
+            &=\int d\bm{r}\phi_n^*(\bm{r}) \phi_m(\bm{r}) \notag \\
+            &= \delta_{nm}
+        \end{align}
+    \end{derivationBox}
+    次にこの演算子を用いてハミルトニアンを書き換える
+    \begin{formula}[自由粒子ハミルトニアン]
+        \begin{equation}
+            \hat{\mathscr{H}}_0 = \sum_n \varepsilon_n\hat{c}^\dagger_n\hat{c}_n
+        \end{equation}
+    \end{formula}
+    \begin{derivationBox}
+        \begin{align}
+            \hat{\mathscr{H}}_0 &= \int d\bm{r}\left\{ \frac{\hbar^2}{2m} \bm{\nabla}\hat{\psi}^\dagger(\bm{r})\cdot \bm{\nabla}\hat{\psi}(\bm{r}) + V(\bm{r}) \hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r}) \right\} \notag \\
+            &= \sum_{n,m}\int d\bm{r}\left\{ \frac{\hbar^2}{2m} \bm{\nabla}\phi_n^*(\bm{r}) \hat{c}^\dagger_n\cdot \bm{\nabla}\phi_m(\bm{r})\hat{c}_m + V(\bm{r}) \phi_n^*(\bm{r}) \hat{c}^\dagger_n\phi_m(\bm{r}) \hat{c}_m \right\} \notag \\
+            &= \sum_{n,m}\int d\bm{r}\left\{ -\frac{\hbar^2}{2m} \phi_n^*(\bm{r})  \bm{\nabla}^2\phi_m(\bm{r}) + V(\bm{r}) \phi_n^*(\bm{r}) \phi_m(\bm{r}) \right\} \hat{c}^\dagger_n \hat{c}_m  \notag \\
+            &= \sum_{n,m}\int d\bm{r}\ \phi_n^*(\bm{r})\left\{ -\frac{\hbar^2}{2m} \bm{\nabla}^2 + V(\bm{r})  \right\} \phi_m(\bm{r}) \hat{c}^\dagger_n \hat{c}_m  \notag \\
+            &= \sum_{n,m}\int d\bm{r}\ \phi_n^*(\bm{r})\varepsilon_m \phi_m(\bm{r}) \hat{c}^\dagger_n \hat{c}_m \notag \\
+            &= \sum_{n,m}\delta_{nm} \varepsilon_m  \hat{c}^\dagger_n \hat{c}_m \notag \\
+            &= \sum_{n} \varepsilon_n  \hat{c}^\dagger_n \hat{c}_n 
+        \end{align}
+    \end{derivationBox}
+    系の全粒子数演算子は、密度演算子を用いて以下の様に表される。
+    \begin{formula}[密度演算子]
+        \begin{equation}
+            \hat{\mathscr{N}} := \int d\bm{r}\ \hat{\rho}(\bm{r}) = \sum_n \hat{c}_n^\dagger\hat{c}_n
+        \end{equation}
+    \end{formula}
+    \begin{derivationBox}
+        \begin{align}
+            \hat{\mathscr{N}} &= \int d\bm{r}\ \hat{\rho}(\bm{r}) \notag \\
+            &= \int d\bm{r}\ \hat{\psi}^\dagger(\bm{r})\hat{\psi}(\bm{r}) \notag \\
+            &= \sum_{n,m}\int d\bm{r}\ \phi_n^*(\bm{r})\phi_m(\bm{r})\hat{c}^\dagger_n\hat{c}_m \notag \\
+            &= \sum_{n,m}\delta_{nm} \hat{c}^\dagger_n\hat{c}_m\notag \\
+            &=  \sum_n \hat{c}_n^\dagger\hat{c}_n
+        \end{align}
+    \end{derivationBox}
+    一般に$N$粒子状態は
+    \begin{align}
+        \ket{\Psi_N(T)} = e^{\frac{E}{i\hbar}t} \prod_{i=1}^N \hat{c}^\dagger_{n_i} \ket{0},\quad E = \sum_{i=1}^N \varepsilon_n
+    \end{align}
+    と書ける。
+    \begin{derivationBox}
+        
+    \end{derivationBox}
+\subsection{ハイゼンベルグ描像}
+    波動関数の状態ベクトルの時間発展は
+    \begin{align}
+        i\hbar \frac{\partial}{\partial t}\ket{\Psi_N(t)} = \hat{\mathscr{H}}\ket{\Psi_N(t)}
+    \end{align}
+    で記述される。これをSchrödinger描像という。\\
+    ここでハミルトニアン$\hat{\mathscr{H}}$が時間に依存しないとき
+    \begin{align}
+        &i\hbar \frac{\partial}{\partial t}\ket{\Psi_N(t)} = \hat{\mathscr{H}}\ket{\Psi_N(t)} \notag \\
+        &\Leftrightarrow \ket{\Psi_N(t)} = e^{\frac{\hat{\mathscr{H}}}{i\hbar}t} \ket{\Psi_N(0)} = \hat{U}(t) \ket{\Psi_N(0)}
+    \end{align}
+    と書くことができ
+    \begin{align}
+        \hat{U}(t) := e^{\frac{\hat{\mathscr{H}}}{i\hbar}t}
+    \end{align}
+    と定義し、これを時間発展演算子という。これを用いると物理量$\hat{\mathcal{O}}$の行列要素は
+    \begin{align}
+        \bra{\Psi'_N(t)} \hat{\mathcal{O}} \ket{\Psi_N(t)} = \bra{\Psi'_N(0)} e^{\frac{-\hat{\mathscr{H}}}{i\hbar}t} \hat{\mathcal{O}} e^{\frac{\hat{\mathscr{H}}}{i\hbar}t}\ket{\Psi_N(0)} 
+    \end{align}
+    となり、新たに
+    \begin{align}
+        \hat{\mathcal{O}}_H(t) := e^{-\frac{\hat{\mathscr{H}}}{i\hbar}t} \hat{\mathcal{O}} e^{\frac{\hat{\mathscr{H}}}{i\hbar}t}
+    \end{align}
+    と定義すると、演算子$\hat{\mathcal{O}}$の行列要素は
+    \begin{align}
+        \bra{\Psi'_N(0)} \hat{\mathcal{O}}_H(t)\ket{\Psi_N(0)}
+    \end{align}
+    と表される。このような時間発展を演算子に押し付けた表現をハイゼンベルグ描像という。その時間発展は以下の方程式に従う
+    \begin{formula}[ハイゼンベルグ描像の演算子の時間発展]
+        \begin{equation}
+            i\hbar \frac{\partial}{\partial t} \hat{\mathcal{O}}_H(t) = [\hat{\mathcal{O}}_H(t),\hat{\mathscr{H}}]
+        \end{equation}
+    \end{formula}
+    \begin{derivationBox}
+        \begin{align}
+            i\hbar \frac{\partial}{\partial t} \hat{\mathcal{O}}_H(t) &= i\hbar \frac{\partial}{\partial t} e^{-\frac{\hat{\mathscr{H}}}{i\hbar}t} \hat{\mathcal{O}} e^{\frac{\hat{\mathscr{H}}}{i\hbar}t} \notag \\
+            &= -\hat{\mathscr{H}} e^{-\frac{\hat{\mathscr{H}}}{i\hbar}t} \hat{\mathcal{O}} e^{\frac{\hat{\mathscr{H}}}{i\hbar}t} + e^{-\frac{\hat{\mathscr{H}}}{i\hbar}t} \hat{\mathcal{O}}e^{\frac{\hat{\mathscr{H}}}{i\hbar}t} \hat{\mathscr{H}}  \notag \\
+            &= -\hat{\mathscr{H}}  \hat{\mathcal{O}}_H(t)  +  \hat{\mathcal{O}}_H(t) \hat{\mathscr{H}}  \notag \\
+            &= [\hat{\mathcal{O}}_H(t),\hat{\mathscr{H}}]
+        \end{align}
+    \end{derivationBox}
+\subsection{電流演算子}
+    この節では第二量子化における電流演算子の表式を考える。\\
+    電荷保存則
+    \begin{align}
+        q\frac{\partial}{\partial t} \rho(\bm{r},t) = -\bm{\nabla} \cdot \bm{j}(\bm{r},t)
+    \end{align}
+    を参考にして、第二量子化における電流密度演算子$\hat{\bm{j}}(\bm{r})$が以下の方程式を満たすこととする
+    \begin{align}
+        q\frac{\partial}{\partial t} \bra{\Psi_N(t)}\hat{\rho}(\bm{r})\ket{\Psi_N(t)} = -\bm{\nabla} \cdot \bra{\Psi_N(t)} \hat{\bm{j}}(\bm{r}) \ket{\Psi_N(t)}
+    \end{align}
+    となる。ハイゼンベルグ描像で書き直すと
+    \begin{align}
+        q\ \frac{\partial}{\partial t} e^{-\frac{\hat{\mathscr{H}}}{i\hbar}t} \hat{\rho}(\bm{r}) e^{\frac{\hat{\mathscr{H}}}{i\hbar}t} = q\frac{\partial}{\partial t} \hat{\rho}_H(\bm{r},t)= -\bm{\nabla}\cdot \hat{\bm{j}}_H (\bm{r},t)
+    \end{align}
+    となる。さらにハイゼンベルグ描像の演算子の時間発展方程式より
+    \begin{align}
+        &q\frac{\partial}{\partial t} \hat{\rho}_H(\bm{r},t)= -\bm{\nabla}\cdot \hat{\bm{j}}_H (\bm{r},t) \notag \\
+        &\Leftrightarrow \frac{q}{i\hbar} [\hat{\rho}_H(\bm{r},t),\hat{\mathscr{H}}] =  -\bm{\nabla}\cdot \hat{\bm{j}}_H (\bm{r},t) \notag \\
+        &\Leftrightarrow \frac{q}{i\hbar} [\hat{\rho}(\bm{r},t),\hat{\mathscr{H}}] =  -\bm{\nabla}\cdot \hat{\bm{j}} (\bm{r},t) 
+    \end{align}
+    を満たす$\hat{\bm{j}}(\bm{r},t)$が電流密度演算子となる。
 \end{document}
