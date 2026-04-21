@@ -784,4 +784,98 @@ U_{\bm{q}} &= \int d(\bm{r}-\bm{r}')\ e^{i\bm{q}\cdot(\bm{r}-\bm{r}')}\frac{1}{4
     \end{align}
     よくわからない、どう考えてもこれの主要項が消えるのかがわからない。$\rho_0 = N/ZV$が納得できない、、、
 \subsection{不純物との相互作用}
+    結晶中の不純物や格子欠陥は電気抵抗の原因となる。これをモデル化するために以下の不純物ポテンシャルを考える
+    \begin{align}
+        V_{\text{imp}}(\bm{r}-\bm{R}_i)
+    \end{align}
+    $\bm{R}_i$はランダムに分布する不純物の位置ベクトルである。このポテンシャルにおけるハミルトニアンは
+    \begin{align}
+        \hat{\mathscr{H}}_{\text{imp}} = \sum_{i}\sum_{\alpha} \int d\bm{r}\ \hat{\psi}^\dagger_\alpha (\bm{r})V_{\text{imp}}(\bm{r}-\bm{R}_i) \hat{\psi}_{\alpha}(\bm{r})
+    \end{align}
+    となる。平面波で展開する
+    \begin{formula}[不純物との相互作用ハミルトニアン]
+        \begin{equation}
+            \begin{aligned}
+                \hat{\mathscr{H}}_{\text{imp}} &=\frac{1}{V} \sum_{\alpha} \sum_{\bm{k}}\sum_{\bm{q}}      v_{\text{imp}}(\bm{q}) \rho_{\text{imp}}(\bm{q})\hat{c}^\dagger_{\bm{k}+\bm{q}\ \alpha} \hat{c}_{\bm{k}\alpha} \\
+                V_{\text{imp}}(\bm{r}-\bm{R}_i) &= \frac{1}{V} \sum_{\bm{q}} v_{\text{imp}}(\bm{q}) e^{i\bm{q}\cdot(\bm{r}-\bm{R}_i)} \\
+                v_{\text{imp}}(\bm{q}) &= \int d(\bm{r}-\bm{R}_i)\ e^{-i\bm{q}\cdot(\bm{r}-\bm{R}_i)}V_{\text{imp}}(\bm{r}-\bm{R}_i)
+            \end{aligned}
+        \end{equation}
+    \end{formula}
+    \begin{derivationBox}
+        \begin{align}
+            \hat{\mathscr{H}}_{\text{imp}} &= \sum_{i}\sum_{\alpha} \int d\bm{r}\ \hat{\psi}^\dagger_\alpha (\bm{r})V_{\text{imp}}(\bm{r}-\bm{R}_i) \hat{\psi}_{\alpha}(\bm{r}) \notag \\
+            &= \sum_i \sum_{\alpha} \int d\bm{r} \left\{ \frac{1}{\sqrt{V}} \sum_{\bm{k}} e^{-i\bm{k}\cdot\bm{r}} \hat{c}^\dagger_{\bm{k}\alpha}  \right\} V_{\text{imp}}(\bm{r}-\bm{R}_i)\left\{ \frac{1}{\sqrt{V}} \sum_{\bm{k}'} e^{i\bm{k}'\cdot\bm{r}} \hat{c}_{\bm{k}'\alpha}\right\}  \notag \\
+            &= \frac{1}{V}\sum_i \sum_{\alpha} \sum_{\bm{k}}\sum_{\bm{k}'}\int d\bm{r}  e^{-i(\bm{k}-\bm{k}')\cdot\bm{r}}   V_{\text{imp}}(\bm{r}-\bm{R}_i) \hat{c}^\dagger_{\bm{k}\alpha} \hat{c}_{\bm{k}'\alpha} \notag \\
+            &= \frac{1}{V}\sum_i \sum_{\alpha} \sum_{\bm{k}}\sum_{\bm{k}'}\int d\bm{r}  e^{-i(\bm{k}-\bm{k}')\cdot\bm{r}}   \left\{ \frac{1}{V} \sum_{\bm{q}} v_{\text{imp}}(\bm{q}) e^{i\bm{q}\cdot(\bm{r}-\bm{R}_i)} \right\} \hat{c}^\dagger_{\bm{k}\alpha} \hat{c}_{\bm{k}'\alpha} \notag \\
+            &= \frac{1}{V^2}\sum_i \sum_{\alpha} \sum_{\bm{k}}\sum_{\bm{k}'}\sum_{\bm{q}}\int d\bm{r}  e^{-i(\bm{k}-\bm{k}'-\bm{q})\cdot\bm{r}}      v_{\text{imp}}(\bm{q}) e^{-i\bm{q}\cdot\bm{R}_i}  \hat{c}^\dagger_{\bm{k}\alpha} \hat{c}_{\bm{k}'\alpha} \notag \\
+            &= \frac{1}{V^2}\sum_i \sum_{\alpha} \sum_{\bm{k}}\sum_{\bm{k}'}\sum_{\bm{q}} V\delta_{\bm{k}\ \bm{k}'+\bm{q}}      v_{\text{imp}}(\bm{q}) e^{-i\bm{q}\cdot\bm{R}_i}  \hat{c}^\dagger_{\bm{k}\alpha} \hat{c}_{\bm{k}'\alpha} \notag \\
+            &= \frac{1}{V}\sum_i \sum_{\alpha} \sum_{\bm{k}'}\sum_{\bm{q}}      v_{\text{imp}}(\bm{q}) e^{-i\bm{q}\cdot\bm{R}_i}  \hat{c}^\dagger_{\bm{k}'+\bm{q}\ \alpha} \hat{c}_{\bm{k}'\alpha} \notag \\
+            &= \frac{1}{V} \sum_{\alpha} \sum_{\bm{k}'}\sum_{\bm{q}}      v_{\text{imp}}(\bm{q}) \left\{ \sum_ie^{-i\bm{q}\cdot\bm{R}_i}  \right\}\hat{c}^\dagger_{\bm{k}'+\bm{q}\ \alpha} \hat{c}_{\bm{k}'\alpha} \notag \\
+            &= \frac{1}{V} \sum_{\alpha} \sum_{\bm{k}'}\sum_{\bm{q}}      v_{\text{imp}}(\bm{q}) \rho_{\text{imp}}(\bm{q})\hat{c}^\dagger_{\bm{k}'+\bm{q}\ \alpha} \hat{c}_{\bm{k}'\alpha} \notag \\
+            &= \frac{1}{V} \sum_{\alpha} \sum_{\bm{k}}\sum_{\bm{q}}      v_{\text{imp}}(\bm{q}) \rho_{\text{imp}}(\bm{q})\hat{c}^\dagger_{\bm{k}+\bm{q}\ \alpha} \hat{c}_{\bm{k}\alpha}
+        \end{align}
+        となる。ここで不純物のランダムなサイトの和
+        \begin{align}
+            \rho_{\text{imp}}(\bm{q}) = \sum_ie^{-i\bm{q}\cdot\bm{R}_i}
+        \end{align}
+        を定義した。また
+        \begin{align}
+            V_{\text{imp}}(\bm{r}-\bm{R}_i) = \frac{1}{V} \sum_{\bm{q}} v_{\text{imp}}(\bm{q}) e^{i\bm{q}\cdot(\bm{r}-\bm{R}_i)}
+        \end{align}
+        より
+        \begin{align}
+            v_{\text{imp}}(\bm{q}) = \int d(\bm{r}-\bm{R}_i)\ e^{-i\bm{q}\cdot(\bm{r}-\bm{R}_i)}V_{\text{imp}}(\bm{r}-\bm{R}_i)
+        \end{align}
+        となる。
+    \end{derivationBox}
+    ハミルトニアンの形を見ると、波数$\bm{k}$の電子が消えて、波数$\bm{k}+\bm{q}$の電子が生成するようなものになっている。これは運動量が保存しないことを表しているので、電気抵抗の原因となりえる。\\
+    $\ \ $ここではスピンに依存しない単純な不純物散乱効果を考えたが、磁性不純物の場合にはスピンを反転させる散乱も考えられる。そのようなときのハミルトニアンは
+    \begin{align}
+        \hat{\mathscr{H}}_{\text{imp}} = \sum_{i}\sum_{\alpha \beta} \int d\bm{r}\ V_{\text{imp}}(\bm{r}-\bm{R}_i) \hat{\bm{S}}_i \cdot \hat{\psi}_\alpha^\dagger(\bm{r}) (\bm{\sigma})_{\alpha \beta} \hat{\psi}^\dagger_\beta(\bm{r})
+    \end{align}
+    となる。平面波展開すると
+    \begin{align}
+        \hat{\mathscr{H}}_{\text{imp}} = \frac{1}{V} \sum_{\alpha} \sum_{\beta}\sum_{\bm{k}}\sum_{\bm{q}}      v_{\text{imp}}(\bm{q}) \rho_{\text{imp}}(\bm{q})\hat{\bm{S}}_i \cdot \hat{c}^\dagger_{\bm{k}+\bm{q}\ \alpha} (\bm{\sigma})_{\alpha \beta} \hat{c}_{\bm{k}\beta}
+    \end{align}
+    が得られる。
+\subsection{フォノン}
+    結晶格子または金属中のイオン原子は格子点に固定されていて、その周りで微小振動していると考える。イオン原子は$\bm{R}^0_j$という格子点の周りに束縛された粒子として扱う。イオン原子の変位を$\bm{u}_j = \bm{R}-\bm{R}^0_j$とし、この変異を量子力学的に扱って$\hat{\bm{u}}_j = (\hat{u}_{jx},\hat{u}_{jy},\hat{u}_{jz})$としそれと共役な運動量を$\hat{\bm{P}}_j = (\hat{P}_{jx},\hat{P}_{jy},\hat{P}_{jz})$とする。交換関係は$[\hat{u}_{j\mu},\hat{P}_{j\nu}]=i\hbar\delta_{ij}\delta_{\mu\nu}$である。\\
+    $\ \ $まずは単純な一次元の場合を考える。イオン原子間が古典的なバネでつながれているとするとハミルトニアンは
+    \begin{align}
+        \hat{\mathscr{H}}_{\text{ph}} = \sum_j \frac{\hat{P}_j^2}{2M} + \sum_j \frac{K}{2}(\hat{u}_{j+1}-\hat{u}_j)^2
+    \end{align}
+    となる。ここで$M$はイオン原子の質量、$K$はばね定数である。次にそれぞれの演算子をフーリエ展開する
+    \begin{align}
+        \hat{u}_j= \frac{1}{\sqrt{N}}\sum_{q} e^{iqR_j^0}\hat{u}_q \qquad \hat{P}_j = \frac{1}{\sqrt{N}}\sum_q e^{-iqR_j^0 }\hat{P}_q
+    \end{align}
+    $a$を格子間隔とすると、ハミルトニアンは以下のようになる
+    \begin{formula}[格子振動ハミルトニアン]
+        \begin{equation}
+            \begin{aligned}
+                \hat{\mathscr{H}}_{\text{ph}} &= \sum_q \frac{\hat{P}_q \hat{P}_{-q}}{2M} + \frac{M\omega_q^2}{2} \hat{u}_{-q}\hat{u}_q\notag \\
+                \omega_q = \sqrt{\frac{4K}{M}}\left| \sin \frac{qa}{2} \right|
+            \end{aligned}
+        \end{equation}
+    \end{formula}
+    格子振動ハミルトニアンは調和振動子系と同じ形をしているので、新たに生成消滅演算子$\hat{a},\hat{a}^\dagger$を
+    \begin{align}
+        \hat{u}_q = \sqrt{\frac{\hbar}{2m\omega_q}}(\hat{a}_q + \hat{a}^\dagger_{-q})\qquad \hat{P}_q = i\sqrt{\frac{\hbar M \omega_q}{2}} (-\hat{a}_{-q} + \hat{a}^\dagger_q)
+    \end{align}
+    で定義すると、交換関係は$[\hat{a}_q,\hat{a}^\dagger_{q'}]=\delta_{qq'}$となり、ハミルトニアンは
+    \begin{align}
+        \hat{\mathscr{H}}_{ph} = \sum_q \hbar \omega_q \left( \hat{a}^\dagger_q\hat{a}_q + \frac{1}{2} \right)
+    \end{align}
+    となる。この格子振動で生成される調和振動子系の粒子をフォノンといい、Bose統計に従う。またフォノンの数には制限がないので化学ポテンシャルは常に0となる。
+\subsection{電子格子相互作用}
+    格子が変位することによって正電荷密度が変化ℏ氏、その結果として電子格子相互作用が生じる。ここでは単純な場合の電子格子相互作用を導出する。イオン原子が作るポテンシャルを$V(\bm{r}) = \sum_j V(\bm{r}-\bm{R}_j)$とし、イオン原子の変位を$\bm{u}_j=\bm{R}_j-\bm{R}_j^0$とする。ポテンシャルを変位$\bm{u}_j$で展開すると
+    \begin{align}
+        \sum_jV(\bm{r}-\bm{R}_j) &= \sum_jV(\bm{r}-\bm{R}_j^0 - \bm{u}_j) \notag \\
+        &= \sum_jV(\bm{r}-\bm{R}_j^0) -\sum_j \bm{u}_j \cdot \bm{\nabla}V(\bm{r}-\bm{R}_j^0) + O(u_j^3)
+    \end{align}
+    ここで第二項目が結晶格子の変化を表すので、その最低次の効果のみを考慮するモデルを考える。したがってハミルトニアンを
+    \begin{align}
+        \hat{\mathscr{H}}_{\text{el-ph}} = -\sum_j\sum_\alpha \int d\bm{r}\ \hat{\psi}^\dagger_\alpha(\bm{r}) \hat{\bm{u}}_j \cdot \bm{\nabla}V(\bm{r}-\bm{R}_j^0) \hat{\psi}_\alpha(\bm{r})
+    \end{align}
+    では？
 \end{document}
