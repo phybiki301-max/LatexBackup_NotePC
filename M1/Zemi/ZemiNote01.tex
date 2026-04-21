@@ -611,4 +611,177 @@
         &\Leftrightarrow \frac{q}{i\hbar} [\hat{\rho}(\bm{r},t),\hat{\mathscr{H}}] =  -\bm{\nabla}\cdot \hat{\bm{j}} (\bm{r},t) 
     \end{align}
     を満たす$\hat{\bm{j}}(\bm{r},t)$が電流密度演算子となる。
+\section{モデルと物理量}
+\subsection{電子ガスモデル}
+    典型的な金属のモデルとして自由電子ガスモデルを考える。金属中のプラスイオンによる結晶構造の効果が小さく、金属中の電子があたかもポテンシャルを感じない自由電子としてふるまうようにみなす。この場合$V(\bm{r})=0$とするので、Schrödinger方程式の固有関数は
+    \begin{align}
+        \phi_n (\bm{r}) = \frac{1}{\sqrt{V}}e^{i\bm{k}\cdot \bm{r}}
+    \end{align}
+    周期境界条件より波数は$\bm{k}=2\pi/L(n_x,n_y,n_z)$となり$n$は整数である。\\
+    $\ \ $場の演算子を固有関数で展開すると
+    \begin{align}
+        \hat{\psi}_{\alpha}(\bm{r}) = \frac{1}{\sqrt{V}}\sum_{\bm{k}} e^{i\bm{k}\cdot\bm{r}}\hat{c}_{\bm{k}\alpha}
+    \end{align}
+    となる。ただし$\alpha$はスピンを表す。逆変換は
+    \begin{align}
+        \hat{c}_{\bm{k}\alpha} = \frac{1}{\sqrt{V}}\int d\bm{r}\ e^{-i\bm{k}\cdot \bm{r}}\hat{\psi}_{\alpha}(\bm{r})
+    \end{align}
+    となる。第二量子化ハミルトニアンは
+    \begin{align}
+        \hat{\mathscr{H}}_0 = \sum_{\bm{k}\alpha} \varepsilon_{\bm{k}} \hat{c}_{\bm{k}\alpha}^\dagger \hat{c}_{\bm{k}\alpha}
+    \end{align}
+    となり、全粒子数演算子は
+    \begin{align}
+        \hat{\mathscr{N} =}\sum_{\bm{k}\alpha}  \hat{c}_{\bm{k}\alpha}^\dagger \hat{c}_{\bm{k}\alpha}
+    \end{align}
+    となる。\\
+    $\ \ $電子同士の相互作用を考える場合には
+    \begin{align}
+        \hat{\mathscr{H}}_{\text{int}} = \frac{1}{2} \sum_{\alpha \beta}\int \int d\bm{r}d\bm{r}'\ \hat{\psi}^\dagger_{\alpha} (\bm{r})\hat{\psi}_{\beta}(\bm{r}') U(\bm{r}-\bm{r}')\hat{\psi}_{\beta}(\bm{r}')\hat{\psi}_{\alpha}(\bm{r})
+    \end{align}
+    をハミルトニアンに付け加えればよい。これを固有関数で展開すると以下が得られる
+    \begin{formula}[相互作用ハミルトニアン]
+        \begin{equation}
+            \begin{aligned}
+            &\hat{\mathscr{H}}_{\text{int}} =  \frac{1}{2\sqrt{V}}\sum_{\alpha \beta} \sum_{\bm{k}\bm{k}'\bm{q}} U_{\alpha \beta\bm{q}} \hat{c}^\dagger_{\bm{k}'+\bm{q}\ \alpha} \hat{c}^\dagger_{\bm{k}-\bm{q}\ \beta}\hat{c}_{\bm{k} \beta}\hat{c}_{\bm{k}' \alpha} \\
+            &U_{\alpha\beta\bm{q}}=\int d(\bm{r}-\bm{r}')\ e^{-i\bm{q}\cdot(\bm{r}-\bm{r}')} U_{\alpha \beta}(\bm{r}-\bm{r}')
+            \end{aligned}
+        \end{equation}
+    \end{formula}
+    \begin{derivationBox}
+        \begin{align}
+            \hat{\mathscr{H}}_{\text{int}} &= \frac{1}{2} \sum_{\alpha \beta}\int \int d\bm{r}d\bm{r}'\ \hat{\psi}^\dagger_{\alpha} (\bm{r})\hat{\psi}_{\beta}(\bm{r}') U_{\alpha\beta}(\bm{r}-\bm{r}')\hat{\psi}_{\beta}(\bm{r}')\hat{\psi}_{\alpha}(\bm{r}) \notag \\
+            &= \frac{1}{2} \sum_{\alpha \beta}\int \int d\bm{r}d\bm{r}'\ \left\{ \sum_{\bm{k}}\frac{1}{\sqrt{V}} e^{-i\bm{k}\cdot \bm{r}} \hat{c}^\dagger_{\bm{k}\alpha} \right\}\left\{ \sum_{\bm{k}'}\frac{1}{\sqrt{V}} e^{-i\bm{k}'\cdot \bm{r}'} \hat{c}^\dagger_{\bm{k}'\beta} \right\} U_{\alpha\beta}(\bm{r}-\bm{r}')\notag \\\
+            &\ \ \ \ \ \ \ \ \left\{ \sum_{\bm{q}}\frac{1}{\sqrt{V}} e^{i\bm{q}\cdot \bm{r}'} \hat{c}_{\bm{q}\beta} \right\}\left\{ \sum_{\bm{q}'}\frac{1}{\sqrt{V}} e^{i\bm{q}'\cdot \bm{r}} \hat{c}_{\bm{q}'\alpha} \right\} \notag \\
+            &= \frac{1}{2V^2} \sum_{\alpha \beta} \sum_{\bm{k}}\sum_{\bm{k}'}\sum_{\bm{q}}\sum_{\bm{q}'}\int \int d\bm{r}d\bm{r}'\   e^{-i(\bm{k}-\bm{q}')\cdot \bm{r}}   e^{-i(\bm{k}'-\bm{q})\cdot \bm{r}'}  U_{\alpha\beta}(\bm{r}-\bm{r}') \hat{c}^\dagger_{\bm{k}\alpha}\hat{c}^\dagger_{\bm{k}'\beta}\hat{c}_{\bm{q}\beta} \hat{c}_{\bm{q}'\alpha}\notag \\
+            &= \frac{1}{2V^2} \sum_{\alpha \beta} \sum_{\bm{k}}\sum_{\bm{k}'}\sum_{\bm{q}}\sum_{\bm{q}'}\int \int d\bm{r}d\bm{r}'\   e^{-i(\bm{k}-\bm{q}')\cdot \bm{r}}   e^{-i(\bm{k}'-\bm{q})\cdot \bm{r}'}  \left\{ \frac{1}{V}\sum_{\bm{\tilde{k}}} U_{\alpha \beta\bm{\tilde{k}}}e^{i\bm{\tilde{k}}\cdot(\bm{r}-\bm{r}')}\right\}\hat{c}^\dagger_{\bm{k}\alpha}\hat{c}^\dagger_{\bm{k}'\beta}\hat{c}_{\bm{q}\beta} \hat{c}_{\bm{q}'\alpha}\notag \\
+            &= \frac{1}{2V^3} \sum_{\alpha \beta} \sum_{\bm{k}}\sum_{\bm{k}'}\sum_{\bm{q}}\sum_{\bm{q}'}\sum_{\bm{\tilde{k}}}\int \int d\bm{r}d\bm{r}'\   e^{-i(\bm{k}-\bm{q}'-\bm{\tilde{k}})\cdot \bm{r}}   e^{-i(\bm{k}'-\bm{q}+\bm{\tilde{k}})\cdot \bm{r}'}   U_{\alpha \beta\bm{\tilde{k}}}\hat{c}^\dagger_{\bm{k}\alpha}\hat{c}^\dagger_{\bm{k}'\beta}\hat{c}_{\bm{q}\beta} \hat{c}_{\bm{q}'\alpha}\notag \\
+            &= \frac{1}{2V^3} \sum_{\alpha \beta} \sum_{\bm{k}}\sum_{\bm{k}'}\sum_{\bm{q}}\sum_{\bm{q}'}\sum_{\bm{\tilde{k}}}   V\delta_{\bm{k}\ \bm{q}'+\bm{\tilde{k}}}   V\delta_{\bm{k}'\ \bm{q}-\bm{\tilde{k}}}   U_{\alpha \beta\bm{\tilde{k}}}\hat{c}^\dagger_{\bm{k}\alpha}\hat{c}^\dagger_{\bm{k}'\beta}\hat{c}_{\bm{q}\beta} \hat{c}_{\bm{q}'\alpha}\notag \\
+            &= \frac{1}{2V} \sum_{\bm{q}}\sum_{\bm{q}'}\sum_{\bm{\tilde{k}}}     U_{\alpha \beta\bm{\tilde{k}}}\hat{c}^\dagger_{\bm{q}'+\bm{\tilde{k}}\ \alpha}\hat{c}^\dagger_{\bm{q}-\bm{\tilde{k}}\ \beta}\hat{c}_{\bm{q}\beta} \hat{c}_{\bm{q}'\alpha}\notag \\
+            &= \frac{1}{2V} \sum_{\bm{k}}\sum_{\bm{k}'}\sum_{\bm{q}}     U_{\alpha \beta\bm{q}}\hat{c}^\dagger_{\bm{k}'+\bm{q}\ \alpha}\hat{c}^\dagger_{\bm{k}-\bm{q}\ \beta}\hat{c}_{\bm{k}\beta} \hat{c}_{\bm{k}'\alpha}\notag \\
+        \end{align}
+        \begin{align}
+            U_{\alpha \beta} (\bm{r}-\bm{r}') = \frac{1}{V}\sum_{\bm{\tilde{k}}} U_{\alpha \beta \bm{q}}e^{i\bm{q}\cdot(\bm{r}-\bm{r}')}
+        \end{align}
+        より
+        \begin{align}
+            U_{\alpha\beta}=\int d(\bm{r}-\bm{r}')\ e^{-i\bm{q}\cdot(\bm{r}-\bm{r}')} U_{\alpha \beta}(\bm{r}-\bm{r}')
+        \end{align}
+        となる。
+    \end{derivationBox}
+    スピンが同じ向きのときの相互作用と反対向きのときの相互作用を区別して
+    \begin{align}
+        U_{\alpha \beta \bm{q}} = V_{||}(\bm{q}) \delta_{\alpha \beta} + V_{\uparrow \downarrow}(\bm{q})\delta_{\alpha\ -\beta}
+    \end{align}
+    と書くことにする。相互作用ハミルトニアンは
+    \begin{align}
+        \hat{\mathscr{H}}_{\text{int}} =  \frac{1}{2\sqrt{V}}\sum_{\alpha} \sum_{\bm{k}\bm{k}'\bm{q}} \left\{V_{||}(\bm{q}) \hat{c}^\dagger_{\bm{k}'+\bm{q}\ \alpha} \hat{c}^\dagger_{\bm{k}-\bm{q}\ \alpha}\hat{c}_{\bm{k} \alpha}\hat{c}_{\bm{k}' \alpha} + V_{\uparrow \downarrow}(\bm{q})\hat{c}^\dagger_{\bm{k}'+\bm{q}\ \alpha} \hat{c}^\dagger_{\bm{k}-\bm{q}\ -\alpha}\hat{c}_{\bm{k} -\alpha}\hat{c}_{\bm{k}' \alpha} \right\}
+    \end{align}
+    となる。\\
+    $\ \ $自由電子ガスに電場・磁場がかかった場合のハミルトニアンは
+    \begin{align}
+    \hat{\mathscr{H}}_0 &= \sum_{\alpha} \int d\bm{r}\ \hat{\psi}_\alpha^\dagger(\bm{r}) \left\{ \frac{1}{2m}\left( \frac{\hbar}{i}\bm{\nabla}-e\bm{A}(\bm{r},t) \right)^2 + e\phi(\bm{r},t) \right\}\hat{\psi}_\alpha(\bm{r}) \notag \\
+    &\ \ \ \ -\sum_{\alpha \beta} \int d\bm{r}\ \hat{\psi}^\dagger_{\alpha}(\bm{r}) \frac{e\hbar}{2m} (\bm{\sigma})_{\alpha\beta}\cdot\bm{B}(\bm{r},t) \hat{\psi}_\alpha(\bm{r}) \label{DenjiHamiruDain}
+    \end{align}
+    一般に磁気モーメントを$\hat{M}(\bm{r})$と書くと、磁場との相互作用ハミルトニアンは$-\int d\bm{r}\ \hat{M}(\bm{r})\cdot \bm{B}(\bm{r})$と書ける。このことと\eqref{DenjiHamiruDain}式の最後の項を比較すると
+    \begin{align}
+        \hat{M}(\bm{r}) = \sum_{\alpha \beta} \hat{\psi}^\dagger_{\alpha} (\bm{r})\frac{e\hbar}{2m} (\bm{\sigma})_{\alpha \beta} \hat{\psi}_{\beta}(\bm{r}) =: -g\mu_B \hat{\bm{S}}(\bm{r}) / \hbar 
+    \end{align}
+    であることが分かる。ここでgはg因子で相対論的な効果を考えなければ2、また$\mu_B=|e|\hbar / 2m$はボーア磁子で電子の持つスピン演算子を
+    \begin{align}
+        \hat{\bm{S}}(\bm{r}) := \hat{\psi}^\dagger_{\alpha}(\bm{r}) \frac{\hbar}{2}(\bm{\sigma})_{\alpha \beta} \hat{\psi}_\beta(\bm{r})
+    \end{align}
+    と定義した。電子の電荷は負なのでスピン磁気モーメントとスピンは逆向きであることに注意
+\subsection{クーロン相互作用}
+    次に自由電子ガスモデルにクーロン相互作用を考慮したモデルを考える。相互作用ポテンシャルとしてクーロン斥力
+    \begin{align}
+        U(\bm{r}-\bm{r}')=\frac{1}{4\pi \varepsilon_0} \frac{e^2}{|\bm{r}-\bm{r}'|}
+    \end{align}
+    を採用する。すると相互作用ハミルトニアンは
+    \begin{align}
+        \hat{\mathscr{H}}_{\text{int}} &= \frac{1}{2}\sum_{\alpha \beta} \int \int d\bm{r} d\bm{r}'\ \hat{\psi}_\alpha^\dagger(\bm{r}) \hat{\psi}^\dagger_{\beta}(\bm{r}')U(\bm{r}-\bm{r}')\hat{\psi}_\beta(\bm{r}')\hat{\psi}_\alpha(\bm{r})\notag \\ 
+        &\ \ \ \ -Z\sum_\alpha \int \int d\bm{r} d\bm{r}'\ \hat{\psi}^\dagger_\alpha(\bm{r}) \rho_0 U(\bm{r}-\bm{r}') \hat{\psi}_{\alpha}(\bm{r}) + \frac{Z^2}{2} \int \int d\bm{r} d\bm{r}' U(\bm{r}-\bm{r}')\rho_0^2
+    \end{align}
+    となる。第二項目は背景の正電荷から受ける斥力相互作用で第三項目はなに？？？\\
+    ここで$Z$は正電荷の価数、$\rho_0$は正電荷密度を表し、空間に一様に分布しているとした。また電気的中性条件$V\rho_0 Z = e N$を満たす。\\
+    この電子ガスモデルを平面波展開すると以下が得られる
+    \begin{formula}[電子ガスモデルの相互作用ハミルトニアン]
+        \begin{equation}
+            \begin{aligned}
+                \hat{\mathscr{H}}_{\text{int}}&=\frac{1}{2V}\sum_{\alpha \beta}\sum_{\bm{k}\bm{k}'\bm{q}} U_{\bm{q}} \hat{c}^\dagger_{\bm{k}+\bm{q}\ \alpha} \hat{c}^\dagger_{\bm{k}'-\bm{q}\ \beta} \hat{c}_{\bm{k}'\beta} \hat{c}_{\bm{k}\alpha} \notag \\
+&\ \ \ \ -\sum_{\alpha}\sum_{\bm{k}} U_{\bm{q}=0}\hat{c}^\dagger_{\bm{k}\alpha}\hat{c}_{\bm{k}\alpha}Z\rho_0 + \frac{V}{2}U_{\bm{q}=0}(Z\rho_0)^2\\
+U_{\bm{q}} &= \int d(\bm{r}-\bm{r}')\ e^{i\bm{q}\cdot(\bm{r}-\bm{r}')}\frac{1}{4\pi\varepsilon_0} \frac{e^2}{|\bm{r}-\bm{r}'|} =\frac{e^2}{\varepsilon_0|\bm{q}|^2}
+            \end{aligned}
+        \end{equation}
+    \end{formula}
+    \begin{derivationBox}
+        \begin{align}
+            \hat{\mathscr{H}}_{\text{int}} &= \frac{1}{2}\sum_{\alpha \beta} \int \int d\bm{r} d\bm{r}'\ \hat{\psi}_\alpha^\dagger(\bm{r}) \hat{\psi}^\dagger_{\beta}(\bm{r}')U(\bm{r}-\bm{r}')\hat{\psi}_\beta(\bm{r}')\hat{\psi}_\alpha(\bm{r})\notag \\ 
+            &\ \ \ \ -Z\sum_\alpha \int \int d\bm{r} d\bm{r}'\ \hat{\psi}^\dagger_\alpha(\bm{r}) \rho_0 U(\bm{r}-\bm{r}') \hat{\psi}_{\alpha}(\bm{r}) + \frac{Z^2}{2} \int \int d\bm{r} d\bm{r}' U(\bm{r}-\bm{r}')\rho_0^2
+        \end{align}
+        を平面波で展開する。積分の項ごとに計算していく。\\
+        $\ \ $第一項目は
+        \begin{align}
+            &\frac{1}{2}\sum_{\alpha \beta} \int \int d\bm{r} d\bm{r}'\ \hat{\psi}_\alpha^\dagger(\bm{r}) \hat{\psi}^\dagger_{\beta}(\bm{r}')U(\bm{r}-\bm{r}')\hat{\psi}_\beta(\bm{r}')\hat{\psi}_\alpha(\bm{r}) \notag \\
+            &= \frac{1}{2}\sum_{\alpha \beta} \int \int d\bm{r} d\bm{r}'\ \left\{ \frac{1}{\sqrt{V}}\sum_{\bm{k}}e^{-i\bm{k}\cdot \bm{r}}\hat{c}^\dagger_{\bm{k}\alpha} \right\} \left\{ \frac{1}{\sqrt{V}}\sum_{\bm{k}'}e^{-i\bm{k}'\cdot \bm{r}}\hat{c}^\dagger_{\bm{k}'\beta} \right\}U(\bm{r}-\bm{r}')\notag \\
+            &\ \ \ \ \ \ \ \ \left\{ \frac{1}{\sqrt{V}}\sum_{\bm{q}}e^{i\bm{q}\cdot \bm{r}'}\hat{c}_{\bm{q}\beta} \right\}\left\{ \frac{1}{\sqrt{V}}\sum_{\bm{q}'}e^{i\bm{q}'\cdot \bm{r}}\hat{c}_{\bm{q}'\alpha} \right\} \notag \\
+            &= \frac{1}{2V^2}\sum_{\alpha \beta} \sum_{\bm{k}} \sum_{\bm{k}'} \sum_{\bm{q}} \sum_{\bm{q}'}\int \int d\bm{r} d\bm{r}'\  e^{-i(\bm{k}-\bm{q}')\cdot \bm{r}}  e^{-i(\bm{k}'-\bm{q})\cdot \bm{r}} U(\bm{r}-\bm{r}') \hat{c}^\dagger_{\bm{k}\alpha}\hat{c}^\dagger_{\bm{k}'\beta} \hat{c}_{\bm{q}\beta} \hat{c}_{\bm{q}'\alpha} \notag \\
+            &= \frac{1}{2V^2}\sum_{\alpha \beta} \sum_{\bm{k}} \sum_{\bm{k}'} \sum_{\bm{q}} \sum_{\bm{q}'}\int \int d\bm{r} d\bm{r}'\  e^{-i(\bm{k}-\bm{q}')\cdot \bm{r}}  e^{-i(\bm{k}'-\bm{q})\cdot \bm{r}} \left\{ \frac{1}{V}\sum_{\bm{\tilde{k}}} U_{\bm{\tilde{k}}} e^{i\bm{\tilde{k}}\cdot (\bm{r}-\bm{r}')} \right\}\hat{c}^\dagger_{\bm{k}\alpha}\hat{c}^\dagger_{\bm{k}'\beta} \hat{c}_{\bm{q}\beta} \hat{c}_{\bm{q}'\alpha}\notag \\
+            &= \frac{1}{2V^3}\sum_{\alpha \beta} \sum_{\bm{k}} \sum_{\bm{k}'} \sum_{\bm{q}} \sum_{\bm{q}'}\sum_{\bm{\tilde{k}}}\int \int d\bm{r} d\bm{r}'\  e^{-i(\bm{k}-\bm{q}'-\bm{\tilde{k}})\cdot \bm{r}}  e^{-i(\bm{k}'-\bm{q} + \bm{\tilde{k}})\cdot \bm{r}}  U_{\bm{\tilde{k}}}  \hat{c}^\dagger_{\bm{k}\alpha}\hat{c}^\dagger_{\bm{k}'\beta} \hat{c}_{\bm{q}\beta} \hat{c}_{\bm{q}'\alpha}\notag \\
+            &= \frac{1}{2V^3}\sum_{\alpha \beta} \sum_{\bm{k}} \sum_{\bm{k}'} \sum_{\bm{q}} \sum_{\bm{q}'}\sum_{\bm{\tilde{k}}}  V \delta_{\bm{k}\ \bm{q}'+\bm{\tilde{k}}}  V\delta_{\bm{k}'\ \bm{q} - \bm{\tilde{k}}}  U_{\bm{\tilde{k}}}  \hat{c}^\dagger_{\bm{k}\alpha}\hat{c}^\dagger_{\bm{k}'\beta} \hat{c}_{\bm{q}\beta} \hat{c}_{\bm{q}'\alpha}\notag \\
+            &= \frac{1}{2V}\sum_{\alpha \beta}  \sum_{\bm{q}} \sum_{\bm{q}'}\sum_{\bm{\tilde{k}}}   U_{\bm{\tilde{k}}}  \hat{c}^\dagger_{\bm{q}'+\bm{\tilde{k}}\ \alpha}\hat{c}^\dagger_{\bm{q} - \bm{\tilde{k}}\ \beta} \hat{c}_{\bm{q}\beta} \hat{c}_{\bm{q}'\alpha} \notag \\
+            &= \frac{1}{2V}\sum_{\alpha \beta}  \sum_{\bm{k}} \sum_{\bm{k}'}\sum_{\bm{q}}   U_{\bm{q}}  \hat{c}^\dagger_{\bm{k}+\bm{q}\ \alpha}\hat{c}^\dagger_{\bm{k}' - \bm{q}\ \beta} \hat{c}_{\bm{k}'\beta} \hat{c}_{\bm{k}\alpha}
+        \end{align} 
+        第二項目は
+        \begin{align}
+            &-Z\sum_\alpha \int \int d\bm{r} d\bm{r}'\ \hat{\psi}^\dagger_\alpha(\bm{r}) \rho_0 U(\bm{r}-\bm{r}') \hat{\psi}_{\alpha}(\bm{r}) \notag \\
+            &= -Z\sum_\alpha \int \int d\bm{r} d\bm{r}'\ \left\{ \frac{1}{\sqrt{V}}\sum_{\bm{k}}e^{-i\bm{k}\cdot \bm{r}}\hat{c}_{\bm{k}\alpha} \right\} \rho_0 \left\{ \frac{1}{V}\sum_{\bm{\tilde{k}}}U_{\bm{\tilde{k}}}e^{i\bm{\tilde{k}}\cdot (\bm{r}-\bm{r}')} \right\}\left\{ \frac{1}{\sqrt{V}}\sum_{\bm{k}'}e^{i\bm{k}'\cdot \bm{r}}\hat{c}_{\bm{k}'\alpha} \right\} \notag \\
+            &= -\frac{Z}{V^2}\sum_\alpha \sum_{\bm{k}} \sum_{\bm{k}'} \sum_{\bm{\tilde{k}}}\int \int d\bm{r} d\bm{r}'\ e^{-i(\bm{k} - \bm{k}'-\bm{\tilde{k}})\cdot \bm{r}}  e^{-i\bm{\tilde{k}}\cdot \bm{r}'} U_{\bm{\tilde{k}}} \rho_0\hat{c}_{\bm{k}\alpha} \hat{c}_{\bm{k}'\alpha}  \notag \\
+            &= -\frac{Z}{V^2}\sum_\alpha \sum_{\bm{k}} \sum_{\bm{k}'} \sum_{\bm{\tilde{k}}}V\delta_{\bm{k}\ \bm{k}'+\bm{\tilde{k}}}  V\delta_{\bm{\tilde{k}}0} U_{\bm{\tilde{k}}} \rho_0\hat{c}_{\bm{k}\alpha} \hat{c}_{\bm{k}'\alpha}  \notag \\
+            &= -\sum_\alpha \sum_{\bm{k}}    U_{\bm{\tilde{k}}=0} \hat{c}_{\bm{k}\alpha} \hat{c}_{\bm{k}\alpha}Z\rho_0 
+        \end{align}
+        第三項目は
+        \begin{align}
+            &\frac{Z^2}{2} \int \int d\bm{r} d\bm{r}' U(\bm{r}-\bm{r}')\rho_0^2 \notag \\
+            &=\frac{Z^2}{2} \int \int d\bm{r} d\bm{r}' \left\{ \frac{1}{V}\sum_{\bm{q}}U_{\bm{q}}e^{i\bm{q}\cdot (\bm{r}-\bm{r}')} \right\}\rho_0^2 \notag \\
+            &=\frac{Z^2}{2V}\sum_{\bm{q}} \int \int d\bm{r} d\bm{r}' e^{i\bm{q}\cdot \bm{r}} e^{-i\bm{q}\cdot \bm{r}'}U_{\bm{q}} \rho_0^2 \notag \\
+            &=\frac{Z^2}{2V}\sum_{\bm{q}}  V\delta_{\bm{q}0} V\delta_{\bm{q}0}U_{\bm{q}} \rho_0^2 \notag \\
+            &=\frac{V}{2}U_{\bm{q}=0} (Z\rho_0)^2
+        \end{align}
+        となる。また
+        \begin{align}
+            U(\bm{r}-\bm{r}') = \frac{1}{V}\sum_{\bm{q}}U_{\bm{q}}e^{i\bm{q}\cdot (\bm{r}-\bm{r}')}
+        \end{align}
+        より
+        \begin{align}
+            U_{\bm{q}} &= \int d(\bm{r}-\bm{r}')\  e^{-i\bm{q}\cdot (\bm{r}-\bm{r}')} U(\bm{r}-\bm{r}') \notag \\
+            &= \int d\bm{R}\ e^{-i\bm{q}\cdot \bm{R}} U(\bm{R}) \notag \\
+            &= \int d\bm{R}\ e^{-i\bm{q}\cdot \bm{R}} \frac{1}{4\pi\varepsilon_0} \frac{e^2}{|\bm{R}|} \notag \\
+            &= \frac{e^2}{4\pi\varepsilon_0}\int_0^{2\pi} d\varphi \int_{0}^{\pi}d\theta\int_0^{\infty} dR\ R^2 \sin \theta  e^{-iq\cos \theta R} \frac{1}{R} \notag \\
+            &= \frac{e^2}{4\pi\varepsilon_0}\int_0^{2\pi} d\varphi \int_0^{\infty} dR\int_{0}^{\pi}d\theta\ R \sin \theta  e^{-iq\cos \theta R} \notag \\
+            &= \frac{e^2}{4\pi\varepsilon_0}\int_0^{2\pi} d\varphi \int_0^{\infty} dR\left[  \frac{1}{qi} e^{-iq\cos \theta R} \right]_0^\pi\notag \\
+            &= \frac{e^2}{4\pi\varepsilon_0q}\int_0^{2\pi} d\varphi \int_0^{\infty} dR\ 2 \frac{e^{iq R} - e^{-iq R} }{2i}\notag \\
+            &= \frac{e^2}{2\pi\varepsilon_0q}\int_0^{2\pi} d\varphi \int_0^{\infty} dR\ \sin qR\notag \\
+            &= \frac{e^2}{2\pi\varepsilon_0q}\int_0^{2\pi} d\varphi\ \left[ -\frac{1}{q}\cos qR\right]_0^\infty \rightarrow \infty?
+        \end{align}
+        となる。
+    \end{derivationBox}
+    クーロン相互作用が長距離まで及ぶために$U_{\bm{q}=0}$は発散してしまが形式的に$U_{\bm{q}=0}$のまま残している。\\
+    $\ \ $第一項目の$U_{\bm{q}=0}$の成分と第二項目と第三項目を合わせると
+    \begin{align}
+        &\frac{1}{2V}\sum_{\alpha \beta}\sum_{\bm{k}\bm{k}'} U_{\bm{q}=0} \hat{c}^\dagger_{\bm{k}\alpha} \hat{c}^\dagger_{\bm{k}' \beta} \hat{c}_{\bm{k}'\beta} \hat{c}_{\bm{k}\alpha}-\sum_{\alpha}\sum_{\bm{k}} U_{\bm{q}=0}\hat{c}^\dagger_{\bm{k}\alpha}\hat{c}_{\bm{k}\alpha}Z\rho_0 + \frac{V}{2}U_{\bm{q}=0}(Z\rho_0)^2 \notag \\
+        &=-\frac{1}{2V}\sum_{\alpha \beta}\sum_{\bm{k}\bm{k}'} U_{\bm{q}=0} \hat{c}^\dagger_{\bm{k}\alpha} \hat{c}^\dagger_{\bm{k}' \beta} \hat{c}_{\bm{k}\alpha}\hat{c}_{\bm{k}'\beta} -\sum_{\alpha}\sum_{\bm{k}} U_{\bm{q}=0}\hat{c}^\dagger_{\bm{k}\alpha}\hat{c}_{\bm{k}\alpha}Z\rho_0 + \frac{V}{2}U_{\bm{q}=0}(Z\rho_0)^2 \notag \\
+        &=-\frac{1}{2V}\sum_{\alpha \beta}\sum_{\bm{k}\bm{k}'} U_{\bm{q}=0} \hat{c}^\dagger_{\bm{k}\alpha}( -\hat{c}_{\bm{k}\alpha}\hat{c}^\dagger_{\bm{k}' \beta} + \delta_{\bm{k}\bm{k}'} \delta_{\alpha \beta} )\hat{c}_{\bm{k}'\beta} -\sum_{\alpha}\sum_{\bm{k}} U_{\bm{q}=0}\hat{c}^\dagger_{\bm{k}\alpha}\hat{c}_{\bm{k}\alpha}Z\rho_0 + \frac{V}{2}U_{\bm{q}=0}(Z\rho_0)^2 \notag \\
+        &=\frac{1}{2V}\sum_{\alpha \beta}\sum_{\bm{k}\bm{k}'} U_{\bm{q}=0} \hat{c}^\dagger_{\bm{k}\alpha}\hat{c}_{\bm{k}\alpha}\hat{c}^\dagger_{\bm{k}' \beta}\hat{c}_{\bm{k}'\beta} - \delta_{\bm{k}\bm{k}'} \delta_{\alpha \beta} \hat{c}^\dagger_{\bm{k}\alpha}\hat{c}_{\bm{k}'\beta} -\sum_{\alpha}\sum_{\bm{k}} U_{\bm{q}=0}\hat{c}^\dagger_{\bm{k}\alpha}\hat{c}_{\bm{k}\alpha}Z\rho_0 + \frac{V}{2}U_{\bm{q}=0}(Z\rho_0)^2 \notag \\
+        &=\frac{1}{2V} U_{\bm{q}=0} \left\{ \sum_\alpha \sum_{\bm{k}} \hat{c}^\dagger_{\bm{k}\alpha}\hat{c}_{\bm{k}\alpha} \right\}\left\{ \sum_\beta \sum_{\bm{k}'} \hat{c}^\dagger_{\bm{k}'\beta}\hat{c}_{\bm{k}'\beta} \right\} - \frac{1}{2V} \sum_\alpha \sum_{\bm{k}} \hat{c}^\dagger_{\bm{k}\alpha}\hat{c}_{\bm{k}\alpha} \notag \\
+        &\ \ \ \ \ \ \ \ -U_{\bm{q}=0}\left\{ \sum_{\alpha}\sum_{\bm{k}} \hat{c}^\dagger_{\bm{k}\alpha}\hat{c}_{\bm{k}\alpha} \right\}Z\rho_0 + \frac{V}{2}U_{\bm{q}=0}(Z\rho_0)^2 \notag  \\
+        &=\frac{1}{2V} U_{\bm{q}=0} (\hat{\mathscr{N}}^2-\hat{\mathscr{N}}) - U_{\bm{q}=0}\hat{\mathscr{N}}Z\rho_0 + \frac{V}{2}U_{\bm{q}=0}(Z\rho_0)^2  
+    \end{align}
+    となり、ここでは電子数が$N$に固定されたモデルを考えるので$\hat{\mathscr{N}}$は保存料$N$に置き換えてよい、従って$\rho_0 = N/V$に注意すると
+    \begin{align}
+        &=\frac{1}{2V} U_{\bm{q}=0} (N^2-N) - U_{\bm{q}=0}N Z\rho_0 + \frac{V}{2}U_{\bm{q}=0}(Z\rho_0)^2 \notag \\
+        &=\frac{1}{2V} U_{\bm{q}=0} (N^2-N) - U_{\bm{q}=0}N Z\frac{N}{V} + \frac{V}{2}U_{\bm{q}=0}\left(Z\frac{N}{V}\right)^2
+    \end{align}
+    よくわからない、どう考えてもこれの主要項が消えるのかがわからない。$\rho_0 = N/ZV$が納得できない、、、
+\subsection{不純物との相互作用}
 \end{document}
