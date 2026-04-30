@@ -695,22 +695,22 @@
 \subsection{クーロン相互作用}
     次に自由電子ガスモデルにクーロン相互作用を考慮したモデルを考える。相互作用ポテンシャルとしてクーロン斥力
     \begin{align}
-        U(\bm{r}-\bm{r}')=\frac{1}{4\pi \varepsilon_0} \frac{e^2}{|\bm{r}-\bm{r}'|}
+        U(\bm{r}-\bm{r}')=\frac{1}{4\pi \varepsilon_0} \frac{e^2}{|\bm{r}-\bm{r}'|} = \lim_{\eta \rightarrow 0} e^{-\eta |\bm{r}-\bm{r}'|} \frac{1}{4\pi \varepsilon_0} \frac{e^2}{|\bm{r}-\bm{r}'|}
     \end{align}
-    を採用する。すると相互作用ハミルトニアンは
+    を採用する。\footnote{$e^{-\eta|\bm{r}-\bm{r}'|}$は積分計算を収束させるための減衰因子である。本来クーロン相互作用は無限遠にまで及び一般にフーリエ係数は発散するが電子ガスモデルでは背景の正電荷による遮蔽効果により無限遠では相互作用効果は無くなることが予想される。しかし遮蔽効果を具体的に考慮することは、正電荷が動かないとしている断熱近似においては難しい。なので電子ガスモデルではその代わり減衰因子を導入することで間接的に遮蔽効果を取り入れ、フーリエ係数の発散を抑えている。だが依然として波数0のフーリエ係数は発散してしまうが後にみるように背景の正電荷エネルギーを考慮するとうまく発散を取り除くことができる}すると相互作用ハミルトニアンは
     \begin{align}
         \hat{\mathscr{H}}_{\text{int}} &= \frac{1}{2}\sum_{\alpha \beta} \int \int d\bm{r} d\bm{r}'\ \hat{\psi}_\alpha^\dagger(\bm{r}) \hat{\psi}^\dagger_{\beta}(\bm{r}')U(\bm{r}-\bm{r}')\hat{\psi}_\beta(\bm{r}')\hat{\psi}_\alpha(\bm{r})\notag \\ 
         &\ \ \ \ -Z\sum_\alpha \int \int d\bm{r} d\bm{r}'\ \hat{\psi}^\dagger_\alpha(\bm{r}) \rho_0 U(\bm{r}-\bm{r}') \hat{\psi}_{\alpha}(\bm{r}) + \frac{Z^2}{2} \int \int d\bm{r} d\bm{r}' U(\bm{r}-\bm{r}')\rho_0^2
     \end{align}
     となる。第二項目は背景の正電荷から受ける斥力相互作用で第三項目はなに？？？\\
-    ここで$Z$は正電荷の価数、$\rho_0$は正電荷密度を表し、空間に一様に分布しているとした。また電気的中性条件$V\rho_0 Z = e N$を満たす。\\
+    ここで$Z$は正電荷の価数、$\rho_0$は正電荷密度を表し、空間に一様に分布しているとした。また電気的中性条件$\rho_0 = N / VZ$を満たす。\footnote{電子数密度は$e\frac{N}{V}$で正電荷密度は$Ze\rho_0$で表される}\\
     この電子ガスモデルを平面波展開すると以下が得られる
     \begin{formula}[電子ガスモデルの相互作用ハミルトニアン]
         \begin{equation}
             \begin{aligned}
                 \hat{\mathscr{H}}_{\text{int}}&=\frac{1}{2V}\sum_{\alpha \beta}\sum_{\bm{k}\bm{k}'\bm{q}} U_{\bm{q}} \hat{c}^\dagger_{\bm{k}+\bm{q}\ \alpha} \hat{c}^\dagger_{\bm{k}'-\bm{q}\ \beta} \hat{c}_{\bm{k}'\beta} \hat{c}_{\bm{k}\alpha} \notag \\
 &\ \ \ \ -\sum_{\alpha}\sum_{\bm{k}} U_{\bm{q}=0}\hat{c}^\dagger_{\bm{k}\alpha}\hat{c}_{\bm{k}\alpha}Z\rho_0 + \frac{V}{2}U_{\bm{q}=0}(Z\rho_0)^2\\
-U_{\bm{q}} &= \int d(\bm{r}-\bm{r}')\ e^{i\bm{q}\cdot(\bm{r}-\bm{r}')}\frac{1}{4\pi\varepsilon_0} \frac{e^2}{|\bm{r}-\bm{r}'|} =\frac{e^2}{\varepsilon_0|\bm{q}|^2}
+U_{\bm{q}} &= \lim_{\eta \to 0}\int d(\bm{r}-\bm{r}')\ e^{i\bm{q}\cdot(\bm{r}-\bm{r}')}\frac{1}{4\pi\varepsilon_0} \frac{e^2}{|\bm{r}-\bm{r}'|} e^{-\eta|\bm{r}-\bm{r}'|} =\frac{e^2}{\varepsilon_0|\bm{q}|^2}
             \end{aligned}
         \end{equation}
     \end{formula}
@@ -756,13 +756,13 @@ U_{\bm{q}} &= \int d(\bm{r}-\bm{r}')\ e^{i\bm{q}\cdot(\bm{r}-\bm{r}')}\frac{1}{4
         \begin{align}
             U_{\bm{q}} &= \int d(\bm{r}-\bm{r}')\  e^{-i\bm{q}\cdot (\bm{r}-\bm{r}')} U(\bm{r}-\bm{r}') \notag \\
             &= \int d\bm{R}\ e^{-i\bm{q}\cdot \bm{R}} U(\bm{R}) \notag \\
-            &= \int d\bm{R}\ e^{-i\bm{q}\cdot \bm{R}} \frac{1}{4\pi\varepsilon_0} \frac{e^2}{|\bm{R}|} \notag \\
-            &= \frac{e^2}{4\pi\varepsilon_0}\int_0^{2\pi} d\varphi \int_{0}^{\pi}d\theta\int_0^{\infty} dR\ R^2 \sin \theta  e^{-iq\cos \theta R} \frac{1}{R} \notag \\
-            &= \frac{e^2}{4\pi\varepsilon_0}\int_0^{2\pi} d\varphi \int_0^{\infty} dR\int_{0}^{\pi}d\theta\ R \sin \theta  e^{-iq\cos \theta R} \notag \\
-            &= \frac{e^2}{4\pi\varepsilon_0}\int_0^{2\pi} d\varphi \int_0^{\infty} dR\left[  \frac{1}{qi} e^{-iq\cos \theta R} \right]_0^\pi\notag \\
-            &= \frac{e^2}{4\pi\varepsilon_0q}\int_0^{2\pi} d\varphi \int_0^{\infty} dR\ 2 \frac{e^{iq R} - e^{-iq R} }{2i}\notag \\
-            &= \frac{e^2}{2\pi\varepsilon_0q}\int_0^{2\pi} d\varphi \int_0^{\infty} dR\ \sin qR\notag \\
-            &= \frac{e^2}{2\pi\varepsilon_0q}\int_0^{2\pi} d\varphi\ \left[ -\frac{1}{q}\cos qR\right]_0^\infty \rightarrow \infty?
+            &= \lim_{\eta \to 0}\int d\bm{R}\ e^{-\eta |\bm{R}|}e^{-i\bm{q}\cdot \bm{R}} \frac{1}{4\pi\varepsilon_0} \frac{e^2}{|\bm{R}|} \notag \\
+            &= \lim_{\eta \to 0}\frac{e^2}{4\pi\varepsilon_0}\int_0^{2\pi} d\varphi \int_{0}^{\pi}d\theta\int_0^{\infty} dR\ R^2 \sin \theta  e^{-iq\cos \theta R} \frac{1}{R}e^{-\eta R} \notag \\
+            &= \lim_{\eta \to 0}\frac{e^2}{4\pi\varepsilon_0}\int_0^{2\pi} d\varphi \int_0^{\infty} dR\int_{0}^{\pi}d\theta\ R \sin \theta  e^{-iq\cos \theta R} e^{-\eta R}\notag \\
+            &= \lim_{\eta \to 0}\frac{e^2}{4\pi\varepsilon_0}\int_0^{2\pi} d\varphi \int_0^{\infty} dR\ \left[  \frac{1}{qi} e^{-iq\cos \theta R} \right]_0^\pi e^{-\eta R} \notag \\
+            &= \lim_{\eta \to 0}\frac{e^2}{4\pi\varepsilon_0q}\int_0^{2\pi} d\varphi \int_0^{\infty} dR\ 2 \frac{e^{iq R} - e^{-iq R} }{2i}e^{-\eta R}\notag \\
+            &= \lim_{\eta \to 0}\frac{e^2}{2\pi\varepsilon_0q}2\pi \int_0^{\infty} dR\ e^{-\eta R}\sin qR\notag \\
+            &= \lim_{\eta \to 0}\frac{e^2}{\varepsilon_0q} \frac{q}{\eta^2 + q^2} = \frac{e^2}{\varepsilon_0 |\bm{q}|^2}
         \end{align}
         となる。
     \end{derivationBox}
@@ -777,12 +777,19 @@ U_{\bm{q}} &= \int d(\bm{r}-\bm{r}')\ e^{i\bm{q}\cdot(\bm{r}-\bm{r}')}\frac{1}{4
         &\ \ \ \ \ \ \ \ -U_{\bm{q}=0}\left\{ \sum_{\alpha}\sum_{\bm{k}} \hat{c}^\dagger_{\bm{k}\alpha}\hat{c}_{\bm{k}\alpha} \right\}Z\rho_0 + \frac{V}{2}U_{\bm{q}=0}(Z\rho_0)^2 \notag  \\
         &=\frac{1}{2V} U_{\bm{q}=0} (\hat{\mathscr{N}}^2-\hat{\mathscr{N}}) - U_{\bm{q}=0}\hat{\mathscr{N}}Z\rho_0 + \frac{V}{2}U_{\bm{q}=0}(Z\rho_0)^2  
     \end{align}
-    となり、ここでは電子数が$N$に固定されたモデルを考えるので$\hat{\mathscr{N}}$は保存料$N$に置き換えてよい、従って$\rho_0 = N/V$に注意すると
+    となり、ここでは電子数が$N$に固定されたモデルを考えるので$\hat{\mathscr{N}}$は保存料$N$に置き換えてよい、従って$\rho_0 = N/VZ$に注意すると
     \begin{align}
         &=\frac{1}{2V} U_{\bm{q}=0} (N^2-N) - U_{\bm{q}=0}N Z\rho_0 + \frac{V}{2}U_{\bm{q}=0}(Z\rho_0)^2 \notag \\
-        &=\frac{1}{2V} U_{\bm{q}=0} (N^2-N) - U_{\bm{q}=0}N Z\frac{N}{V} + \frac{V}{2}U_{\bm{q}=0}\left(Z\frac{N}{V}\right)^2
+        &=\frac{1}{2V} U_{\bm{q}=0} (N^2-N) - U_{\bm{q}=0}N Z\frac{N}{VZ} + \frac{V}{2}U_{\bm{q}=0}\left(Z\frac{N}{VZ}\right)^2 \notag \\
+        &=\frac{1}{2V} U_{\bm{q}=0} (N^2-N) - U_{\bm{q}=0}\frac{N^2}{V} + \frac{1}{2}U_{\bm{q}=0}\frac{N^2}{V}\notag \\
+        &= -\frac{U_{\bm{q}=0}}{2} \frac{N}{V}
     \end{align}
-    よくわからない、どう考えてもこれの主要項が消えるのかがわからない。$\rho_0 = N/ZV$が納得できない、、、
+    となる。ここで熱力学極限をとることを考えると、この項はエネルギーはオーダー$N$に対して無視することができる。したがって発散する項は考えなくてよくなり、電子ガスモデルのハミルトニアンは以下となる
+    \begin{definition}[電子ガスモデルのハミルトニアン]
+        \begin{align}
+            \hat{\mathscr{H}}_{\text{int}}&=\frac{1}{2V}\sum_{\alpha \beta}\sum_{\bm{k}\bm{k}'\bm{q}\ne0} U_{\bm{q}} \hat{c}^\dagger_{\bm{k}+\bm{q}\ \alpha} \hat{c}^\dagger_{\bm{k}'-\bm{q}\ \beta} \hat{c}_{\bm{k}'\beta} \hat{c}_{\bm{k}\alpha}
+        \end{align}
+    \end{definition}
 \subsection{不純物との相互作用}
     結晶中の不純物や格子欠陥は電気抵抗の原因となる。これをモデル化するために以下の不純物ポテンシャルを考える
     \begin{align}
@@ -849,15 +856,65 @@ U_{\bm{q}} &= \int d(\bm{r}-\bm{r}')\ e^{i\bm{q}\cdot(\bm{r}-\bm{r}')}\frac{1}{4
     \begin{align}
         \hat{u}_j= \frac{1}{\sqrt{N}}\sum_{q} e^{iqR_j^0}\hat{u}_q \qquad \hat{P}_j = \frac{1}{\sqrt{N}}\sum_q e^{-iqR_j^0 }\hat{P}_q
     \end{align}
-    $a$を格子間隔とすると、ハミルトニアンは以下のようになる
+    ただし、周期境界条件より波数$q=2\pi n/L,\ n= $$a$を格子間隔とすると、ハミルトニアンは以下のようになる
     \begin{formula}[格子振動ハミルトニアン]
         \begin{equation}
             \begin{aligned}
                 \hat{\mathscr{H}}_{\text{ph}} &= \sum_q \frac{\hat{P}_q \hat{P}_{-q}}{2M} + \frac{M\omega_q^2}{2} \hat{u}_{-q}\hat{u}_q\notag \\
-                \omega_q = \sqrt{\frac{4K}{M}}\left| \sin \frac{qa}{2} \right|
+                \omega_q &= \sqrt{\frac{4K}{M}}\left| \sin \frac{qa}{2} \right|
             \end{aligned}
         \end{equation}
     \end{formula}
+    \begin{derivationBox}
+        運動エネルギー項を計算すると
+        \begin{align}
+            \sum_j \frac{\hat{P}_j^2}{2M} &= \sum_j  \frac{1}{2M} \left\{  \frac{1}{\sqrt{N}}\sum_{q} e^{-iqR_j^0}\hat{P}_q\right\} \left\{  \frac{1}{\sqrt{N}}\sum_{q'} e^{-iq'R_j^0}\hat{P}_{q'}\right\} \notag \\
+            &= \frac{1}{2MN}\sum_j \sum_{q}\sum_{q'}      e^{-i(q+q')R_j^0}\hat{P}_q\hat{P}_{q'} \notag \\
+            &= \frac{1}{2MN} \sum_{q}\sum_{q'} N\delta_{q\ -q'}\hat{P}_q\hat{P}_{q'} \notag \\
+            &= \frac{1}{2M} \sum_{q}\hat{P}_q\hat{P}_{-q}
+        \end{align}
+        となる。ポテンシャル項は
+        \begin{align}
+            \sum_j \frac{K}{2}(\hat{u}_{j+1}-\hat{u}_j)^2 &= \sum_j \frac{K}{2}\left(\left\{  \frac{1}{\sqrt{N}}\sum_{q} e^{iqR_{j+1}^0}\hat{u}_{q}\right\}-\left\{  \frac{1}{\sqrt{N}}\sum_{q} e^{iqR_{j}^0}\hat{u}_{q}\right\}\right)^2 \notag \\
+            &= \sum_j \frac{K}{2N}\left(\sum_{q} (e^{iq(R_{j}^0+a)}- e^{iqR_{j}^0})\hat{u}_{q}\right)^2 \notag \\
+            &= \sum_j \frac{K}{2N}\left(\sum_{q} (e^{iqa}- 1)e^{iqR_{j}^0}\hat{u}_{q}\right)^2 \notag \\
+            &= \sum_j \frac{K}{2N}\left(\sum_{q} e^{i\frac{qa}{2}}(e^{i\frac{qa}{2}}- e^{-\frac{qa}{2}})e^{iqR_{j}^0}\hat{u}_{q}\right)^2 \notag \\
+            &= \sum_j \frac{K}{2N}\left(\sum_{q} 2ie^{i\frac{qa}{2}}\sin \frac{qa}{2}e^{iqR_{j}^0}\hat{u}_{q}\right)^2 \notag \\
+            &= \frac{K}{2N}\sum_j \sum_q \sum_{q'}\left(2ie^{i\frac{qa}{2}}\sin \frac{qa}{2}e^{iqR_{j}^0}\hat{u}_{q}\right)\left(2ie^{i\frac{q'a}{2}}\sin \frac{q'a}{2}e^{iq'R_{j}^0}\hat{u}_{q'}\right) \notag \\
+            &= -\frac{2K}{N}\sum_j \sum_q \sum_{q'}\sin \frac{qa}{2} \sin \frac{q'a}{2} e^{i\frac{a}{2}(q+q')}e^{i(q+q')R_{j}^0}\hat{u}_{q}\hat{u}_{q'} \notag \\
+            &= -\frac{2K}{N} \sum_q \sum_{q'}\sin \frac{qa}{2} \sin \frac{q'a}{2} e^{i\frac{a}{2}(q+q')}N\delta_{q\ -q'}\hat{u}_{q}\hat{u}_{q'} \notag \\
+            &= -2K \sum_q \sin \frac{qa}{2} \sin \left(-\frac{qa}{2}\right) e^{i\frac{a}{2}(q-q)}\hat{u}_{q}\hat{u}_{-q} \notag \\
+            &= 2K \sum_q \sin^2 \frac{qa}{2} \hat{u}_{q}\hat{u}_{-q}
+        \end{align}
+        となるので
+        \begin{align}
+            \omega_q := \frac{4K}{M}\left|\sin \frac{qa}{2}\right|
+        \end{align}
+        とすれば
+        \begin{align}
+            =\sum_q \frac{M\omega_q^2}{2} \hat{u}_q \hat{u}_{-q}
+        \end{align}
+        となる。\\
+        $\ \ $したがって
+        \begin{align}
+            \hat{\mathscr{H}}_{\text{ph}} &= \sum_j \frac{\hat{P}_j^2}{2M} + \sum_j \frac{K}{2}(\hat{u}_{j+1}-\hat{u}_j)^2 \notag \\
+            &= \sum_q \frac{\hat{P}_q \hat{P}_{-q}}{2M} + \frac{M\omega_q^2}{2} \hat{u}_{-q}\hat{u}_q
+        \end{align}
+        となる。
+    \end{derivationBox}
+    フーリエ逆変換は
+    \begin{align}
+        \hat{u}_q = \frac{1}{\sqrt{N}}\sum_j e^{-iqR_j^0} \hat{u}_j ,\quad \hat{P}_q = \frac{1}{\sqrt{N}}\sum_j e^{iqR_j^0} \hat{P}_j 
+    \end{align}
+    となる。したがってフーリエ展開後の演算子の交換関係は
+    \begin{align}
+        [\hat{u}_q,\hat{P}_{q'}] &= \frac{1}{N}\sum_j\sum_{k}e^{-iqR_j^0}e^{iq'R_k^0}[\hat{u}_j , \hat{P}_k] \notag \\
+        &= \frac{1}{N}\sum_j\sum_{k}e^{-iqR_j^0}e^{iq'R_k^0}i\hbar \delta_{jk} \notag \\
+        &= \frac{i\hbar}{N}\sum_je^{-i(q-q')R_i^0} \notag\\
+        &= \frac{i\hbar}{N}N\delta_{qq'}\notag \\
+        &=i\hbar \delta_{qq'}
+    \end{align}
+    となる。$\hat{u}_j,\hat{P}_j$がエルミート演算子であることから$\hat{u}_q^\dagger = \hat{u}_{-q},\ \hat{P}_q^\dagger = \hat{P}_{-q}$
     格子振動ハミルトニアンは調和振動子系と同じ形をしているので、新たに生成消滅演算子$\hat{a},\hat{a}^\dagger$を
     \begin{align}
         \hat{u}_q = \sqrt{\frac{\hbar}{2m\omega_q}}(\hat{a}_q + \hat{a}^\dagger_{-q})\qquad \hat{P}_q = i\sqrt{\frac{\hbar M \omega_q}{2}} (-\hat{a}_{-q} + \hat{a}^\dagger_q)
@@ -866,16 +923,52 @@ U_{\bm{q}} &= \int d(\bm{r}-\bm{r}')\ e^{i\bm{q}\cdot(\bm{r}-\bm{r}')}\frac{1}{4
     \begin{align}
         \hat{\mathscr{H}}_{ph} = \sum_q \hbar \omega_q \left( \hat{a}^\dagger_q\hat{a}_q + \frac{1}{2} \right)
     \end{align}
-    となる。この格子振動で生成される調和振動子系の粒子をフォノンといい、Bose統計に従う。またフォノンの数には制限がないので化学ポテンシャルは常に0となる。
+    となる。この格子振動で生成される調和振動子系の粒子をフォノンといい、Bose統計に従う。またフォノンの数には制限がないので化学ポテンシャルは常に0となる。\\ \\
+    debye振動数について\\
 \subsection{電子格子相互作用}
     格子が変位することによって正電荷密度が変化ℏ氏、その結果として電子格子相互作用が生じる。ここでは単純な場合の電子格子相互作用を導出する。イオン原子が作るポテンシャルを$V(\bm{r}) = \sum_j V(\bm{r}-\bm{R}_j)$とし、イオン原子の変位を$\bm{u}_j=\bm{R}_j-\bm{R}_j^0$とする。ポテンシャルを変位$\bm{u}_j$で展開すると
     \begin{align}
-        \sum_jV(\bm{r}-\bm{R}_j) &= \sum_jV(\bm{r}-\bm{R}_j^0 - \bm{u}_j) \notag \\
-        &= \sum_jV(\bm{r}-\bm{R}_j^0) -\sum_j \bm{u}_j \cdot \bm{\nabla}V(\bm{r}-\bm{R}_j^0) + O(u_j^3)
+        \sum_j V(\bm{r}-\bm{R}_j) &= \sum_jV(\bm{r}-\bm{R}_j^0 - \bm{u}_j) \notag \\
+        &= \sum_j V(\bm{r}-\bm{R}_j^0) -\sum_j \bm{u}_j \cdot \bm{\nabla} V(\bm{r}-\bm{R}_j^0) + O(u_j^3)
     \end{align}
     ここで第二項目が結晶格子の変化を表すので、その最低次の効果のみを考慮するモデルを考える。したがってハミルトニアンを
     \begin{align}
-        \hat{\mathscr{H}}_{\text{el-ph}} = -\sum_j\sum_\alpha \int d\bm{r}\ \hat{\psi}^\dagger_\alpha(\bm{r}) \hat{\bm{u}}_j \cdot \bm{\nabla}V(\bm{r}-\bm{R}_j^0) \hat{\psi}_\alpha(\bm{r})
+        \hat{\mathscr{H}}_{\text{el-ph}} = -\sum_j\sum_\alpha \int d\bm{r}\ \hat{\psi}^\dagger_\alpha(\bm{r})  \hat{\psi}_\alpha(\bm{r}) \hat{\bm{u}}_j \cdot \bm{\nabla}V(\bm{r}-\bm{R}_j^0)
     \end{align}
-    では？
+    とする。\footnote{格子の変位演算子$\hat{u}$と電子の生成演算子$\hat{\psi}^\dagger$は可換とする}このハミルトニアンをフーリエ展開する
+    \begin{derivationBox}
+        \begin{align}
+            \hat{\mathscr{H}}_{\text{el-ph}} &= -\sum_j\sum_\alpha \int d\bm{r}\ \hat{\psi}^\dagger_\alpha(\bm{r})  \hat{\psi}_\alpha(\bm{r}) \hat{\bm{u}}_j \cdot \bm{\nabla}V(\bm{r}-\bm{R}_j^0) \notag \\
+            &= -\sum_j\sum_\alpha \int d\bm{r}\ \left\{ \frac{1}{\sqrt{V}}\sum_{\bm{k}}e^{-i\bm{k}\cdot \bm{r}} \hat{c}^\dagger_{\bm{k}\alpha} \right\}  \left\{ \frac{1}{\sqrt{V}}\sum_{\bm{k}'}e^{i\bm{k}'\cdot \bm{r}} \hat{c}_{\bm{k}'\alpha} \right\}   \hat{\bm{u}}_j \cdot \bm{\nabla}\left\{\frac{1}{V}\sum_{\tilde{\bm{k}}} e^{i\tilde{\bm{k}}\cdot (\bm{r}-\bm{R}_j^0)}V_{\tilde{\bm{k}}}  \right\} \notag \\
+            &= -\frac{i}{V^2}\sum_j\sum_\alpha \sum_{\bm{k}} \sum_{\bm{k}'}\sum_{\tilde{\bm{k}}}\int d\bm{r}\  e^{-i(\bm{k}-\bm{k}')\cdot \bm{r}} \hat{c}^\dagger_{\bm{k}\alpha}   \hat{c}_{\bm{k}'\alpha}  \hat{\bm{u}}_j \cdot \tilde{\bm{k}} e^{i\tilde{\bm{k}}\cdot (\bm{r}-\bm{R}_j^0)}V_{\tilde{\bm{k}}}  \notag \\
+            &= -\frac{i}{V^2}\sum_j\sum_\alpha \sum_{\bm{k}} \sum_{\bm{k}'}\sum_{\tilde{\bm{k}}}\int d\bm{r}\  e^{-i(\bm{k}-\bm{k}'-\tilde{\bm{k}})\cdot \bm{r}} \hat{c}^\dagger_{\bm{k}\alpha}   \hat{c}_{\bm{k}'\alpha}   \hat{\bm{u}}_j \cdot \tilde{\bm{k}} e^{-i\tilde{\bm{k}}\cdot \bm{R}_j^0}V_{\tilde{\bm{k}}}  \notag \\
+            &= -\frac{i}{V^2}\sum_j\sum_\alpha \sum_{\bm{k}} \sum_{\bm{k}'}\sum_{\tilde{\bm{k}}}V \delta_{\bm{k}\ \bm{k}'+\tilde{\bm{k}}} \hat{c}^\dagger_{\bm{k}\alpha}   \hat{c}_{\bm{k}'\alpha}   \hat{\bm{u}}_j \cdot \tilde{\bm{k}} e^{-i\tilde{\bm{k}}\cdot \bm{R}_j^0}V_{\tilde{\bm{k}}}  \notag \\
+            &= -\frac{i}{V}\sum_j\sum_\alpha  \sum_{\bm{k}'}\sum_{\tilde{\bm{k}}} \hat{c}^\dagger_{\bm{k}'+\tilde{\bm{k}}\ \alpha}   \hat{c}_{\bm{k}'\alpha}   \hat{\bm{u}}_j \cdot \tilde{\bm{k}} e^{-i\tilde{\bm{k}}\cdot \bm{R}_j^0}V_{\tilde{\bm{k}}}  \notag \\
+            &= -\frac{i}{V}\sum_j\sum_\alpha  \sum_{\bm{k}'}\sum_{\tilde{\bm{k}}} \hat{c}^\dagger_{\bm{k}'+\tilde{\bm{k}}\ \alpha}   \hat{c}_{\bm{k}'\alpha} \left\{ \frac{1}{\sqrt{N}}\sum_{\bm{q}} e^{i\bm{q}\cdot \bm{R}_j^0}\hat{\bm{u}}_q \right\} \cdot \tilde{\bm{k}} e^{-i\tilde{\bm{k}}\cdot \bm{R}_j^0}V_{\tilde{\bm{k}}}  \notag \\
+            &= -\frac{i}{V\sqrt{N}}\sum_j\sum_\alpha  \sum_{\bm{k}'}\sum_{\tilde{\bm{k}}} \sum_{\bm{q}}\hat{c}^\dagger_{\bm{k}'+\tilde{\bm{k}}\ \alpha}   \hat{c}_{\bm{k}'\alpha}   e^{i(\bm{q}-\tilde{\bm{k}})\cdot\bm{R}_j^0}\hat{\bm{u}}_q \cdot \tilde{\bm{k}} V_{\tilde{\bm{k}}}  \notag \\
+            &= -\frac{i}{V\sqrt{N}}\sum_\alpha  \sum_{\bm{k}'}\sum_{\tilde{\bm{k}}} \sum_{\bm{q}}\hat{c}^\dagger_{\bm{k}'+\tilde{\bm{k}}\ \alpha}   \hat{c}_{\bm{k}'\alpha}   N\delta_{\bm{q} \tilde{\bm{k}}}\hat{\bm{u}}_q \cdot \tilde{\bm{k}} V_{\tilde{\bm{k}}} \notag \\
+            &= -\frac{i\sqrt{N}}{V}\sum_\alpha  \sum_{\bm{k}'}\sum_{\tilde{\bm{k}}} \hat{c}^\dagger_{\bm{k}'+\tilde{\bm{k}}\ \alpha}   \hat{c}_{\bm{k}'\alpha}   \hat{\bm{u}}_{\tilde{\bm{k}}} \cdot \tilde{\bm{k}} V_{\tilde{\bm{k}}}  \notag \\
+            &= -\frac{i\sqrt{N}}{V}\sum_\alpha  \sum_{\bm{k}}\sum_{\bm{q}} \hat{c}^\dagger_{\bm{k}+\bm{q}\ \alpha}   \hat{c}_{\bm{k}\alpha}   \hat{\bm{u}}_{\bm{q}} \cdot \bm{q} V_{\bm{q}}  
+        \end{align}
+        となり、ここで変位ベクトルの単位ベクトル$\bm{\xi}_{\bm{k}}$を用いて
+        \begin{align}
+            \hat{\bm{u}}_{\bm{q}} = \sqrt{\frac{\hbar}{2m\omega_{\bm{q}}}}(\hat{a}_{\bm{q}} + \hat{a}^\dagger_{-\bm{q}}) \bm{\xi}_{\bm{q}}
+        \end{align}
+        とし、代入すると
+        \begin{align}
+            &=  -\frac{i\sqrt{N}}{V}\sum_\alpha  \sum_{\bm{k}}\sum_{\bm{q}} \hat{c}^\dagger_{\bm{k}+\bm{q}\ \alpha}   \hat{c}_{\bm{k}\alpha}   \left\{ \sqrt{\frac{\hbar}{2m\omega_{\bm{q}}}}(\hat{a}_{\bm{q}} + \hat{a}^\dagger_{-\bm{q}}) \bm{\xi}_{\bm{q}}  \right\} \cdot \bm{q} V_{\bm{q}}  \notag \\
+            &=  -\frac{i\sqrt{N}}{V}\sqrt{\frac{\hbar}{2m\omega_{\bm{q}}}}\sum_\alpha  \sum_{\bm{k}}\sum_{\bm{q}} \hat{c}^\dagger_{\bm{k}+\bm{q}\ \alpha}   \hat{c}_{\bm{k}\alpha}    (\hat{a}_{\bm{q}} + \hat{a}^\dagger_{-\bm{q}}) \bm{\xi}_{\bm{q}}   \cdot \bm{q} V_{\bm{q}}  
+        \end{align}
+        となる。ここで$\bm{\xi}_{\bm{q}}   \cdot \bm{q}$の因子があることから縦振動フォノンのみが電子と相互作用することが分かる。したがって$\bm{q}$に平行な成分だけ取り出すことにすると$\bm{\xi}_{\bm{q}} = i\bm{q}/|\bm{q}|$と置くことができる。したがって
+        \begin{align}
+            &=  \frac{\sqrt{N}}{V}\sqrt{\frac{\hbar}{2m\omega_{\bm{q}}}}\sum_\alpha  \sum_{\bm{k}}\sum_{\bm{q}} \hat{c}^\dagger_{\bm{k}+\bm{q}\ \alpha}   \hat{c}_{\bm{k}\alpha}    (\hat{a}_{\bm{q}} + \hat{a}^\dagger_{-\bm{q}}) \frac{\bm{q}^2}{|\bm{q}|} V_{\bm{q}}   \notag \\
+            &=  \frac{1}{\sqrt{V}}\sum_\alpha  \sum_{\bm{k}}\sum_{\bm{q}}  g_{\bm{q}} \hat{c}^\dagger_{\bm{k}+\bm{q}\ \alpha}  \hat{c}_{\bm{k}\alpha}    (\hat{a}_{\bm{q}} + \hat{a}^\dagger_{-\bm{q}}) 
+        \end{align}
+        となる。
+        ここで
+        \begin{align}
+            g_{\bm{q}} = \sqrt{N\frac{\hbar}{2mV\omega_{\bm{q}}}}\frac{\bm{q}^2}{|\bm{q}|} V_{\bm{q}}  
+        \end{align}
+        とした
+    \end{derivationBox}
 \end{document}
