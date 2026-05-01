@@ -1,0 +1,1710 @@
+\documentclass{jsarticle}  %ドキュメントクラスの宣言(言語や文字の大きさなどなど)
+
+%プリアンブルと言われる所(武器を備える)
+\usepackage{amsmath} %数式表記用
+\usepackage{amsthm}  %数式表記用
+\usepackage{amssymb} %数式表記用
+\usepackage{mathrsfs} %文字式用
+\usepackage{bm} %文字を太くできる
+\usepackage{color} %色を変えられる
+\usepackage{comment} %複数行のコメントアウトができる
+%\usepackage[dvipdfmx]{hyperref} %ハイパーリンク用
+%\usepackage{pxjahyper} %ハイパーリンク用
+\usepackage{wrapfig} %図の挿入用
+\usepackage[dvipdfmx]{graphicx} %図の挿入用
+\usepackage{here}
+\usepackage{ascmac}
+
+\usepackage[most]{tcolorbox}
+\usepackage{braket}
+
+\newtcolorbox{proofline}[1][]{
+  title=証明,                                               % タイトル
+  coltitle=black,                                         % タイトルの文字色
+  fonttitle=\bfseries,                                  % タイトルのフォント
+  breakable,
+  enhanced,
+  colframe=black!60,                                % 枠線の色
+  colback=white,                                      % 背景色
+  boxrule=0.5pt,                                       % 線の太さ
+  left=2mm, right=0mm,                           % 内側余白
+  top=0.5mm, bottom=0.5mm,                % 上下余白
+  frame hidden,                                        % 枠線の除去
+  borderline west={1pt}{0pt}{black!40},   % 左端だけに線を引く
+  before skip=10pt,
+  after skip=10pt,
+  sharp corners,
+  parbox=false,                                        % 段落分けを許可
+  before upper={\hspace{1em}},             %一文字目の前に 一文字分のスペース
+  after upper = $\qed$                    % 最後に \qed 
+  #1
+}
+
+\allowdisplaybreaks %数式のページまたぎ許可
+
+\setlength{\textwidth}{\fullwidth}
+\setlength{\textheight}{40\baselineskip}
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{-0.2in}
+\setlength{\topmargin}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\numberwithin{equation}{section} %式番号をsectionごとに振り当てられる
+\numberwithin{figure}{section}
+%タイトル
+\title{量子力学 院試対策} %タイトル
+\author{}%著者
+
+\date{\today}  %任意の補足データ(\todayと入れれば今日の日付が出る)
+
+%本文開始
+\begin{document}
+\maketitle %タイトル
+\tableofcontents %目次
+
+\newpage
+\section{デルタ関数型ポテンシャル散乱}
+    \begin{itembox}[l]{\large{解答の流れ}}
+        ポテンシャルが
+        \begin{align}
+            V(x) = \frac{\lambda\hbar^2}{2m}\delta(x)
+        \end{align}
+        で与えられ、波動関数が
+        \begin{align}
+            \varphi (x) = \left\{
+            \begin{aligned}
+                \begin{matrix}
+                    e^{ikx}+Ae^{-ikx}&x<0\\
+                    Be^{ikx}&x>0
+                \end{matrix}
+            \end{aligned}
+            \right.
+        \end{align}
+        で与えられる一次元系を考える。ただし波動関数のエネルギーEは正とする。
+        \begin{enumerate}
+            \item シュレーディンガー方程式を用いて、デルタ関数前後の波動関数の傾き境界条件が
+            \[ \lim_{\epsilon\rightarrow0}\left\{ \frac{\partial}{\partial x}\varphi(\epsilon) -  \frac{\partial}{\partial x}\varphi(-\epsilon)\right\} = \lambda\varphi(0) \]
+            で与えられることを示す
+            \item 境界条件を解き、波動関数の係数$A,B$が
+            \[ A = \frac{\lambda}{2ik - \lambda},\quad B = \frac{2ik}{2ik - \lambda} \]
+            で与えられることを示す
+            \item 反射率R・透過率Tが
+            \[ R = \frac{\lambda^2}{4k^2 + \lambda^2}, \quad T = \frac{4k^2}{4k^2 + \lambda^2} \]
+            で与えられることを示す
+        \end{enumerate}
+        ポテンシャルが
+        \begin{align}
+            V(x) = -\frac{\lambda\hbar^2}{2m}\delta(x)
+        \end{align}
+        で与えられ、波動関数が
+        \begin{align}
+            \varphi (x) = \left\{
+            \begin{aligned}
+                \begin{matrix}
+                    Ae^{\rho x}&x<0\\
+                    Be^{-\rho x}&x>0
+                \end{matrix}
+            \end{aligned}
+            \right.
+        \end{align}
+        で与えられる一次元系を考える。ただし波動関数のエネルギーEは正とする。
+        \begin{enumerate}
+            \item 束縛エネルギーが
+            \[ E = -\frac{\lambda^2 \hbar^2}{8m} \]
+            で与えられることを示す
+        \end{enumerate}
+    \end{itembox}
+    \begin{itembox}[l]{\large{解答の流れ}}
+        ・発展問題 \\
+        ポテンシャルが
+        \begin{align}
+            V(x) = \frac{\lambda \hbar^2}{2m}(\delta(x) + \delta(x-a))
+        \end{align}
+        で与えられ、波動関数が
+        \begin{align}
+            \phi (x) = 
+            \left\{
+            \begin{matrix}
+                e^{ikx}+Ae^{-ikx}&x<0\\
+                    Be^{ikx}+Ce^{-ikx}&0<x<a\\
+                    De^{ikx}&a<x
+            \end{matrix}
+            \right.
+        \end{align}
+        で与えられる一次元系を考える。ただし波動関数のエネルギーEは正とする。
+        \begin{enumerate}
+            \item 透過率が
+            \[ T = \frac{16k^2}{16k^2 + 4\lambda^2 (2k \cos ka + \lambda \sin ka)} \]
+            で与えられることを示し、全透過条件が
+            \[ \tan ka = -\frac{2k}{\lambda} \]
+            となることを示す
+        \end{enumerate}
+    \end{itembox}
+\subsection{デルタ関数型ポテンシャルの境界条件}
+    シュレーディンガー方程式より
+    \begin{align}
+        &\hat{H}\varphi(x) = E \varphi(x)\notag \\
+        &\Leftrightarrow \left\{ -\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2} + \frac{\lambda \hbar^2}{2m}\delta(x) \right\} \varphi(x) = E \varphi(x) \notag \\
+        &\Leftrightarrow \frac{\partial^2 }{\partial x^2} \varphi (x) = -\frac{2mE}{\hbar^2} \varphi(x) +  \lambda \delta(x) \varphi(x)
+    \end{align}
+    となり、両辺を$-\epsilon \le x \le \epsilon$の幅で積分すると
+    \begin{align}
+        &\int_{-\epsilon}^{\epsilon} \frac{\partial^2 }{\partial x^2} \varphi (x)\ dx= -\int_{-\epsilon}^{\epsilon} \frac{2mE}{\hbar^2} \varphi(x)\ dx + \int_{-\epsilon}^{\epsilon} \lambda \delta(x)\varphi(x) \ dx \notag \\
+        &\Leftrightarrow \left[ \frac{\partial}{\partial x} \varphi(x) \right]_{-\epsilon}^{\epsilon} = -\frac{2mE}{\hbar^2} \left[ \Phi(x) \right]_{-\epsilon}^{\epsilon} + \lambda \varphi(0)
+    \end{align}
+    となり、$\epsilon \rightarrow 0$の極限を考えると
+    \begin{align}
+        \lim_{\epsilon\rightarrow0}\left\{ \frac{\partial}{\partial x}\varphi(\epsilon) -  \frac{\partial}{\partial x}\varphi(-\epsilon)\right\} = \lambda \varphi(0)
+    \end{align}
+    となり\footnote{波動関数の連続性は要請としている。したがって連続な関数の原始関数も連続であるので$\lim_{\epsilon\rightarrow0} \left[ \Phi(x) \right]_{-\epsilon}^{\epsilon} = 0 $となる}、デルタ関数前後の波動関数の傾きの境界条件が得られる$\square$
+\subsection{係数の決定}
+    波動関数の境界条件より
+    \begin{align}
+        &1 + A = B  \label{deltamae}\\
+        &B-(1 - A) = \tilde{\lambda} (1 + A) \label{deltaato}
+    \end{align}
+    が成り立つ。ただし$\tilde{\lambda} = \lambda / ik$と置いた。\\
+    \eqref{deltamae}式を用いて\eqref{deltaato}式のBを消去すると
+    \begin{align}
+        &1 + A - (1 - A) = \tilde{\lambda} (1 + A) \notag \\
+        &\Leftrightarrow 2A = \tilde{\lambda} (1 + A) \notag \\
+        &\Leftrightarrow A = \frac{\tilde{\lambda}}{2 - \tilde{\lambda}}  = \frac{\lambda}{2ik - \lambda}
+    \end{align}
+    となり
+    \begin{align}
+        B = 1 + A = 1 + \frac{\lambda}{2ik - \lambda} = \frac{2ik}{2ik - \lambda}
+    \end{align}
+    となる$\square$
+\subsection{反射率・透過率}
+    反射率Rは
+    \begin{align}
+        R &= |A|^2 \notag \\
+        &= \left| \frac{\lambda}{2ik - \lambda} \right|^2 \notag \\
+        &= \frac{\lambda^2}{(-2ik - \lambda)(2ik - \lambda)} \notag\\
+        &= \frac{\lambda^2}{4k^2 + \lambda^2}
+    \end{align}
+    となり、透過率Tは
+    \begin{align}
+        T &= |B|^2 \notag \\
+        &= \left| \frac{2ik}{2ik - \lambda} \right|^2 \notag \\
+        &= \frac{(-2ik)(2ik)}{(-2ik - \lambda)(2ik - \lambda)} \notag \\
+        &= \frac{4k^2}{4k^2 + \lambda^2}
+    \end{align}
+    となる\footnote{反射率・透過率の定義は、波動関数のフラックスを$J_X = Re[\varphi_X^*\hat{p}\varphi_X]/m$としたとき$T=J_{re} / J_{in},R = J_{tr}/J_{in}$で与えられる}\footnote{反射率・透過率をkの関数として見ると、$k\rightarrow \infty$でT=1(全透過)となる、すなわちエネルギーが無限大のときにだけポテンシャルによる反射は起こらなくなる}$\square$
+\subsection{デルタ関数型ポテンシャルの束縛状態}
+    連続条件より
+    \begin{align}
+        A = B
+    \end{align}
+    が成り立つ。傾きの境界条件より
+    \begin{align}
+        \rho (-B - A) = -\lambda A
+    \end{align}
+    が成り立つ。したがって
+    \begin{align}
+        &\rho (B + A) = \lambda A \notag \\
+        &\Leftrightarrow \rho (A + A) = \lambda A \notag \\
+        &\Leftrightarrow  \rho = \frac{\lambda}{2}
+    \end{align}
+    となり、$\rho = \sqrt{2m|E|}/\hbar$より束縛エネルギーは
+    \begin{align}
+        &\frac{\sqrt{2m|E|}}{\hbar} = -\frac{\lambda}{2} \notag \\
+        &\Leftrightarrow |E| = \frac{\lambda^2 \hbar^2}{8m} \notag \\
+        &\Rightarrow E = -\frac{\lambda^2 \hbar^2}{8m}
+    \end{align}
+    となる$\square$
+\subsection{ダブルデルタ型の全透過条件}
+    波動関数の連続条件より
+    \begin{align}
+        &1 + A = B + C \label{dabledeltarenzoku1}\\
+        &Be^{ika} + Ce^{-ika}= De^{ika}\label{dabuledeltarenzoku2}
+    \end{align}
+    が成り立ち、傾きの境界条件より
+    \begin{align}
+        &(B -C) - (1-A) = \tilde{\lambda}(1+A)\label{dabledeltakatamuki1}\\
+        &De^{ika} - (Be^{ika}-Ce^{-ika}) = \tilde{\lambda} De^{ika} \label{dabuldeltakatamuki2}
+    \end{align}
+    が成り立つ。\\
+    \eqref{dabuledeltarenzoku2},\eqref{dabuldeltakatamuki2}式
+    \begin{align}
+        &Be^{ika} + Ce^{-ika}= De^{ika}\\
+        &Be^{ika}-Ce^{-ika} = -\tilde{\lambda} De^{ika} + De^{ika}
+    \end{align}
+    を足すと
+    \begin{align}
+        &2Be^{ika} = -\tilde{\lambda} De^{ika} + 2De^{ika} \notag \\
+        &\Leftrightarrow B = -\frac{1}{2}\tilde{\lambda}D  + D 
+    \end{align}
+    となり、引くと
+    \begin{align}
+        &2Ce^{-ika} = \tilde{\lambda}De^{ika} \notag \\
+        &\Leftrightarrow C = \frac{\tilde{\lambda}}{2}De^{2ika}
+    \end{align}
+    となる。\\
+    これらを\eqref{dabledeltarenzoku1}式に代入すると
+    \begin{align}
+        &1+A=-\frac{1}{2}\tilde{\lambda}D  + D+ \frac{\tilde{\lambda}}{2}De^{2ika} \notag \\
+        &\Leftrightarrow A = -1 + \left( 1-\frac{1}{2}\tilde{\lambda}  +  \frac{\tilde{\lambda}}{2}e^{2ika} \right)D\label{dabledeltaA}
+    \end{align}
+    となり、\eqref{dabledeltakatamuki1}式に代入すると
+    \begin{align}
+        -\frac{1}{2}\tilde{\lambda}D  + D  -\frac{\tilde{\lambda}}{2}De^{2ika} - (1-A) = \tilde{\lambda}(1+A)
+    \end{align}
+    となり、この式に\eqref{dabledeltaA}式を代入すると
+    \begin{align}
+        &\Leftrightarrow -\frac{1}{2}\tilde{\lambda}D  + D  -\frac{\tilde{\lambda}}{2}De^{2ika} - \left(1-\left( -1 + \left( 1-\frac{1}{2}\tilde{\lambda}  +  \frac{\tilde{\lambda}}{2}e^{2ika} \right)D\ \right) \right) = \tilde{\lambda}\left(1+\left( -1 + \left( 1-\frac{1}{2}\tilde{\lambda}  +  \frac{\tilde{\lambda}}{2}e^{2ika} \right)D\ \right)\right)\notag \\
+        &\Leftrightarrow \left( -\frac{1}{2}\tilde{\lambda}  + 1  -\frac{\tilde{\lambda}}{2}e^{2ika} \right)D - 2+ \left( 1-\frac{1}{2}\tilde{\lambda}  +  \frac{\tilde{\lambda}}{2}e^{2ika} \right)D  = \tilde{\lambda}\left( 1-\frac{1}{2}\tilde{\lambda}  +  \frac{\tilde{\lambda}}{2}e^{2ika} \right)D\ \notag \\
+        &\Leftrightarrow \left( -\tilde{\lambda}  + 2   \right)D - 2= \tilde{\lambda}\left( 1-\frac{1}{2}\tilde{\lambda}  +  \frac{\tilde{\lambda}}{2}e^{2ika} \right)D\ \notag \\ 
+        &\Leftrightarrow \left( 2 -2\tilde{\lambda} + \frac{1}{2}\tilde{\lambda}^2 - \frac{1}{2} \tilde{\lambda}^2 e^{2ika} \right)D = 2\notag \\
+        &\Leftrightarrow \left( 4 -4\tilde{\lambda} + \tilde{\lambda}^2 - \tilde{\lambda}^2 e^{2ika} \right)D = 4\notag \\
+        &\Leftrightarrow D = \frac{4}{4 -4\tilde{\lambda} + \tilde{\lambda}^2 - \tilde{\lambda}^2 e^{2ika}} \notag \\
+        &\Leftrightarrow D = \frac{4}{4 -4\lambda / ik+ (\lambda/ik)^2 - (\lambda/ik)^2 e^{2ika}} \notag \\
+        &\Leftrightarrow D = \frac{4k^2}{4k^2 +i4\lambda k- \lambda^2 +\lambda^2 e^{2ika}} \notag \\
+        &\Leftrightarrow D = \frac{4k^2}{4k^2 +i4\lambda k- \lambda^2 +\lambda^2 (\cos 2ka + i\sin 2ka)} \notag \\
+        &\Leftrightarrow D = \frac{4k^2}{\lambda^2 \cos 2ka + 4k^2 - \lambda^2+i(4\lambda k +\lambda^2  \sin 2ka)}
+    \end{align}
+    となる。ちなみにAは
+    \begin{align}
+        A &= -1 + \left( 1-\frac{1}{2}\tilde{\lambda}  +  \frac{\tilde{\lambda}}{2}e^{2ika} \right)D \notag \\
+        &=-1 + \left( 1-\frac{1}{2}\tilde{\lambda}  +  \frac{\tilde{\lambda}}{2}e^{2ika} \right)\frac{4}{\tilde{\lambda}(e^{2ika}- \tilde{\lambda}e^{2ika}+\tilde{\lambda}-2)} \notag \\
+        &= \frac{-\left( \tilde{\lambda}(e^{2ika}- \tilde{\lambda}e^{2ika}+\tilde{\lambda}-2) \right) + 4 - 2\tilde{\lambda} +2\tilde{\lambda}e^{2ika}}{\tilde{\lambda}(e^{2ika}- \tilde{\lambda}e^{2ika}+\tilde{\lambda}-2)} \notag \\
+        &=\frac{ \tilde{\lambda}(-e^{2ika}+ \tilde{\lambda}e^{2ika}-\tilde{\lambda}+2 -2+2e^{2ika})  + 4  }{\tilde{\lambda}(e^{2ika}- \tilde{\lambda}e^{2ika}+\tilde{\lambda}-2)} \notag \\
+        &=\frac{ \tilde{\lambda}( \tilde{\lambda}e^{2ika}-\tilde{\lambda}+e^{2ika})  + 4  }{\tilde{\lambda}(e^{2ika}- \tilde{\lambda}e^{2ika}+\tilde{\lambda}-2)} \notag \\
+        &=\frac{\tilde{\lambda}( e^{2ika}  + \tilde{\lambda}e^{2ika}-\tilde{\lambda})  + 4  }{\tilde{\lambda}(e^{2ika}- \tilde{\lambda}e^{2ika}+\tilde{\lambda}-2)} \notag \\
+        &=\frac{\tilde{\lambda}( e^{ika}  + \tilde{\lambda}e^{ika}-\tilde{\lambda}e^{-ika})  + 4 e^{-ika} }{\tilde{\lambda}(e^{ika}- \tilde{\lambda}e^{ika}+\tilde{\lambda}e^{-ika}-2e^{-ika})} \notag \\
+        &=\frac{\tilde{\lambda}( e^{ika}  + 2i\tilde{\lambda}\sin ka)  + 4 e^{-ika} }{\tilde{\lambda}(2i\sin ka- 2\tilde{\lambda}\cos ka -e^{-ika})}
+    \end{align}
+    となる。\\
+    したがって透過率は
+    \begin{align}
+        T &= |D|^2\notag \\
+        &= \frac{16k^4}{(\lambda^2 \cos 2ka + 4k^2 - \lambda^2)^2+(4\lambda k +\lambda^2  \sin 2ka)^2} \notag \\
+        &= \frac{16k^4}{\lambda^4\cos^22ka + 16k^4 + \lambda^4+8k^2\lambda^2\cos 2ka-2\lambda^4\cos2ka-8k^2\lambda^2 + 16k^2\lambda^2 + \lambda^4 \sin^22ka + 8k\lambda^3 \sin2ka} \notag \\
+        &=\frac{16k^4}{ 16k^4 + 2\lambda^4 +8k^2\lambda^2\cos 2ka-2\lambda^4\cos2ka+ 8k^2\lambda^2  + 8k\lambda^3 \sin2ka} \notag \\
+        &=\frac{16k^4}{ 16k^4  +8k^2\lambda^2(1+\cos 2ka)+2\lambda^4(1-\cos2ka)  + 8k\lambda^3 \sin2ka} \notag \\
+        &=\frac{16k^4}{ 16k^4  +16k^2\lambda^2\cos^2 ka+4\lambda^4\sin^2 ka  + 16k\lambda^3 \sin ka\cos ka} \notag \\
+        &=\frac{16k^4}{ 16k^4  +4\lambda^2(4k^2\cos^2 ka+\lambda^2\sin^2 ka  + 4k\lambda \sin ka\cos ka)} \notag \\
+        &= \frac{16k^2}{16k^2 + 4\lambda^2 (2k \cos ka + \lambda \sin ka)}
+    \end{align}
+    となる。全透過条件$(T=1)$は
+    \begin{align}
+        &2k \cos ka + \lambda \sin ka = 0\notag \\
+        &\Leftrightarrow \tan ka = -\frac{2k}{\lambda}
+    \end{align}
+    となる\footnote{自分の年で出題されないことを祈りましょう(2025年度広域科学専攻修士課程入学試験で出題)}$\square$
+\section{角運動量}
+    \begin{itembox}[l]{\large{解答の流れ}}
+        \begin{enumerate}
+            \item 角運動量演算子の交換関係、角運動量の大きさの二乗演算子、上昇・下降演算子が定義される
+            \[ [\hat{J_i},\hat{J}_j] = i\hbar \hat{J}_k \varepsilon_{ijk},\quad \hat{\bm{J}^2} := \hat{J}_x^2 + \hat{J}_y^2 + \hat{J}_z^2,\quad \hat{J}_{\pm} := \hat{J}_x \pm i\hat{J}_y \]
+            ($\hat{J}_i$の交換関係は$\hat{J}_i := \left\{ \hat{\bm{r}}\times\hat{\bm{p}} \right\}_i $から導出させる場合もある)
+            \item 以下の交換関係を示す
+            \[ [\hat{J}_{\pm},\hat{J}_z] = \mp \hbar \hat{J}_{\pm},\quad [\hat{J}_{\pm}, \hat{\bm{J}^2}] = 0,\quad [\hat{\bm{J}^2},\hat{J}_z]=0 \]
+            \item 上昇・下降演算子が$\hat{J}_z$の固有値を$\pm \hbar$だけ増減させることを示す
+            \item 角運動量の大きさの二乗演算子を
+            \[ \hat{\bm{J}^2} = \frac{1}{2}\left( \hat{J}_+\hat{J}_- + \hat{J}_-\hat{J}_+ \right) + \hat{J}_z^2\]
+            と書き換え、$\hat{J}_z$の固有状態を$\hat{J}_z\ket{m} = m\hbar\ket{m}$と表すとき
+            \[ \hat{J}_+ \ket{m_{\max}} =0,\quad \hat{J}_{-} \ket{0} = 0 \]
+            を満たす状態が存在することを示す
+            \item 角運動量の大きさの二乗演算子を
+            \[ \hat{\bm{J}^2} = \hat{J}_z(\hat{J}_z + 1) + \hat{J}_- \hat{J}_+\]
+            と書き換え、$j := m_{\max}$とすれば
+            \[ \hat{\bm{J}^2} \ket{j} = j(j+1)\hbar^2\ket{j} \]
+            となることを示す
+            \item $\hat{\bm{J}^2} \ket{j,m} = j(j+1)\hbar^2\ket{j,m}, \hat{J}_z \ket{j,m} = m\hbar \ket{j,m}$と表すとき、$\hat{J}_- \ket{j,m}$のノルムを考え、
+            \[ \hat{J}_+ \ket{j,m} = c_+ \ket{j,m+1},\quad \hat{J}_- \ket{j,m} = c_- \ket{j,m-1} \]
+            を満たす定数$c_+,c_-$を求める。また、$j$が正か0の整数、または半整数であることを示す
+        \end{enumerate}
+    \end{itembox}
+\subsection{角運動量演算子の交換関係}
+    三成分とも計算は同じなのでここでは$[\hat{J}_x,\hat{J}_y]=i\hbar \hat{J}_z$を計算する。\\
+    角運動量演算子の定義$\hat{J}_i := \left\{ \hat{\bm{r}}\times\hat{\bm{p}} \right\}_i$より
+    \begin{align}
+        [\hat{J}_x,\hat{J}_y] &= \hat{J}_x \hat{J}_y - \hat{J}_y \hat{J}_x \notag \\
+        &= \frac{\hbar}{i}\left( y\frac{\partial }{\partial z} -z\frac{\partial}{\partial y} \right)\frac{\hbar}{i}\left( z\frac{\partial }{\partial x} -x\frac{\partial}{\partial z} \right) -\frac{\hbar}{i}\left( z\frac{\partial }{\partial x} -x\frac{\partial}{\partial z} \right) \frac{\hbar}{i}\left( y\frac{\partial }{\partial z} -z\frac{\partial}{\partial y} \right) \notag \\
+        &= \left( \frac{\hbar}{i} \right)^2 \left( y\frac{\partial}{\partial x} - x\frac{\partial }{\partial y}  \right) \notag \\
+        &= i\hbar \left( x\frac{\partial }{\partial y} - y\frac{\partial}{\partial x} \right) \notag \\
+        &= i\hbar \hat{J}_z
+    \end{align}
+    となる$\square$
+\subsection{他の演算子の交換関係}
+    上昇・下降演算子とz方向の角運動量演算子との交換関係は
+    \begin{align}
+        [\hat{J}_{\pm},\hat{J}_z] &= \hat{J}_{\pm} \hat{J}_z - \hat{J}_z \hat{J}_{\pm} \notag \\ 
+        &= \left( \hat{J}_x \pm i\hat{J}_y \right) \hat{J}_z - \hat{J}_z \left( \hat{J}_x \pm i\hat{J}_y \right) \notag \\
+        &= \hat{J}_x \hat{J}_z \pm i \hat{J}_y \hat{J}_z - \hat{J}_z \left( \hat{J}_x \pm i\hat{J}_y \right) \notag \\
+        &= \left( \hat{J}_z \hat{J}_x - i\hbar \hat{J}_y\right) \pm i \left( \hat{J}_z \hat{J}_y + i\hbar \hat{J}_x \right) - \hat{J}_z \left( \hat{J}_x \pm i\hat{J}_y \right) \notag \\
+        &= - i\hbar \hat{J}_y \pm i^2\hbar \hat{J}_x \notag \\
+        &= - i\hbar \hat{J}_y \mp \hbar \hat{J}_x \notag \\
+        &=\mp \hbar \left( \hat{J}_x \pm i\hat{J}_y \right) \notag \\
+        &= \mp \hbar \hat{J}_{\pm}
+    \end{align}
+    となる$\square$\\
+    $\ \ $上昇・下降演算子と角運動量の大きさ演算子の交換関係は
+    \begin{align}
+        [\hat{J}_{\pm},\hat{\bm{J}^2}] &= \hat{J}_{\pm} \hat{\bm{J}^2} - \hat{\bm{J}^2}\hat{J}_{\pm} \notag \\
+        &= \left( \hat{J}_x \pm i\hat{J}_y \right) \left( \hat{J}_x^2 + \hat{J}_y^2 + \hat{J}_z^2 \right) - \left( \hat{J}_x^2 + \hat{J}_y^2 + \hat{J}_z^2 \right) \left( \hat{J}_x \pm i\hat{J}_y \right) \notag \\
+        &= \left( \hat{J}_x^3 -\hat{J}_x^3\right) + \left( \hat{J}_x \hat{J}_y^2 - \hat{J}_y^2 \hat{J}_x\right) + \left( \hat{J}_x \hat{J}_z^2 -\hat{J}_z^2\hat{J}_x \right) \pm i\left\{ \left( \hat{J}_y \hat{J}_x^2 - \hat{J}_x^2 \hat{J}_y \right) + \left( \hat{J}_y^3 - \hat{J}_y^3 \right) + \left( \hat{J}_y \hat{J}_z^2 - \hat{J}_z^2 \hat{J}_y \right) \right\} \notag \\
+        &= \left( \hat{J}_x \hat{J}_y^2 - \hat{J}_y^2 \hat{J}_x\right) + \left( \hat{J}_x \hat{J}_z^2 -\hat{J}_z^2\hat{J}_x \right) \pm i\left\{ \left( \hat{J}_y \hat{J}_x^2 - \hat{J}_x^2 \hat{J}_y \right) + \left( \hat{J}_y \hat{J}_z^2 - \hat{J}_z^2 \hat{J}_y \right) \right\} \notag \\
+        &= \left( i\hbar\hat{J}_z\hat{J}_y  + i\hbar \hat{J}_y \hat{J}_z\right) + \left( -i\hbar \hat{J}_y \hat{J}_z -i\hbar \hat{J}_z\hat{J}_y \right) \pm i\left\{ \left( -i\hbar \hat{J}_z \hat{J}_x - i\hbar \hat{J}_x \hat{J}_z \right) + \left( i\hbar \hat{J}_x \hat{J}_z + i\hbar \hat{J}_z \hat{J}_x \right) \right\} \notag \\
+        &= 0
+    \end{align}
+    となる$\square$\\
+    $\ \ $角運動量の大きさの二乗演算子とz方向の角運動量演算子の交換関係は
+    \begin{align}
+        [\hat{\bm{J}^2},\hat{J}_z] &= \hat{\bm{J}^2} \hat{J}_z - \hat{J}_z \hat{\bm{J}^2} \notag \\
+        &= \left( \hat{J}_x^2 + \hat{J}_y^2 + \hat{J}_z^2 \right) \hat{J}_z - \hat{J}_z\left( \hat{J}_x^2 + \hat{J}_y^2 + \hat{J}_z^2 \right) \notag \\
+        &= \left( \hat{J}_x^2 \hat{J}_z - \hat{J}_z \hat{J}_x^2 \right) + \left( \hat{J}_y^2 \hat{J}_z - \hat{J}_z \hat{J}_y^2 \right) + \left( \hat{J}_z^3 - \hat{J}_z^3 \right) \notag \\
+        &= \left( -i\hbar \hat{J}_x \hat{J}_y - i\hbar \hat{J}_y \hat{J}_x \right) + \left( i\hbar \hat{J}_y \hat{J}_x + i\hbar \hat{J}_x \hat{J}_y \right) \notag \\
+        &= 0
+    \end{align}
+    となる\footnote{この結果は角運動量の大きさとz方向の角運動量の大きさの同時固有状態が存在することを表す}$\square$
+\subsection{上昇・下降演算子の役割}
+    $\hat{J}_z$の固有状態$\hat{J}_z \ket{m} = m\hbar \ket{m}$の両辺に$\hat{J}_{\pm}$を作用させると
+    \begin{align}
+        \hat{J}_{\pm} \hat{J}_z\ket{m} = m\hbar \hat{J}_{\pm}\ket{m}
+    \end{align}
+    交換関係$[\hat{J}_{\pm},\hat{J}_z] = \mp \hbar \hat{J}_{\pm}$より
+    \begin{align}
+        &\left( \hat{J}_z\hat{J}_{\pm} \mp \hbar \hat{J}_{\pm} \right)\ket{m} = m\hat{J}_{\pm}\ket{m} \notag \\
+        &\Leftrightarrow \hat{J}_z\hat{J}_{\pm} \ket{m} = (m \pm 1)\hbar  \hat{J}_{\pm}\ket{m}
+    \end{align}
+    となる。よって$\hat{J}_{\pm}\ket{m}$は$\hat{J}_z$の固有状態となっていることがわかる。さらに固有値は$m\pm1$となっているので、$\hat{J}_{\pm}$を作用させることで固有値が$\hbar$だけ増減することが分かる。\footnote{角運動量の大きさの二乗演算子と上昇・下降演算子が可換であったことを思い出すと、角運動量の大きさは変えずにz方向の角運動量だけ変化させることができるということを表す}$\square$
+\subsection{z方向角運動量の基底状態・最大励起状態の存在}
+    上昇・下降演算子の積を計算すると
+    \begin{align}
+        \hat{J}_+ \hat{J}_- &= \left( \hat{J}_x + i\hat{J}_y \right) \left( \hat{J}_x - i\hat{J}_y \right) \notag \\
+        &= \hat{J}_x^2 + \hat{J}_y^2 - i\left( \hat{J}_x \hat{J}_y - \hat{J}_y \hat{J}_x \right) \notag \\
+        &= \hat{J}_x^2 + \hat{J}_y^2 - i\left( i\hbar \hat{J}_z \right) \notag \\
+        &= \hat{J}_x^2 + \hat{J}_y^2 + \hbar \hat{J}_z 
+    \end{align}
+    \begin{align}
+        \hat{J}_- \hat{J}_+ &= \left( \hat{J}_x - i\hat{J}_y \right) \left( \hat{J}_x + i\hat{J}_y \right) \notag \\
+        &= \hat{J}_x^2 + \hat{J}_y^2 + i\left( \hat{J}_x \hat{J}_y - \hat{J}_y \hat{J}_x \right) \notag \\
+        &= \hat{J}_x^2 + \hat{J}_y^2 + i\left( i\hbar \hat{J}_z \right) \notag \\
+        &= \hat{J}_x^2 + \hat{J}_y^2 - \hbar \hat{J}_z 
+    \end{align}
+    となるので、角運動量の大きさ演算子は
+    \begin{align}
+        &\hat{J}_+ \hat{J}_- + \hat{J}_- \hat{J}_+ = 2\left( \hat{J}_x^2 + \hat{J}_y^2 \right) \notag \\
+        &\Leftrightarrow \hat{J}_x^2 + \hat{J}_y^2 = \frac{1}{2} \left( \hat{J}_+ \hat{J}_- + \hat{J}_- \hat{J}_+ \right) \notag \\
+        &\Leftrightarrow \hat{J}_x^2 + \hat{J}_y^2 + \hat{J}_z^2 = \frac{1}{2} \left( \hat{J}_+ \hat{J}_- + \hat{J}_- \hat{J}_+ \right) + \hat{J}_z^2 \notag \\
+        &\Leftrightarrow \hat{\bm{J}^2} = \frac{1}{2} \left( \hat{J}_+ \hat{J}_- + \hat{J}_- \hat{J}_+ \right) + \hat{J}_z^2
+    \end{align}
+    とかける。\\
+    $\ \ $$\hat{J}_z$の固有状態を$\hat{J}_z\ket{m} = m\hbar\ket{m}$と表すと$\hat{\bm{J}^2}$の期待値は
+    \begin{align}
+        \bra{m}\hat{\bm{J}^2}\ket{m} &= \bra{m}\frac{1}{2} \left( \hat{J}_+ \hat{J}_- + \hat{J}_- \hat{J}_+ \right) + \hat{J}_z^2\ket{m} \notag \\
+        &= \frac{1}{2}\left( \bra{m} \hat{J}_+ \hat{J}_- \ket{m} + \bra{m} \hat{J}_- \hat{J}_+ \ket{m}\right) + \bra{m} \hat{J}_z^2 \ket{m}
+    \end{align}
+    上昇・下降演算子がエルミート共役の関係であることを用いると、第一項目、第二項目は状態のノルムになっており、非負であることが分かるので
+    \begin{align}
+        &\bra{m}\hat{\bm{J}^2}\ket{m}\ge  \bra{m} \hat{J}_z^2 \ket{m} = (m\hbar)^2
+    \end{align}
+    が成り立つ。したがって、角運動量の大きさの二乗の固有値を$(J\hbar)^2$とすれば
+    \begin{align}
+        |m|\le J \label{kakuunndouryou no
+         futoushiki}
+    \end{align}
+    が成り立つ。ここで上昇・下降演算子の役割を思い出すと
+    \begin{align}
+        &\hat{J}_+ \ket{m_{\max}} = 0 \label{mMAX}\\
+        &\hat{J}_- \ket{0} = 0 \label{mMIN}
+    \end{align}
+    を満たす状態が存在しないと不等式\eqref{kakuunndouryou no 
+    futoushiki}が成り立たない状態が存在してしまう。よって\eqref{mMAX},\eqref{mMIN}式を満たすz方向の角運動量の基底状態と最大励起状態が存在する$\square$
+\subsection{角運動量の大きさの二乗演算子の固有値}
+    角運動量の大きさの二乗演算子は、前に計算した
+    \begin{align}
+        \hat{J}_- \hat{J}_+ = \hat{J}_x^2 + \hat{J}_y^2 - \hbar \hat{J}_z 
+    \end{align}
+    より
+    \begin{align}
+        \hat{\bm{J}^2} &= \hat{J}_z^2 + \hbar \hat{J}_z + \hat{J}_- \hat{J}_+ \notag \\
+        &= \hat{J}_z (\hat{J}_z + \hbar) + \hat{J}_- \hat{J}_+
+    \end{align}
+    とかける。z方向の角運動量の最大励起状態を$\ket{j}$とし、$\hat{\bm{J}^2}$を作用させると
+    \begin{align}
+        \hat{\bm{J}^2}\ket{j} &= \hat{J}_z (\hat{J}_z + \hbar) + \hat{J}_- \hat{J}_+ \ket{j} \notag \\
+        &= \hat{J}_z (\hat{J}_z + \hbar) \ket{j} \notag \\
+        &= j(j + 1)\hbar^2\ket{j}
+    \end{align}
+    となる\footnote{したがって角運動量の大きさは$\sqrt{j(j+1)}\hbar $となるのでz方向の角運動量よりも大きさのほうが必ず大きいことになる。これは角運動量が完全に真上を向くことができないことを表す}$\square$
+\subsection{z方向の最大角運動量が取れる値}
+    上昇・下降演算子が$\ket{m}$の固有値を増減させるものであったことを思い出すと、以下の関係が成り立つ
+    \begin{align}
+        \hat{J}_{\pm} \ket{m} = c_{\pm} \ket{m \pm 1}
+    \end{align}
+    ここで
+    \begin{align}
+        &\hat{J}_- \hat{J}_+ = \hat{J}_x^2 + \hat{J}_y^2 - \hbar \hat{J}_z \notag \\
+        &= \hat{\bm{J}^2} - \hat{J}_z^2 - \hbar \hat{J}_z \notag \\
+        &= \hat{\bm{J}^2} - \hat{J}_z(\hat{J}_z + \hbar) \notag \\
+    \end{align}
+    と
+    \begin{align}
+        &\hat{J}_- \hat{J}_+ = \hat{J}_x^2 + \hat{J}_y^2 + \hbar \hat{J}_z \notag \\
+        &= \hat{\bm{J}^2} - \hat{J}_z^2 + \hbar \hat{J}_z \notag \\
+        &= \hat{\bm{J}^2} - \hat{J}_z(\hat{J}_z - \hbar) \notag \\
+    \end{align}
+    を用いて、$\hat{\bm{J}^2} \ket{j,m} = j(j+1)\hbar^2\ket{j,m}, \hat{J}_z \ket{j,m} = m\hbar \ket{j,m}$とし、それぞれの状態のノルムを計算すると
+    \begin{align}
+        \bra{j,m} \hat{J}_- \hat{J}_+ \ket{j,m} &= \bra{j,m+1} c_+^* c_+ \ket{j,m+1} \notag \\
+        \Leftrightarrow |c_+|^2 &= \bra{j,m} \hat{J}_- \hat{J}_+ \ket{j,m} \notag \\
+        &= \bra{j,m} \hat{\bm{J}^2} - \hat{J}_z(\hat{J}_z + \hbar) \ket{j,m} \notag \\
+        &= \bra{j,m} j(j+1)\hbar^2 - m(m + 1)\hbar^2 \ket{j,m} \notag \\
+        &= j(j+1)\hbar^2 - m(m + 1)\hbar^2 
+    \end{align}
+    となるので
+    \begin{align}
+        c_+ = \sqrt{j(j+1)\hbar^2 - m(m + 1)\hbar^2 }
+    \end{align}
+    となる。同様に
+    \begin{align}
+        \bra{j,m} \hat{J}_+ \hat{J}_- \ket{j,m} &= \bra{j,m-1} c_+^* c_+ \ket{j,m-1} \notag \\
+        \Leftrightarrow |c_-|^2 &= \bra{j,m} \hat{J}_+ \hat{J}_- \ket{j,m} \notag \\
+        &= \bra{j,m} \hat{\bm{J}^2} - \hat{J}_z(\hat{J}_z - \hbar) \ket{j,m} \notag \\
+        &= \bra{j,m} j(j+1)\hbar^2 - m(m - 1)\hbar^2 \ket{j,m} \notag \\
+        &= j(j+1)\hbar^2 - m(m - 1)\hbar^2 
+    \end{align}
+    となるので
+    \begin{align}
+        c_- = \sqrt{j(j+1)\hbar^2 - m(m - 1)\hbar^2 }
+    \end{align}
+    となる。\\
+    $\ \ $またノルムは正なので
+    \begin{align}
+        j(j+1)\hbar^2 - m(m + 1)\hbar^2  \ge 0  \\
+        j(j+1)\hbar^2 - m(m - 1)\hbar^2  \ge 0
+    \end{align}
+    が成り立つ。それぞれ変形すると
+    \begin{align}
+        &j(j+1)\hbar^2 - m(m + 1)\hbar^2  \ge 0 \notag \\
+        &\Leftrightarrow j^2 + j-m^2-m \ge 0 \notag \\
+        &\Leftrightarrow j^2-m^2 + j-m \ge 0 \notag \\
+        &\Leftrightarrow (j+m)(j-m) + (j-m) \ge 0 \notag \\
+        &\Leftrightarrow (j-m)(j+m+1) \ge 0
+    \end{align}
+    したがって
+    \begin{align}
+        -j-1\le m \le j
+    \end{align}
+    が成り立つ。同様に
+    \begin{align}
+        &j(j+1)\hbar^2 - m(m - 1)\hbar^2  \ge 0 \notag \\
+        &\Leftrightarrow j^2 + j-m^2+m \ge 0 \notag \\
+        &\Leftrightarrow j^2-m^2 + j+m \ge 0 \notag \\
+        &\Leftrightarrow (j+m)(j-m) + (j+m) \ge 0 \notag \\
+        &\Leftrightarrow (j+m)(j-m+1) \ge 0
+    \end{align}
+    したがって
+    \begin{align}
+        -j\le m \le j + 1
+    \end{align}
+    が成り立つ。したがって得られた二つの不等式より
+    \begin{align}
+        -j \le m \le j
+    \end{align}
+    が成り立つ。ここで上昇・下降演算子によりmの値はjから1ずつ減らしてできる値をとることを思い出すと、ある自然数をnとするとき$\ket{j,-j}$の状態にn回上昇演算子を作用させると$\ket{j,j}$となるので、以下の関係式が成り立つ
+    \begin{align}
+        &j=n-j \notag \\
+        &\Leftrightarrow j = \frac{n}{2}
+    \end{align}
+    したがってjは正か0の整数または半整数の値をとる$\square$
+\section{調和振動子(演算子法)}
+    \begin{itembox}[l]{\large{解答の流れ}}
+        \begin{enumerate}
+            \item 生成・消滅演算子、個数演算子が定義される
+            \[ a^\dagger : = \frac{1}{\sqrt{2\hbar}}\left( \sqrt{m\omega} \hat{x} -i \frac{1}{\sqrt{m\omega}} \hat{p}\right) ,\quad a : = \frac{1}{\sqrt{2\hbar}}\left( \sqrt{m\omega} \hat{x} +i \frac{1}{\sqrt{m\omega}} \hat{p}\right),\quad \hat{N} := a^\dagger a  \]
+            調和振動子ハミルトニアンと個数演算子の関係を示す
+            \item 以下の交換関係を示す
+            \[ [\hat{a},\hat{a}^\dagger] = 1,\quad [\hat{a}^\dagger,\hat{N}]=-\hat{a}^\dagger,\quad [\hat{a},\hat{N}]=\hat{a} \]
+            \item 生成・消滅演算子がハミルトニアンの固有値を$\hbar \omega$だけ増減させることを示す
+            \item 個数演算子の固有値・固有状態を$\hat{N}\ket{n} = n\ket{n}$としたとき、nが負でない整数であることを示し
+            \[ \hat{a}\ket{0} = 0 \]
+            となる状態が存在することを示す
+            \item 生成・消滅演算子を作用させた規格化された固有状態のノルムを考え、以下の関係を示す
+            \[ \hat{a}^\dagger \ket{n} = \sqrt{n+1}\ket{n},\quad \hat{a}\ket{n+1} = \sqrt{n}\ket{n-1} \]
+            また、規格化された固有状態が
+            \[ \ket{n} = \frac{1}{\sqrt{n!}} \left(\hat{a}^\dagger\right)^n \ket{0} \]
+            で与えられることを示す
+        \end{enumerate}
+        ・発展問題
+        \begin{enumerate}
+            \item 位置・運動量演算子に対するハイゼンベルグ方程式を考える
+            \[ i\hbar \frac{d}{dt} \hat{x} = [\hat{x},\hat{H}] ,\quad i\hbar \frac{d}{dt} \hat{p} = [\hat{p},\hat{H}]\]
+            \item ハイゼンベルグ運動方程式を解き、演算子が古典的な調和振動子の解と同様の時間発展をすることを示す
+        \end{enumerate}
+    \end{itembox}
+\subsection{ハミルトニアンと個数演算子の関係}
+    個数演算子を実際に計算すると
+    \begin{align}
+        \hat{N} &= \frac{1}{\sqrt{2\hbar}}\left( \sqrt{m\omega} \hat{x} -i \frac{1}{\sqrt{m\omega}} \hat{p}\right) \frac{1}{\sqrt{2\hbar}}\left( \sqrt{m\omega} \hat{x} +i \frac{1}{\sqrt{m\omega}} \hat{p}\right) \notag \\
+        &= \frac{1}{2\hbar} \left( m\omega \hat{x}^2 + \frac{1}{m\omega}\hat{p}^2 + i\hat{x}\hat{p} -i\hat{p}\hat{x} \right) \notag \\
+        &= \frac{1}{\hbar \omega} \left( \frac{m\omega^2}{2} \hat{x}^2 + \frac{1}{2m}\hat{p}^2 + i\frac{\omega}{2} \left(\hat{x}\hat{p} -\hat{p}\hat{x} \right) \right) \notag \\
+        &= \frac{1}{\hbar \omega} \left( \frac{m\omega^2}{2} \hat{x}^2 + \frac{1}{2m}\hat{p}^2 - \frac{\hbar \omega}{2} \right) \notag \\
+        &= \frac{1}{\hbar \omega} \left( \frac{m\omega^2}{2} \hat{x}^2 + \frac{1}{2m}\hat{p}^2 \right) - \frac{1}{2}
+    \end{align}
+    となり、調和振動子ハミルトニアン$\hat{H}(=\frac{m\omega^2}{2} \hat{x}^2 + \frac{1}{2m}\hat{p}^2 )$で書き換えると
+    \begin{align}
+        &\hat{N} = \frac{1}{\hbar \omega} \hat{H} - \frac{1}{2} \notag \\
+        &\Leftrightarrow \hat{H} = \hbar \omega \left( \hat{N} + \frac{1}{2} \right)
+    \end{align}
+    となる
+\subsection{生成・消滅演算子の交換関係}
+    生成・消滅演算子どうしの交換関係は
+    \begin{align}
+        [\hat{a},\hat{a}^\dagger] &= \hat{a}\hat{a}^\dagger - \hat{a}^\dagger \hat{a} \notag \\
+        &= \frac{1}{2\hbar}\left( \sqrt{m\omega} \hat{x} +i \frac{1}{\sqrt{m\omega}} \hat{p}\right)\left( \sqrt{m\omega} \hat{x} -i \frac{1}{\sqrt{m\omega}} \hat{p}\right) - \frac{1}{2\hbar}\left( \sqrt{m\omega} \hat{x} -i \frac{1}{\sqrt{m\omega}} \hat{p}\right)\left( \sqrt{m\omega} \hat{x} +i \frac{1}{\sqrt{m\omega}} \hat{p}\right) \notag \\
+        &= \frac{1}{2\hbar}\left( -i\hat{x}\hat{p} + i\hat{p}\hat{x} -i\hat{x}\hat{p} + i\hat{p}\hat{x} \right) \notag \\
+        &= -\frac{i}{\hbar}\left( \hat{x}\hat{p} - \hat{p}\hat{x} \right) \notag \\
+        &= 1
+    \end{align}
+    となる。\\
+    $\ \ $生成演算子と個数演算子の交換関係は
+    \begin{align}
+        [\hat{a}^\dagger,\hat{N}] &= [\hat{a}^\dagger,\hat{a}^\dagger \hat{a}] \notag \\
+        &= \hat{a}^\dagger \hat{a}^\dagger \hat{a} - \hat{a}^\dagger \hat{a}\hat{a}^\dagger \notag \\
+        &= \hat{a}^\dagger \hat{a}^\dagger \hat{a} +\left( -\hat{a}^\dagger \hat{a}^\dagger \hat{a} + \hat{a}^\dagger \hat{a}^\dagger \hat{a}  \right)- \hat{a}^\dagger \hat{a}\hat{a}^\dagger \notag \\
+        &= [\hat{a}^\dagger,\hat{a}^\dagger]\hat{a} + \hat{a}^\dagger [\hat{a}^\dagger,\hat{a}] \notag \\
+        &= -\hat{a}^\dagger
+    \end{align}
+    となる。\footnote{$[\hat{A},\hat{B}\hat{C}]=[\hat{A},\hat{B}]\hat{C} + \hat{B}[\hat{A},\hat{C}]と[\hat{A}\hat{B},\hat{C}] = \hat{A}[\hat{B},\hat{C}] + [\hat{A},\hat{C}]\hat{B}$は公式として覚えておくとよい}\\
+    $\ \ $消滅演算子と個数演算子の交換関係は
+    \begin{align}
+        [\hat{a},\hat{N}] &= [\hat{a},\hat{a}^\dagger \hat{a}] \notag \\
+        &= [\hat{a},\hat{a}^\dagger]\hat{a} + \hat{a}^\dagger [\hat{a},\hat{a}] \notag \\
+        &= -\hat{a}
+    \end{align}
+    となる。$\square$
+\subsection{生成・消滅演算子の役割}
+    個数演算子の固有値・固有状態を$\hat{N}\ket{n} = n\ket{n}$とするとき、両辺に生成演算子を作用させると
+    \begin{align}
+        &\hat{a}^\dagger \hat{N}\ket{n} = n\hat{a}^\dagger\ket{n} \notag \\
+        &\Leftrightarrow \left( \hat{N}\hat{a}^\dagger - \hat{a}^\dagger \right) \ket{n} = n\hat{a}^\dagger \ket{n} \notag \\
+        &\Leftrightarrow \hat{N} \hat{a}^\dagger \ket{n} = \left( n + 1 \right) \hat{a}^\dagger \ket{n}
+    \end{align}
+    となる。消滅演算子の場合も同様に
+    \begin{align}
+        &\hat{a} \hat{N}\ket{n} = n\hat{a}\ket{n} \notag \\
+        &\Leftrightarrow \hat{N}\hat{a}\ket{n} = \left( n-1 \right)\hat{a}\ket{n}
+    \end{align}
+    となる。したがって、生成・消滅演算子は個数演算子の固有値を1増減させた状態をつくる。ハミルトニアンが個数演算子で表されることを思い出すと
+    \begin{align}
+        &\hat{H}\hat{a}^\dagger \ket{n} = \hbar \omega \left( n+1 + \frac{1}{2} \right) \hat{a}^\dagger \ket{n} \notag \\
+        &\hat{H}\hat{a} \ket{n} = \hbar \omega \left( n-1 + \frac{1}{2} \right) \hat{a} \ket{n}
+    \end{align}
+    となるので、生成・消滅演算子はハミルトニアンの固有値を$\hbar \omega $だけ増減させた状態をつくる役割を持つ。
+\subsection{基底状態の存在}
+    個数演算子の固有状態に消滅演算子を作用させた状態のノルムを考える
+    \begin{align}
+        &\bra{n}\hat{a}^\dagger \hat{a} \ket{n} = \bra{n}\hat{N}\ket{n} \notag \\
+        &\Leftrightarrow \bra{n}\hat{a}^\dagger \hat{a} \ket{n} = n\braket{n|n} \notag \\ 
+        &\Leftrightarrow n = \bra{n}\hat{a}^\dagger \hat{a} \ket{n} \ge0
+    \end{align}
+    が成り立つ。ここで消滅演算子が個数演算子の固有値を1だけ下げることを思い出すと、nが整数でない場合、または負の整数の場合$n \ge 0$が成り立たない状態が存在してしまう。したがってnは負でない整数であることが分かる。したがって固有値が0の状態に消滅演算子を作用させた状態のノルムを考えると
+    \begin{align}
+        &\bra{0}\hat{a}^\dagger \hat{a}\ket{0} = \bra{0}\hat{N}\ket{0} \notag \\
+        &\Leftrightarrow \bra{0}\hat{a}^\dagger \hat{a}\ket{0} = \bra{0}0\ket{0} = 0 \notag \\
+        &\Leftrightarrow \hat{a}\ket{0} = 0
+    \end{align}
+    となる。\footnote{$\ket{0}$が調和振動子ハミルトニアンに対する基底状態となる}$\square$
+\subsection{固有状態の規格化}
+    個数演算子の固有状態に生成・消滅演算子を作用させたものは個数演算子の固有値を1だけ増減させた固有状態であったことを思い出すと
+    \begin{align}
+        \hat{a}^\dagger \ket{n} &= c_+ \ket{n+1} \notag \\
+        \hat{a}\ket{n} &= c_- \ket{n-1}
+    \end{align}
+    となる。それぞれの規格化されたノルムを考える。\\
+    $\ \ $生成演算子の場合は
+    \begin{align}
+        &\bra{n}\hat{a}\hat{a}^\dagger \ket{n} = \bra{n+1} c_+^* c_+ \ket{n+1} \notag \\
+        &\bra{n}\hat{a}^\dagger \hat{a}+1 \ket{n} = \bra{n+1} c_+^* c_+ \ket{n+1} \notag \\
+        &\Leftrightarrow \bra{n}\hat{N} + 1\ket{n} = |c_+|^2 \braket{n+1|n+1} \notag \\
+        &\Leftrightarrow (n+1) \braket{n|n} = |c_+|^2 \braket{n+1|n+1} \notag \\
+        &\Leftrightarrow |c_+|^2 = n+1
+    \end{align}
+    となる。\\
+    $\ \ $消滅演算子も同様に
+    \begin{align}
+        &\bra{n}\hat{a}^\dagger \hat{a} \ket{n} = \bra{n-1} c_-^* c_- \ket{n-1}  \notag \\
+        &|c_-|^2 = n
+    \end{align}
+    となる。以上より
+    \begin{align}
+        \hat{a}^\dagger \ket{n} = \sqrt{n+1}\ket{n+1},\quad \hat{a}\ket{n} = \sqrt{n}\ket{n-1}
+    \end{align}
+    となる。\\
+    $\ \ $また規格化された第n励起状態は基底状態を用いて
+    \begin{align}
+        \ket{n} = \frac{1}{\sqrt{n}} \hat{a}^\dagger \ket{n-1} = \frac{1}{\sqrt{n(n-1)}}\hat{a}^\dagger \hat{a}^\dagger \ket{n-2} = \cdots = \frac{1}{\sqrt{n!}}\left( \hat{a}^\dagger \right)^n \ket{0}
+    \end{align}
+    と表せる$\square$
+\subsection{ハイゼンベルグの運動方程式}
+    シュレーディンガー方程式を形式的に解くと
+    \begin{align}
+        &i\hbar \frac{\partial}{\partial t} \ket{\psi} = \hat{H} \ket{\psi} \notag \\
+        &\Rightarrow \ket{\psi_{(t)}} = e^{\frac{\hat{H}}{i\hbar}t} \ket{\psi_{(0)}}
+    \end{align}
+    となる。これを用いて、ある時間に陽に依存しない演算子$\hat{A}$の期待値は
+    \begin{align}
+        \braket{\psi|\hat{A}|\psi} = \bra{\psi_{(0)}}e^{-\frac{\hat{H}}{i\hbar}t} \hat{A}e^{\frac{\hat{H}}{i\hbar}t} \ket{\psi_{(0)}}
+    \end{align}
+    となる。ここで演算子のハイゼンベルグ表示$\hat{A}_H$を
+    \begin{align}
+        \hat{A}_H := e^{-\frac{\hat{H}}{i\hbar}t} \hat{A}e^{\frac{\hat{H}}{i\hbar}t}
+    \end{align}
+    と定義する。\footnote{波動関数の時間発展をすべて演算子に押し付けたことになる。また導出過程から明らかなように、期待値の時間発展はハイゼンベルグ表示でも元と変わらない}\\
+    ハイゼンベルグ表示の演算子の時間発展は
+    \begin{align}
+        \frac{d}{dt} \hat{A}_H &= \frac{d}{dt} e^{-\frac{\hat{H}}{i\hbar}t} \hat{A}e^{\frac{\hat{H}}{i\hbar}t} \notag \\
+        &= \left( \frac{d}{dt} e^{-\frac{\hat{H}}{i\hbar}t} \right)\hat{A}e^{\frac{\hat{H}}{i\hbar}t} +  e^{-\frac{\hat{H}}{i\hbar}t} \hat{A} \left( \frac{d}{dt}e^{\frac{\hat{H}}{i\hbar}t} \right) \notag \\
+        &= -\frac{\hat{H}}{i\hbar} e^{-\frac{\hat{H}}{i\hbar}t} \hat{A}e^{\frac{\hat{H}}{i\hbar}t} + e^{-\frac{\hat{H}}{i\hbar}t} \hat{A}e^{\frac{\hat{H}}{i\hbar}t} \frac{\hat{H}}{i\hbar} \notag \\
+        &= -\frac{\hat{H}}{i\hbar} \hat{A}_H + \hat{A}_H \frac{\hat{H}}{i\hbar} \notag \\
+        &= \frac{1}{i\hbar} [\hat{A}_H,\hat{H}]
+    \end{align}
+    となる。
+    \begin{align}
+        i\hbar \frac{d}{dt} \hat{A}_H = [\hat{A}_H,\hat{H}]
+    \end{align}
+    これをハイゼンベルグの運動方程式という。\\
+    $\ \ $位置演算子と調和振動子ハミルトニアンの交換関係は
+    \begin{align}
+        [\hat{x}_H,\hat{H}] &= \hat{x}_H \left( \frac{m\omega^2}{2}\hat{x}_H^2 + \frac{1}{2m} \hat{p}_H^2 \right) - \left( \frac{m\omega^2}{2}\hat{x}_H^2 + \frac{1}{2m} \hat{p}_H^2 \right) \hat{x}_H \notag \\
+        &= \frac{1}{2m}\left( \hat{x}_H \hat{p}_H^2 - \hat{p}_H^2\hat{x}_H \right) \notag \\
+        &= \frac{1}{2m} \left( \hat{p}_H\hat{x}_H \hat{p}_H + i\hbar\hat{p}_H- \left( \hat{p}_H\hat{x}_H \hat{p}_H - i\hbar\hat{p}_H \right) \right) \notag \\
+        &= \frac{i\hbar }{m} \hat{p}_H
+    \end{align}
+    となる。\\
+    $\ \ $運動量演算子と調和振動子ハミルトニアンの交換関係は
+    
+    \begin{align}
+        [\hat{p}_H,\hat{H}] &= \hat{p}_H \left( \frac{m\omega^2}{2}\hat{x}_H^2 + \frac{1}{2m} \hat{p}_H^2 \right) - \left( \frac{m\omega^2}{2}\hat{x}_H^2 + \frac{1}{2m} \hat{p}_H^2 \right) \hat{p}_H \notag \\
+        &= \frac{m\omega^2}{2}\left( \hat{p}_H \hat{x}_H^2 - \hat{x}_H^2\hat{p}_H \right) \notag \\
+        &= \frac{m\omega^2}{2} \left( \hat{x}_H\hat{p}_H \hat{x}_H - i\hbar\hat{x}_H- \left( \hat{x}_H\hat{p}_H \hat{x}_H + i\hbar\hat{x}_H \right) \right) \notag \\
+        &= -i\hbar m\omega^2 \hat{x}_H
+    \end{align}
+    となる。したがって、位置・運動量演算子に対するハイゼンベルグ運動方程式は
+    \begin{align}
+        &\frac{d}{dt} \hat{x}_H = \frac{1}{m} \hat{p}_H \\
+        &\frac{d}{dt} \hat{p}_H = -m\omega^2 \hat{x}_H
+    \end{align}
+    となる。
+\subsection{古典解との類似性}
+    ハイゼンベルグ運動方程式を整理すると
+    \begin{align}
+        &\frac{d}{dt} \hat{x}_H = \frac{1}{m} \hat{p}_H \notag \\
+        &\Leftrightarrow \frac{d^2}{dt^2} \hat{x}_H = \frac{1}{m} \frac{d}{dt}\hat{p}_H = -\omega^2 \hat{x}_H
+    \end{align}
+    \begin{align}
+        &\frac{d}{dt} \hat{p}_H = -m\omega^2 \hat{x}_H \notag \\
+        &\Leftrightarrow \frac{d^2}{dt^2} \hat{p}_H = -m\omega^2 \frac{d}{dt} \hat{x}_H = -\omega^2 \hat{p}_H
+    \end{align}
+    となるので、この方程式の解は振動数$\omega$の振動解となり、古典解と一致する$\square$
+\section{調和振動子コヒーレント状態}
+    \begin{itembox}[l]{\large{解答の流れ}}
+        \begin{enumerate}
+            \item 調和振動子の消滅演算子の固有状態として、コヒーレント状態が定義される
+            \[ \hat{a} \ket{\lambda} = \lambda \ket{\lambda},\quad \lambda \in \mathbb{C} \]
+            コヒーレント状態を調和振動子の固有状態で展開することを考える
+            \[ \ket{\lambda} = \sum_{n=0}^{\infty} c_n(\lambda) \ket{n} \]
+            コヒーレント状態の定義式を用いて、展開係数の漸化式を求め、$\ket{\lambda}$の規格化条件を用いて展開係数$c_n(\lambda)$が
+            \[ c_n(\lambda) = \frac{\lambda^n}{\sqrt{n!}} e^{-\frac{|\lambda|^2}{2} } \]
+            となることを示す
+            \item 規格化されたコヒーレント状態が
+            \[ \ket{\lambda} = e^{-\frac{|\lambda|}{2}} e^{\lambda \hat{a}^\dagger} \ket{0} \]
+            となることを示す
+            \item コヒーレント状態の位置・運動量のゆらぎを計算し、不確定性関係
+            \[ \Delta x\Delta p = \frac{\hbar }{2} \]
+            を示す
+            \item 調和振動子ハミルトニアンでコヒーレント状態を時間発展させたときの位置の期待値が
+            \[ \braket{\psi(t)|\hat{x}|\psi(t)} = \sqrt{\frac{\hbar}{m\omega}} \Re e\left[ \lambda e^{-i\omega t} \right] \]
+            となることを示す
+        \end{enumerate}
+        ・発展問題
+        \begin{enumerate}
+            \item コヒーレント状態の座標表示が
+            \[ \braket{x|\lambda} = \left( \frac{m\omega}{\pi \hbar} \right)^\frac{1}{4} \exp\left\{ -\frac{1}{2}\left( |\lambda|^2 - \lambda^2 \right) \right\} \exp\left\{ -\frac{m\omega}{2\hbar} \left( x - 2\lambda \sqrt{\frac{\hbar}{2m\omega}} \right)^2 \right\} \]
+            となることを示す
+        \end{enumerate}
+    \end{itembox}
+\subsection{コヒーレント状態の展開係数}
+    調和振動子の固有状態で展開したコヒーレント状態に消滅演算子を作用させると
+    \begin{align}
+        \hat{a}\ket{\lambda} &= \hat{a}\sum_{n=0}^{\infty} c_n(\lambda) \ket{n} \notag \\
+        &= \sum_{n=0}^{\infty} c_n(\lambda) \hat{a}\ket{n}
+    \end{align}
+    となり、$\hat{a}\ket{n} = n \ket{n-1}$を用いると
+    \begin{align}
+        &= \sum_{n=0}^{\infty} c_n(\lambda) \hat{a}\ket{n} \notag \\
+        &= \sum_{n=1}^{\infty} c_n(\lambda) \sqrt{n}\ket{n-1} \notag \\
+        &= \sum_{n=0}^{\infty} c_{n+1}(\lambda) \sqrt{n+1}\ket{n}
+    \end{align}
+    となる。$\hat{a}\ket{\lambda} = \lambda \ket{\lambda}$となることを用いると
+    \begin{align}
+         &\sum_{n=0}^{\infty} c_{n+1}(\lambda) \sqrt{n+1}\ket{n} = \lambda \ket{\lambda} = \sum_{n=0}^\infty \lambda c_n(\lambda) \ket{n} \notag \\
+         &\Leftrightarrow c_{n+1}(\lambda) \sqrt{n+1} = \lambda c_n(\lambda) \notag \\
+         &\Leftrightarrow c_{n+1}(\lambda)  = \frac{\lambda}{\sqrt{n+1}} c_n(\lambda)
+    \end{align}
+    が成り立つ。\\
+    したがって、展開係数$c_n$は
+    \begin{align}
+        c_n(\lambda) = \frac{\lambda}{\sqrt{n}}c_{n-1}(\lambda) = \cdots = \frac{\lambda^n}{\sqrt{n!}}c_0
+    \end{align}
+    とかける。\\
+    $\ \ $次に$\ket{\lambda}$のノルムを考えると
+    \begin{align}
+        \braket{\lambda | \lambda} &= \sum_{m = 1}^\infty \sum_{n = 1}^\infty \bra{m} c_m^*(\lambda) c_n(\lambda)\ket{n} \notag \\
+        &= \sum_{m = 1}^\infty \sum_{n = 1}^\infty c_m^*(\lambda) c_n(\lambda)\braket{m|n} \notag \\
+        &= \sum_{m = 1}^\infty \sum_{n = 1}^\infty\frac{(\lambda^*)^m}{\sqrt{m!}}c_0^* \frac{\lambda^n}{\sqrt{n!}}c_0\delta_{mn} \notag \\
+        &= |c_0|^2\sum_{n=0}^\infty \frac{1}{n!} \left( |\lambda|^2 \right)^n \notag \\
+        &= |c_0|^2 e^{|\lambda|^2}
+    \end{align}
+    となり規格化条件より
+    \begin{align}
+        &\braket{\lambda|\lambda} = 1 \notag \\
+        &\Leftrightarrow |c_0|^2 e^{|\lambda|^2} = 1\notag \\
+    \end{align}
+    となるで
+    \begin{align}
+        c_0 = e^{-\frac{|\lambda|^2}{2} }
+    \end{align}
+    となる。したがって展開係数は
+    \begin{align}
+        c_n(\lambda) = \frac{\lambda^n}{\sqrt{n!}} e^{-\frac{|\lambda|^2}{2} }
+    \end{align}
+    となる$\square$
+\subsection{コヒーレント状態の規格化}
+    コヒーレント状態は
+    \begin{align}
+        \ket{\lambda} = \sum_{n=0}^\infty \frac{\lambda^n}{\sqrt{n!}} e^{-\frac{|\lambda|^2}{2} } \ket{n}
+    \end{align}
+    とかけた。調和振動子の固有状態が$\ket{n} = \frac{1}{\sqrt{n!}}(\hat{a}^{\dagger})^n \ket{0}$とかけたことを思い出すと
+    \begin{align}
+        &= \sum_{n=0}^\infty \frac{\lambda^n}{\sqrt{n!}} e^{-\frac{|\lambda|^2}{2} } \frac{1}{\sqrt{n!}}(\hat{a}^{\dagger})^n \ket{0} \notag \\
+        &= e^{-\frac{|\lambda|^2}{2} } \sum_{n=0}^\infty \frac{(\lambda\hat{a}^{\dagger})^n}{n!} \ket{0} \notag \\
+        &= e^{-\frac{|\lambda|^2}{2} } e^{\lambda \hat{a}^\dagger} \ket{0}
+    \end{align}
+    となる$\square$
+\subsection{コヒーレント状態のゆらぎ}
+    まず$\braket{\hat{x}^2}$と$\braket{\hat{x}}$を計算する。\\
+    xの期待値は
+    \begin{align}
+        \braket{\hat{x}} &= \braket{\lambda|\hat{x}|\lambda} \notag \\
+        &=\braket{\lambda|\frac{1}{2}\sqrt{\frac{2\hbar}{m\omega}} (\hat{a}^\dagger + \hat{a}) |\lambda} \notag \\
+        &=\frac{1}{2}\sqrt{\frac{2\hbar}{m\omega}} \braket{\lambda| \hat{a}^\dagger + \hat{a} |\lambda} \notag \\
+        &= \sqrt{\frac{\hbar}{2m\omega}} \left( \braket{\lambda|\hat{a}^\dagger|\lambda} + \braket{\lambda|\hat{a}|\lambda} \right) \notag \\
+        &= \sqrt{\frac{\hbar}{2m\omega}} \left( \braket{\lambda|\lambda^*|\lambda} + \braket{\lambda|\lambda|\lambda} \right) \notag \\
+        &= \sqrt{\frac{\hbar}{2m\omega}} \left( \lambda + \lambda^*\right)
+    \end{align}
+    となる。\footnote{$a^\dagger : = \frac{1}{\sqrt{2\hbar}}\left( \sqrt{m\omega} \hat{x} -i \frac{1}{\sqrt{m\omega}} \hat{p}\right) ,\quad a : = \frac{1}{\sqrt{2\hbar}}\left( \sqrt{m\omega} \hat{x} +i \frac{1}{\sqrt{m\omega}} \hat{p}\right)$を$\hat{x}$について解いたものを用いた。今後も基本的に$\hat{x},\hat{p}$は$\hat{a}^\dagger,\hat{a}$を用いて計算する}\\
+    $x^2$の期待値は
+    \begin{align}
+        \braket{{\hat{x}}^2} &= \braket{\lambda|{\hat{x}}^2|\lambda} \notag \\
+        &=\braket{\lambda|\left( \frac{1}{2}\sqrt{\frac{2\hbar}{m\omega}} \right)^2 (\hat{a}^\dagger + \hat{a})^2 |\lambda} \notag \\
+        &=\frac{\hbar}{2m\omega} \braket{\lambda| (\hat{a}^\dagger)^2 + {\hat{a}}^2 + {\hat{a}}^\dagger \hat{a} + \hat{a} {\hat{a}}^\dagger |\lambda} \notag \\
+        &=\frac{\hbar}{2m\omega}\braket{\lambda| (\hat{a}^\dagger)^2 + {\hat{a}}^2 + 2{\hat{a}}^\dagger \hat{a} + 1 |\lambda} \notag \\
+        &=\frac{\hbar}{2m\omega} \left( \braket{\lambda |(\hat{a}^\dagger)^2|\lambda } + \braket{\lambda|\hat{a}^2 |\lambda} + 2\braket{\lambda|\hat{a}^\dagger \hat{a}|\lambda} + \braket{\lambda|\lambda} \right)\notag \\
+        &=\frac{\hbar}{2m\omega} \left( (\lambda^*)^2 + \lambda^2 + 2|\lambda|^2 + 1\right)
+    \end{align}
+    となる。\\
+    したがって位置のゆらぎの期待値は
+    \begin{align}
+        \braket{\lambda|(\Delta x)^2|\lambda} &= \braket{\lambda|\hat{x}^2 |\lambda} - \braket{\lambda|\hat{x}|\lambda}^2 \notag \\
+        &= \frac{\hbar}{2m\omega} \left( (\lambda^*)^2 + \lambda^2 + 2|\lambda|^2 + 1\right) - \left\{ \sqrt{\frac{\hbar}{2m\omega}} \left( \lambda + \lambda^*\right) \right\}^2 \notag \\
+        &= \frac{\hbar}{2m\omega}\left\{ (\lambda^*)^2 + \lambda^2 + 2|\lambda|^2 + 1 - (\lambda^2 + 2|\lambda|^2 + (\lambda^*)^2) \right\} \notag \\
+        &= \frac{\hbar}{2m\omega}
+    \end{align}
+    となる。\\
+    $\ \ $次に$\braket{\lambda|\hat{p}|\lambda},\braket{\lambda|\hat{p}^2|\lambda}$を計算する\\
+    $\hat{p}$の期待値は
+    \begin{align}
+        \braket{\hat{p}} &= \braket{\lambda|\hat{p}|\lambda} \notag \\
+        &= \braket{\lambda|\frac{1}{2i}\sqrt{2\hbar m\omega}(\hat{a} - \hat{a}^\dagger)|\lambda} \notag \\
+        &=i\sqrt{\frac{\hbar m\omega}{2}} \braket{\lambda|\hat{a}^\dagger - \hat{a} |\lambda} \notag \\
+        &= i\sqrt{\frac{\hbar m\omega}{2}}(\lambda^* - \lambda)
+    \end{align}
+    となる。\\
+    $\hat{p}^2$の期待値は
+    \begin{align}
+        \braket{\hat{p}^2} &= -\frac{\hbar m\omega}{2}\braket{\lambda|(\hat{a}^\dagger - \hat{a})^2|\lambda} \notag \\
+        &= -\frac{\hbar m\omega}{2}\braket{\lambda|(\hat{a}^\dagger)^2 + \hat{a}^2 - \hat{a}^\dagger \hat{a} - \hat{a}\hat{a}^\dagger|\lambda} \notag \\
+        &= -\frac{\hbar m\omega}{2}\braket{\lambda|(\hat{a}^\dagger)^2 + \hat{a}^2 - 2\hat{a}^\dagger \hat{a} - 1|\lambda} \notag \\
+        &= -\frac{\hbar m\omega}{2}((\lambda^*)^2 + \lambda^2 - 2|\lambda|^2 - 1)
+    \end{align}
+    となる。\\
+    したがって運動量のゆらぎの期待値は
+    \begin{align}
+        \braket{\lambda|(\Delta p)^2|\lambda} &= \braket{\lambda|\hat{p}^2 |\lambda} - \braket{\lambda|\hat{p}|\lambda}^2 \notag \\
+        &= -\frac{\hbar m\omega}{2}((\lambda^*)^2 + \lambda^2 - 2|\lambda|^2 - 1) - \left\{ i\sqrt{\frac{\hbar m\omega}{2}}(\lambda^* - \lambda) \right\}^2 \notag \\
+        &= -\frac{\hbar m\omega}{2}\left\{ (\lambda^*)^2 + \lambda^2 - 2|\lambda|^2 - 1 -((\lambda^*)^2 + \lambda^2 - 2|\lambda|^2) \right\} \notag \\
+        &= \frac{\hbar m\omega}{2}
+    \end{align}
+    となる。\\
+    したがって、不確定性関係は
+    \begin{align}
+        &(\Delta x)^2(\Delta p)^2 =  \frac{\hbar}{2m\omega}\frac{\hbar m\omega}{2} =\frac{\hbar^2}{4} \notag \\
+        &\Leftrightarrow \Delta x \Delta p = \frac{\hbar}{2}
+    \end{align}
+    となる$\square$
+\subsection{コヒーレント状態の位置の期待値}
+    調和振動子のハミルトニアンを$\hat{H}$としたとき、初期状態をコヒーレント状態としたときの時刻tでの状態は$\ket{\psi(t)}$は
+    \begin{align}
+        \ket{\psi(t)} &= e^{\frac{t\hat{H}}{i\hbar}} \ket{\lambda} \notag \\
+        &= e^{\frac{t\hat{H}}{i\hbar}}\sum_{n=0}^\infty \frac{\lambda^n}{\sqrt{n!}} e^{-\frac{|\lambda|^2}{2} } \ket{n} \notag \\
+        &= \sum_{n=0}^\infty \frac{\lambda^n}{\sqrt{n!}} e^{-\frac{|\lambda|^2}{2} } e^{\frac{t\hat{H}}{i\hbar}}\ket{n} \notag \\
+        &= \sum_{n=0}^\infty \frac{\lambda^n}{\sqrt{n!}} e^{-\frac{|\lambda|^2}{2} } e^{\frac{tE_n}{i\hbar}}\ket{n}
+    \end{align}
+    となり\footnote{$e^{\frac{t\hat{H}}{i\hbar}}\ket{n} = (1 + \frac{t\hat{H}}{i\hbar} + \frac{1}{2!} \left( \frac{t\hat{H}}{i\hbar} \right)^2 + \cdots)\ket{n} = (1 + \frac{tE_n}{i\hbar} + \frac{1}{2!} \left( \frac{tE_n}{i\hbar} \right)^2 + \cdots)\ket{n} = e^{\frac{tE_n}{i\hbar}}\ket{n}$}、調和振動子のエネルギー固有値$E_n = \hbar \omega (n + 1/2)$を用いると
+    \begin{align}
+        &= \sum_{n=0}^\infty \frac{\lambda^n}{\sqrt{n!}} e^{-\frac{|\lambda|^2}{2} } e^{-i\omega(n+\frac{1}{2})t}\ket{n}
+    \end{align}
+    となる。この状態に$\hat{x}$を作用さると
+    \begin{align}
+        \hat{x} \ket{\psi(t)} &= \hat{x} \sum_{n=0}^\infty \frac{\lambda^n}{\sqrt{n!}} e^{-\frac{|\lambda|^2}{2} } e^{-i\omega(n+\frac{1}{2})t}\ket{n} \notag \\
+        &= \sum_{n=0}^\infty \frac{\lambda^n}{\sqrt{n!}} e^{-\frac{|\lambda|^2}{2} } e^{-i\omega(n+\frac{1}{2})t} \hat{x} \ket{n} \notag \\
+        &= \sum_{n=0}^\infty \frac{\lambda^n}{\sqrt{n!}} e^{-\frac{|\lambda|^2}{2} } e^{-i\omega(n+\frac{1}{2})t} \sqrt{\frac{\hbar}{2m\omega}}(\hat{a}^\dagger + \hat{a}) \ket{n} \notag \\
+        &= \sqrt{\frac{\hbar}{2m\omega}} \sum_{n=0}^\infty \frac{\lambda^n}{\sqrt{n!}} e^{-\frac{|\lambda|^2}{2} } e^{-i\omega(n+\frac{1}{2})t} (\sqrt{n+1}\ket{n+1} + \sqrt{n}\ket{n-1}) 
+    \end{align}
+    となる。したがって位置の期待値は
+    \begin{align}
+        \braket{\hat{x}} &= \braket{\psi(t)|\hat{x}|\psi (t)} \notag \\
+        &= \sqrt{\frac{\hbar}{m\omega}} e^{-|\lambda^2|} \sum_{m=0}^{\infty}\sum_{n=0}^{\infty} \frac{(\lambda^*)^m\lambda^n}{\sqrt{m!n!}}e^{-i\omega(n-m)t}(\bra{m}\sqrt{n+1}\ket{n+1} + \bra{m}\sqrt{n}\ket{n-1}) \notag \\
+        &= \sqrt{\frac{\hbar}{m\omega}} e^{-|\lambda^2|} \sum_{m=0}^{\infty}\sum_{n=0}^{\infty} \frac{(\lambda^*)^m\lambda^n}{\sqrt{m!n!}}e^{-i\omega(n-m)t}(\sqrt{n+1} \delta_{m\ n+1} + \sqrt{n}\delta_{m\ n-1})  \notag \\
+        &= \sqrt{\frac{\hbar}{m\omega}} e^{-|\lambda^2|} \left\{ \sum_{n=0}^{\infty} \frac{(\lambda^*)^{n+1}\lambda^n}{\sqrt{(n+1)!n!}}e^{-i\omega(n-(n+1))t}\sqrt{n+1} + \sum_{n=0}^{\infty} \frac{(\lambda^*)^{n-1}\lambda^n}{\sqrt{(n-1)!n!}}e^{-i\omega(n-(n-1))t}\sqrt{n} \right\} \notag \\
+        &= \sqrt{\frac{\hbar}{m\omega}} e^{-|\lambda^2|} \left\{ \lambda^* \sum_{n=0}^{\infty} \frac{|\lambda|^{2n}}{n!}e^{i\omega t} + \lambda \sum_{n=1}^{\infty} \frac{|\lambda|^{2({n-1})}}{(n-1)!}e^{-i\omega t} \right\} \notag \\
+        &= \sqrt{\frac{\hbar}{m\omega}} e^{-|\lambda^2|} \left\{ \lambda^* e^{i\omega t}\sum_{n=0}^{\infty} \frac{|\lambda|^{2n}}{n!} + \lambda e^{-i\omega t}\sum_{n=0}^{\infty} \frac{|\lambda|^{2n}}{n!} \right\} \notag \\
+        &= \sqrt{\frac{\hbar}{m\omega}} e^{-|\lambda^2|} \left\{ \lambda^* e^{i\omega t} e^{|\lambda|^2} + \lambda e^{-i\omega t}e^{|\lambda|^2} \right\} \notag \\
+        &= \sqrt{\frac{\hbar}{m\omega}} \left( \lambda^* e^{i\omega t} + \lambda e^{-i\omega t} \right) \notag \\
+        &= \sqrt{\frac{\hbar}{m\omega}} \Re e\left[ \lambda e^{-i\omega t} \right]
+    \end{align}
+    となる\footnote{この結果は古典的な調和振動子と同様の時間発展を表す}$\square$
+\subsection{コヒーレント状態の座標表示}
+    \begin{align}
+        \braket{x|\lambda} &= \bra{x} e^{-\frac{|\lambda|^2}{2} } e^{\lambda \hat{a}^\dagger} \ket{0} \notag \\
+        &= e^{-\frac{|\lambda|^2}{2} }\bra{x} \exp\left[ \lambda \frac{1}{\sqrt{2\hbar}}\left( \sqrt{m\omega} \hat{x} -i \frac{1}{\sqrt{m\omega}} \hat{p}\right) \right]  \ket{0} \notag \\
+        &= e^{-\frac{|\lambda|^2}{2} }\bra{x} \exp\left[ \lambda \sqrt{\frac{m\omega}{2\hbar }} \hat{x} \right]\exp\left[ -\lambda i \frac{1}{\sqrt{2\hbar m\omega}} \hat{p} \right] \exp\left[ \lambda^2 \frac{i}{2\hbar}\frac{1}{2!} [\hat{x},\hat{p}] \right] \ket{0}  \notag \\
+        &= e^{-\frac{|\lambda|^2}{2} }\bra{x} \exp\left[ \lambda \sqrt{\frac{m\omega}{2\hbar }} \hat{x} \right]\exp\left[ -\lambda i \frac{1}{\sqrt{2\hbar m\omega}} \hat{p} \right] \exp\left[ \lambda^2 \frac{i}{4\hbar} i\hbar \right] \ket{0}  \notag \\
+        &= e^{-\frac{|\lambda|^2}{2} }\bra{x} \exp\left[ \lambda \sqrt{\frac{m\omega}{2\hbar }} \hat{x} \right]\exp\left[ -\lambda i \frac{1}{\sqrt{2\hbar m\omega}} \hat{p} \right] \exp\left[ -\frac{\lambda^2}{4} \right] \ket{0}  \notag \\
+        &= e^{-\frac{|\lambda|^2}{2} -\frac{\lambda^2}{4} }e^{\lambda \sqrt{\frac{m\omega}{2\hbar }} x }\bra{x}\exp\left[ -\lambda i \frac{1}{\sqrt{2\hbar m\omega}} \hat{p} \right] \ket{0} \notag \\
+        &= e^{-\frac{|\lambda|^2}{2} -\frac{\lambda^2}{4} }e^{\lambda \sqrt{\frac{m\omega}{2\hbar }} x }\bra{x}\exp\left[ \lambda \frac{1}{i\hbar} \sqrt{\frac{\hbar }{2m\omega}}\hat{p} \right] \ket{0} \notag \\
+        &= e^{-\frac{|\lambda|^2}{2} -\frac{\lambda^2}{4} }e^{\lambda \sqrt{\frac{m\omega}{2\hbar }} x }\left( \exp\left[ \frac{1}{i\hbar} \lambda \sqrt{\frac{\hbar }{2m\omega}}\hat{p} \right] \ket{x} \right)^\dagger \ket{0} 
+    \end{align}
+    となり\footnote{$e^{ \hat{x} + \hat{p} } = e^{\hat{x}}e^{\hat{p}} e^{-[\hat{x},\hat{p}]}$ を用いた。一般の演算子に対しては $e^{\hat{A}} e^{\hat{B}} = e^{\hat{A} + \hat{B} + \frac{1}{2!}[\hat{A}, \hat{B}] + \frac{1}{12}([\hat{A},[\hat{A},\hat{B}]+[\hat{B},[\hat{B},\hat{A}]])+\cdots}$が成り立ち、これをCampbell-Hausudorffの公式という}\footnote{$\hat{p}^\dagger = -\hat{p}$}、ここで$e^{\frac{a\hat{p}}{i\hbar}}\ket{x}=\ket{x-a}$となることを用いると
+    \begin{align}
+        &= e^{-\frac{|\lambda|^2}{2} -\frac{\lambda^2}{4} }e^{\lambda \sqrt{\frac{m\omega}{2\hbar }} x }\left(  \Ket{x - \lambda \sqrt{\frac{\hbar }{2m\omega}}} \right)^\dagger \ket{0} \notag \\
+        &= e^{-\frac{|\lambda|^2}{2} -\frac{\lambda^2}{4} }e^{\lambda \sqrt{\frac{m\omega}{2\hbar }} x }\Braket{x - \lambda \sqrt{\frac{\hbar }{2m\omega}}|0} 
+    \end{align}
+    となり、$\braket{x|0} = \left( \frac{m\omega}{\pi \hbar} \right)^{\frac{1}{4}} \exp\left[ -\frac{m\omega}{2 \hbar}x^2 \right]$をもちいると
+    \begin{align}
+        &= e^{-\frac{|\lambda|^2}{2} -\frac{\lambda^2}{4} }e^{\lambda \sqrt{\frac{m\omega}{2\hbar }} x } \left( \frac{m\omega}{\pi \hbar} \right)^{\frac{1}{4}} \exp\left[ -\frac{m\omega}{2 \hbar}\left( x - \lambda \sqrt{\frac{\hbar }{2m\omega}} \right)^2 \right] \notag \\
+        &= \exp \left[ -\frac{|\lambda|^2}{2} -\frac{\lambda^2}{4} + \lambda \sqrt{\frac{m\omega}{2\hbar }} x \right] \left( \frac{m\omega}{\pi \hbar} \right)^{\frac{1}{4}} \exp\left[ -\frac{m\omega}{2 \hbar}\left( x - 2\lambda \sqrt{\frac{\hbar }{2m\omega}} \right)^2 - \lambda \sqrt{\frac{m\omega}{2 \hbar }}x + \frac{3\lambda^2}{4}\right] \notag \\
+        &= \exp \left[ -\frac{|\lambda|^2}{2} -\frac{\lambda^2}{4} + \lambda \sqrt{\frac{m\omega}{2\hbar }} x - \lambda \sqrt{\frac{m\omega}{2 \hbar }}x + \frac{3\lambda^2}{4}\right] \left( \frac{m\omega}{\pi \hbar} \right)^{\frac{1}{4}} \exp\left[ -\frac{m\omega}{2 \hbar}\left( x - 2\lambda \sqrt{\frac{\hbar }{2m\omega}} \right)^2 \right] \notag \\
+        &=\left( \frac{m\omega}{\pi \hbar} \right)^{\frac{1}{4}} \exp \left[ -\frac{|\lambda|^2}{2} + \frac{\lambda^2}{2}\right]  \exp\left[ -\frac{m\omega}{2 \hbar}\left( x - 2\lambda \sqrt{\frac{\hbar }{2m\omega}} \right)^2 \right] \notag \\
+        &=\left( \frac{m\omega}{\pi \hbar} \right)^{\frac{1}{4}} \exp \left[ -\frac{1}{2}\left( |\lambda|^2 + \lambda^2 \right)\right]  \exp\left[ -\frac{m\omega}{2 \hbar}\left( x - 2\lambda \sqrt{\frac{\hbar }{2m\omega}} \right)^2 \right]
+    \end{align}
+    となる。$\square$
+\section{スピン1/2に磁場をかける}
+    \begin{itembox}[l]{\large{Pauli行列の性質}}
+        Pauli行列は以下の行列として定義される
+        \begin{align}
+            \hat{\sigma}_x := 
+            \left(
+            \begin{matrix}
+                0&1\\
+                1&0
+            \end{matrix}
+            \right),\quad
+            \hat{\sigma}_y := 
+            \left(
+            \begin{matrix}
+                0&-i\\
+                i&0
+            \end{matrix}
+            \right),\quad
+            \hat{\sigma}_z := 
+            \left(
+            \begin{matrix}
+                1&0\\
+                0&-1
+            \end{matrix}
+            \right),\quad
+            \hat{I} := 
+            \left(
+            \begin{matrix}
+                1&0\\
+                0&1
+            \end{matrix}
+            \right) 
+        \end{align}
+        以下の関係式を満たす
+        \begin{align}
+            &\hat{\sigma}_x^2 = \hat{\sigma}_y^2 = \hat{\sigma}_z^2 = \hat{I} \\
+            &\hat{\sigma}_x \hat{\sigma}_y = -\hat{\sigma}_y \hat{\sigma}_x = i\hat{\sigma}_z \\
+            &\hat{\sigma}_y \hat{\sigma}_z = -\hat{\sigma}_z \hat{\sigma}_y = i\hat{\sigma}_x \\
+            &\hat{\sigma}_z \hat{\sigma}_x = -\hat{\sigma}_x \hat{\sigma}_z = i\hat{\sigma}_y
+        \end{align}
+        スピン行列$\hat{\bm{S}}$は
+        \begin{align}
+            \hat{\bm{S}} = \frac{\hbar}{2} \hat{\bm{\sigma}}= \frac{\hbar}{2} 
+            \left(
+            \begin{matrix}
+                \hat{\sigma}_x\\
+                \hat{\sigma}_y\\
+                \hat{\sigma}_z
+            \end{matrix}
+            \right)
+        \end{align}
+        と表される
+    \end{itembox}
+    \begin{itembox}[l]{\large{それぞれのPauli行列に対する固有ベクトル}}
+        Pauli行列の規格化された固有ベクトルは
+        \begin{align}
+            &\hat{\sigma}_x \frac{1}{\sqrt{2}}
+            \left(
+            \begin{matrix}
+                1\\
+                1
+            \end{matrix}
+            \right) = \frac{1}{\sqrt{2}}
+            \left(
+            \begin{matrix}
+                1\\
+                1
+            \end{matrix}
+            \right),\quad
+            \hat{\sigma}_x \frac{1}{\sqrt{2}}
+            \left(
+            \begin{matrix}
+                1\\
+                -1
+            \end{matrix}
+            \right) = -
+            \frac{1}{\sqrt{2}}
+            \left(
+            \begin{matrix}
+                1\\
+                -1
+            \end{matrix}
+            \right) \\
+            &\hat{\sigma}_y \frac{1}{\sqrt{2}}
+            \left(
+            \begin{matrix}
+                1\\
+                i
+            \end{matrix}
+            \right) = \frac{1}{\sqrt{2}}
+            \left(
+            \begin{matrix}
+                1\\
+                i
+            \end{matrix}
+            \right),\quad
+            \hat{\sigma}_x \frac{1}{\sqrt{2}}
+            \left(
+            \begin{matrix}
+                1\\
+                -i
+            \end{matrix}
+            \right) = -
+            \frac{1}{\sqrt{2}}
+            \left(
+            \begin{matrix}
+                1\\
+                -i
+            \end{matrix}
+            \right) \\
+            &\hat{\sigma}_z
+            \left(
+            \begin{matrix}
+                1\\
+                0
+            \end{matrix}
+            \right) = 
+            \left(
+            \begin{matrix}
+                1\\
+                0
+            \end{matrix}
+            \right),\quad
+            \hat{\sigma}_z 
+            \left(
+            \begin{matrix}
+                0\\
+                1
+            \end{matrix}
+            \right) = -
+            \frac{1}{\sqrt{2}}
+            \left(
+            \begin{matrix}
+                0\\
+                1
+            \end{matrix}
+            \right)
+        \end{align}
+        となる
+    \end{itembox}
+    \begin{itembox}[l]{\large{磁場中のスピンのハミルトニアン}}
+        磁気モーメントベクトル$\bm{\mu}(=-\frac{2g \mu_B}{\hbar} \hat{\bm{S}})$、角振動数$\omega = \frac{g\mu_B}{\hbar}B$とし、スピンの固有状態の向きを$\bm{n}=(\sin \theta,0,\cos \theta)$とすれば、ハミルトニアンは
+        \begin{align}
+            \hat{H} &= -\bm{\mu}\cdot\bm{B} \\
+            &= \hbar \omega \bm{n}\cdot \hat{\bm{\sigma}} \\
+            &=\hbar \omega (\sin \theta \hat{\sigma}_x + \cos \theta \hat{\sigma}_z)\\
+            &= \hbar \omega 
+            \left(
+            \begin{matrix}
+                \cos \theta&\sin \theta\\
+                \sin \theta&-\cos \theta
+            \end{matrix}
+            \right)
+        \end{align}
+        と表される。このハミルトニアンの固有状態はスピンz方向の固有状態を$(1,0)\rightarrow \ket{\uparrow},(0,1)\rightarrow \ket{\downarrow}$とすると
+        \begin{align}
+            &\ket{+} = \cos \frac{\theta}{2} \ket{\uparrow} + \sin \frac{\theta}{2} \ket{\downarrow},\quad \hat{H}\ket{+} = \hbar \omega \ket{+} \\
+            &\ket{-} = \sin \frac{\theta}{2} \ket{\uparrow} - \cos \frac{\theta}{2} \ket{\downarrow},\quad \hat{H}\ket{-} = -\hbar \omega \ket{-} 
+        \end{align}
+        となる。
+    \end{itembox}
+    \begin{proofline}
+        ハミルトニアンに対する固有値、固有状態(ベクトル)を求める。\\
+        固有ベクトルを$(a,b)$、固有値を$\lambda$とすると固有値方程式は
+        \begin{align}
+            \hbar \omega 
+            \left(
+            \begin{matrix}
+                \cos \theta&\sin \theta\\
+                \sin \theta&-\cos \theta
+            \end{matrix}
+            \right)
+            \left(
+            \begin{matrix}
+                a\\
+                b
+            \end{matrix}
+            \right)
+            = \lambda 
+            \left(
+            \begin{matrix}
+                a\\
+                b
+            \end{matrix}
+            \right)
+        \end{align}
+        となる。この方程式が非自明解を持つ条件を考えると
+        \begin{align}
+            &\left|
+            \begin{matrix}
+                \hbar \omega \cos \theta - \lambda&\hbar \omega \sin \theta\\
+                \hbar \omega \sin \theta&-\hbar \omega \cos \theta - \lambda
+            \end{matrix}
+            \right| = 0 \notag \\
+            &\Leftrightarrow (\hbar \omega \cos \theta - \lambda)(-\hbar \omega \cos \theta - \lambda)-(\hbar \omega \sin \theta)(\hbar \omega \sin \theta)=0 \notag \\
+            &\Leftrightarrow \lambda^2 - (\hbar \omega \cos \theta)^2 - (\hbar \omega \sin \theta)^2 = 0 \notag \\
+            &\Leftrightarrow \lambda^2 - (\hbar \omega)^2 = 0 \notag  \\
+            &\Leftrightarrow \lambda = \pm \hbar \omega 
+        \end{align}
+        となる。この$\lambda$をもとの方程式に代入する。\\
+        $\ \ $$\lambda = \hbar \omega$のとき
+        \begin{align}
+            &\hbar \omega 
+            \left(
+            \begin{matrix}
+                \cos \theta&\sin \theta\\
+                \sin \theta&-\cos \theta
+            \end{matrix}
+            \right)
+            \left(
+            \begin{matrix}
+                a\\
+                b
+            \end{matrix}
+            \right)
+            = \hbar \omega 
+            \left(
+            \begin{matrix}
+                a\\
+                b
+            \end{matrix}
+            \right) \notag \\ 
+            &\Leftrightarrow 
+            \left(
+            \begin{matrix}
+                \cos \theta&\sin \theta\\
+                \sin \theta&-\cos \theta
+            \end{matrix}
+            \right)
+            \left(
+            \begin{matrix}
+                a\\
+                b
+            \end{matrix}
+            \right)
+            = 
+            \left(
+            \begin{matrix}
+                a\\
+                b
+            \end{matrix}
+            \right)
+        \end{align}
+        となるが、第一成分と第二成分は同じ式となるので片方を使い
+        \begin{align}
+            &a\cos \theta + b \sin \theta = a \notag \\
+            &\Leftrightarrow b = \frac{1 - \cos \theta}{\sin \theta} a \notag \\
+            &\Leftrightarrow b = \frac{\sin \frac{\theta}{2}}{\cos \frac{\theta}{2}}a
+        \end{align}
+        となるので、固有ベクトルは
+        \begin{align}
+            \ket{+} = a 
+            \left(
+            \begin{matrix}
+                1\\
+                \frac{\sin \frac{\theta}{2}}{\cos \frac{\theta}{2}}
+            \end{matrix}
+            \right)
+        \end{align}
+        規格化条件を課しaを定めると
+        \begin{align}
+            \ket{+} = 
+            \left(
+            \begin{matrix}
+                \cos \frac{\theta}{2}\\
+                \sin \frac{\theta}{2}
+            \end{matrix}
+            \right)
+        \end{align}
+        となる。\\
+        $\ \ $$\lambda=-\hbar \omega$のときも同様に
+        \begin{align}
+            &\hbar \omega 
+            \left(
+            \begin{matrix}
+                \cos \theta&\sin \theta\\
+                \sin \theta&-\cos \theta
+            \end{matrix}
+            \right)
+            \left(
+            \begin{matrix}
+                a\\
+                b
+            \end{matrix}
+            \right)
+            = -\hbar \omega 
+            \left(
+            \begin{matrix}
+                a\\
+                b
+            \end{matrix}
+            \right) \notag \\ 
+            &\Leftrightarrow 
+            \left(
+            \begin{matrix}
+                \cos \theta&\sin \theta\\
+                \sin \theta&-\cos \theta
+            \end{matrix}
+            \right)
+            \left(
+            \begin{matrix}
+                a\\
+                b
+            \end{matrix}
+            \right)
+            = -
+            \left(
+            \begin{matrix}
+                a\\
+                b
+            \end{matrix}
+            \right)
+        \end{align}
+        となり、第一成分の式を使うと
+        \begin{align}
+            &a\cos \theta + b \sin \theta = -a \notag \\
+            &\Leftrightarrow b = -\frac{1 + \cos \theta}{\sin \theta} a \notag \\
+            &\Leftrightarrow b = -\frac{\cos \frac{\theta}{2}}{\sin \frac{\theta}{2}}a
+        \end{align}
+        となるので固有ベクトルは
+        となるので、固有ベクトルは
+        \begin{align}
+            \ket{-} = a 
+            \left(
+            \begin{matrix}
+                1\\
+                -\frac{\cos \frac{\theta}{2}}{\sin \frac{\theta}{2}}
+            \end{matrix}
+            \right)
+        \end{align}
+        規格化条件を課しaを定めると
+        \begin{align}
+            \ket{-} = 
+            \left(
+            \begin{matrix}
+                \sin \frac{\theta}{2}\\
+                -\cos \frac{\theta}{2}
+            \end{matrix}
+            \right)
+        \end{align}
+        となる。\\
+        したがって、$(1,0)\rightarrow \ket{\uparrow},(0,1)\rightarrow \ket{\downarrow}$とすると
+        \begin{align}
+            &\ket{+} = \cos \frac{\theta}{2} \ket{\uparrow} + \sin \frac{\theta}{2} \ket{\downarrow},\quad \hat{H}\ket{+} = \hbar \omega \ket{+} \\
+            &\ket{-} = \sin \frac{\theta}{2} \ket{\uparrow} - \cos \frac{\theta}{2} \ket{\downarrow},\quad \hat{H}\ket{-} = -\hbar \omega \ket{-} 
+        \end{align}
+        となる。
+    \end{proofline}
+    \begin{itembox}[l]{\large{スピンの時間発展演算子に関する定理}}
+        ハミルトニアン$\hat{H}$が$c_1^2 + c_2^2 + c_3^2=1$を満たす実数$c_1,c_2,c_3$を用いて$\hat{H}=\hbar \omega(c_1 \hat{\sigma}_x + c_2\hat{\sigma}_y + c_3\hat{\sigma}_z)$と書けるとき、そのハミルトニアンに対する時間発展演算子$\hat{U}_{\hat{H}}(t)$は
+        \begin{align}
+            \hat{U}_{\hat{H}}(t) = \cos (\omega t) - i\sin (\omega t) \left( c_1 \hat{\sigma}_x + c_2 \hat{\sigma}_y + c_3 \hat{\sigma}_z \right)
+        \end{align}
+        と書ける
+    \end{itembox}
+    \begin{proofline}
+        Pauli行列の性質より、$c_1^2 + c_2^2 + c_3^2=1$を満たす実数に対し
+        \begin{align}
+            \left( c_1 \hat{\sigma}_x + c_2 \hat{\sigma}_y + c_3 \sigma_z \right)^2 &= c_1^2 \hat{\sigma}_x^2 + c_2^2 \hat{\sigma}_y^2 + c_3^2 \hat{\sigma}_z^2 +c_1c_2\left( \sigma_x \sigma_y + \sigma_y \sigma_x \right) + c_2c_3\left( \sigma_y \sigma_z + \sigma_z \sigma_y \right) + c_3c_1\left( \sigma_z \sigma_x + \sigma_x \sigma_z \right) \notag \\
+            &= c_1^2 + c_2^2 + c_3^2 \notag \\
+            &= 1
+        \end{align}
+        となる。このことを用いて時間発展演算子を計算すると
+        \begin{align}
+            \hat{U}_{\hat{H}}(t) &= \exp \left[ \frac{t}{i\hbar} \hat{H} \right] \notag \\
+            &= \sum_{n=0}^\infty \frac{1}{n!} \left( \frac{t}{i\hbar} \right)^n \hat{H}^n \notag \\
+            &= \sum_{n=0}^\infty \frac{1}{n!} \left( \frac{\omega}{i}t \right)^n \left( c_1 \hat{\sigma}_x + c_2 \hat{\sigma}_y + c_3 \sigma_z \right)^n \notag \\
+            &= \left( 1 + \frac{1}{2!} \left( \frac{\omega}{i}t \right)^2  + \cdots \right) + \left( \left( \frac{\omega}{i}t \right)+ \frac{1}{3!} \left( \frac{\omega}{i}t \right)^3 + \cdots \right)\left( c_1 \hat{\sigma}_x + c_2 \hat{\sigma}_y + c_3 \sigma_z \right) \notag \\
+            &= \left( 1 - \frac{1}{2!} \left( \omega t \right)^2  + \cdots \right) -i \left( \left( \omega t \right) - \frac{1}{3!} \left( \omega t \right)^3 + \cdots \right)\left( c_1 \hat{\sigma}_x + c_2 \hat{\sigma}_y + c_3 \sigma_z \right) \notag \\
+            &= \cos (\omega t) - i\sin (\omega t) \left( c_1 \hat{\sigma}_x + c_2 \hat{\sigma}_y + c_3 \sigma_z \right)
+        \end{align}
+        となる
+    \end{proofline}
+\subsection{スピンの歳差運動(z軸磁場)}
+    z軸方向に磁場をかけると、ハミルトニアンは
+    \begin{align}
+        \hat{H} &= \hbar \omega \hat{\sigma}_z \notag \\
+    \end{align}
+    となる。したがって、このハミルトニアンに対する時間発展演算子は定理より
+    \begin{align}
+        \hat{U}_{\hat{H}}(t) = \cos \omega t - i\sin \omega t\ \hat{\sigma}_z
+    \end{align}
+    となる。初期状態を$(a,b)$とすれば時刻tの状態は
+    \begin{align}
+        \hat{U}_{\hat{H}}(t) 
+        \left(
+        \begin{matrix}
+            a\\
+            b
+        \end{matrix}
+        \right) &= \left( \cos \omega t - i\sin \omega t\ \hat{\sigma}_z \right)
+        \left(
+        \begin{matrix}
+            a\\
+            b
+        \end{matrix}
+        \right) \\
+        &=
+        \left(
+        \begin{matrix}
+            a\cos \omega t - ia\sin \omega t\\
+            b\cos \omega t + ib\sin \omega t
+        \end{matrix}
+        \right)\notag \\
+        &=
+        \left(
+        \begin{matrix}
+            ae^{-i\omega t}\\
+            be^{i\omega t}
+        \end{matrix}
+        \right) 
+    \end{align}
+    となる。\\
+    $\ \ $初期状態がz方向の固有状態、すなわち$(1,0)$または$(0,1)$のとき
+    \begin{align}
+        \hat{U}_{\hat{H}}(t) 
+        \left(
+        \begin{matrix}
+            1\\
+            0
+        \end{matrix}
+        \right) &= e^{-i\omega t}
+        \left(
+        \begin{matrix}
+            1\\
+            0
+        \end{matrix}
+        \right)  \\
+        \hat{U}_{\hat{H}}(t) 
+        \left(
+        \begin{matrix}
+            0\\
+            1
+        \end{matrix}
+        \right) &= e^{i\omega t}
+        \left(
+        \begin{matrix}
+            0\\
+            1
+        \end{matrix}
+        \right) 
+    \end{align}
+    となり、時間発展は位相のみの変化となる。\\
+    $\ \ $初期状態がx方向の固有状態、すなわち$(1,1)$または$(1,-1))$のとき
+    \begin{align}
+        \hat{U}_{\hat{H}}(t) 
+        \left(
+        \begin{matrix}
+            1\\
+            1
+        \end{matrix}
+        \right) &= 
+        \left(
+        \begin{matrix}
+            e^{-i\omega t}\\
+            e^{i\omega t}
+        \end{matrix}
+        \right) = e^{-i\omega t}
+        \left(
+        \begin{matrix}
+            1\\
+            e^{2i\omega t}
+        \end{matrix}
+        \right)  \\
+        \hat{U}_{\hat{H}}(t) 
+        \left(
+        \begin{matrix}
+            1\\
+            -1
+        \end{matrix}
+        \right) &= 
+        \left(
+        \begin{matrix}
+            e^{-i\omega t}\\
+            -e^{i\omega t}
+        \end{matrix}
+        \right) = e^{-i\omega t}
+        \left(
+        \begin{matrix}
+            1\\
+            -e^{2i\omega t}
+        \end{matrix}
+        \right) 
+    \end{align}
+    となり、位相を無視すれば、時間発展と共に以下のように状態が変化する
+    \begin{align}
+        \left(
+        \begin{matrix}
+            1\\
+            1
+        \end{matrix}
+        \right) \xrightarrow{+\frac{\pi}{2\omega}}
+        \left(
+        \begin{matrix}
+            1\\
+            i
+        \end{matrix}
+        \right) \xrightarrow{+\frac{\pi}{2\omega}}
+        \left(
+        \begin{matrix}
+            1\\
+            -1
+        \end{matrix}
+        \right) \xrightarrow{+\frac{\pi}{2\omega}}
+        \left(
+        \begin{matrix}
+            1\\
+            -i
+        \end{matrix}
+        \right) \xrightarrow{+\frac{\pi}{2\omega}}
+        \left(
+        \begin{matrix}
+            1\\
+            1
+        \end{matrix}
+        \right) \xrightarrow{+\frac{\pi}{2\omega}}
+    \end{align}
+    状態が$x_+ \rightarrow y_+ \rightarrow x_- \rightarrow y_-$のようにあたかもz軸周りにスピンが歳差運動しているような周期運動が見られる。
+\subsection{スピンの歳差運動(z軸から45°傾けた磁場)}
+    z軸から45°傾けた磁場をかけたときのハミルトニアンは
+    \begin{align}
+        \hat{H} = \hbar \omega \left( \frac{1}{\sqrt{2}}\hat{\sigma}_x + \frac{1}{\sqrt{2}}\hat{\sigma}_z \right)
+    \end{align}
+    となる。このハミルトニアンに対する時間発展演算子は定理より
+    \begin{align}
+        \hat{U}_{\hat{H}}(t) = \cos \omega t -i\sin \omega t\left( \frac{1}{\sqrt{2}}\hat{\sigma}_x + \frac{1}{\sqrt{2}}\hat{\sigma}_z \right)
+    \end{align}
+    となる。したがって初期状態を$(a,b)$とすると、時刻tでの状態は
+    \begin{align}
+        \hat{U}_{\hat{H}}(t)
+        \left(
+        \begin{matrix}
+            a\\
+            b
+        \end{matrix}
+        \right)
+        &= \left( \cos \omega t -i\sin \omega t\left( \frac{1}{\sqrt{2}}\hat{\sigma}_x + \frac{1}{\sqrt{2}}\hat{\sigma}_z \right) \right)
+        \left(
+        \begin{matrix}
+            a\\
+            b
+        \end{matrix}
+        \right) \notag \\
+        &= \cos \omega t
+        \left(
+        \begin{matrix}
+            a\\
+            b
+        \end{matrix}
+        \right) - i\sin \omega t \frac{1}{\sqrt{2}}
+        \left(
+        \begin{matrix}
+            a+b\\
+            a-b
+        \end{matrix}
+        \right)
+    \end{align}
+    となる。\\
+    $\ \ $初期状態がz軸上向きの固有状態、すなわち$(1,0)$のとき
+    \begin{align}
+        \hat{U}_{\hat{H}}(t)
+        \left(
+        \begin{matrix}
+            1\\
+            0
+        \end{matrix}
+        \right) = \cos \omega t
+        \left(
+        \begin{matrix}
+            1\\
+            0
+        \end{matrix}
+        \right) - i\sin \omega t \frac{1}{\sqrt{2}}
+        \left(
+        \begin{matrix}
+            1\\
+            1
+        \end{matrix}
+        \right)
+    \end{align}
+    となり、位相、規格化定数を無視すれば、時間発展とともに状態が以下のように変化する
+    \begin{align}
+        \left(
+        \begin{matrix}
+            1\\
+            0
+        \end{matrix} 
+        \right) \xrightarrow{\frac{\pi}{2\omega}}
+        \left(
+        \begin{matrix}
+            1\\
+            1
+        \end{matrix} 
+        \right) \xrightarrow{\frac{\pi}{2\omega}}
+        \left(
+        \begin{matrix}
+            1\\
+            0
+        \end{matrix} 
+        \right) \xrightarrow{\frac{\pi}{2\omega}}
+    \end{align}
+    $\ \ $初期状態がz軸下向きの固有状態、すなわち$(0,1)$のとき
+    \begin{align}
+        \hat{U}_{\hat{H}}(t)
+        \left(
+        \begin{matrix}
+            0\\
+            1
+        \end{matrix}
+        \right) = \cos \omega t
+        \left(
+        \begin{matrix}
+            0\\
+            1
+        \end{matrix}
+        \right) - i\sin \omega t \frac{1}{\sqrt{2}}
+        \left(
+        \begin{matrix}
+            1\\
+            -1
+        \end{matrix}
+        \right)
+    \end{align}
+    となり、位相、規格化定数を無視すれば、時間発展とともに状態が以下のように変化する
+    \begin{align}
+        \left(
+        \begin{matrix}
+            0\\
+            1
+        \end{matrix} 
+        \right) \xrightarrow{\frac{\pi}{2\omega}}
+        \left(
+        \begin{matrix}
+            1\\
+            -1
+        \end{matrix} 
+        \right) \xrightarrow{\frac{\pi}{2\omega}}
+        \left(
+        \begin{matrix}
+            0\\
+            1
+        \end{matrix} 
+        \right) \xrightarrow{\frac{\pi}{2\omega}}
+    \end{align}
+    以上より、今回の場合もz軸を45度傾けた軸の周りに歳差運動をしている描像が得られる
+\section{摂動論}
+\subsection{時間に依存しない摂動論(縮退なし)}
+    \begin{itembox}[l]{\large{覚えましょう}}
+        ハミルトニアンが$\hat{H} = \hat{H}_0 + \lambda \hat{V}$で与えられ、$\hat{H}_0$の固有状態を$\ket{\varphi_n^{(0)}}$とすると、$\hat{H}$の固有エネルギー$E_n$、固有状態$\ket{\varphi_n}$は摂動展開で
+        \begin{align}
+            &E_n = E_n^{(0)} + \lambda \braket{\varphi_n^{(0)}|\hat{V}|\varphi_n^{(0)}} + \lambda^2 \sum_{\underset{n\ne m}{m=0}}^\infty \frac{\left| \braket{\varphi_m^{(0)}|\hat{V}|\varphi_n^{(0)}} \right|^2}{E_n^{(0)} - E_m^{(0)}} +O(\lambda^3)\\
+            &\ket{\varphi_n} = \ket{\varphi_n^{(0)}} + \lambda \sum_{\underset{n\ne m}{m=0}}^\infty \frac{ \braket{\varphi_m^{(0)}|\hat{V}|\varphi_n^{(0)}} }{E_n^{(0)} - E_m^{(0)}} \ket{\varphi_m^{(0)}} +O(\lambda^2)
+        \end{align}
+        で与えられる。
+    \end{itembox}
+    {\large{【導出】}}\\
+    系のハミルトニアン$\hat{H}$のエネルギー固有値$E_n$と状態$\ket{\varphi_n}$を$\lambda$に関して展開すると
+    \begin{align}
+        E_n &= E_n^{(0)}+\lambda E_n^{(1)} + \lambda^2 E_n^{(2)} + O(\lambda^3)\\
+        \ket{\varphi_n} &= \ket{\varphi_n^{(0)}} + \lambda \ket{\varphi_n^{(1)}} + \lambda^2 \ket{\varphi_n^{(2)}} + O(\lambda^3)
+    \end{align}
+    となる。ただし()の数字は$\lambda$の次数を表す。次にこれらの式をシュレーディンガー方程式に代入すると
+    \begin{align}
+        &\hat{H} \ket{\varphi_n} = E_n\ket{\varphi_n} \notag \\
+        &\Leftrightarrow (\hat{H}_0 + \lambda\hat{V}) (\ket{\varphi_n^{(0)}} + \lambda \ket{\varphi_n^{(1)}} + \lambda^2 \ket{\varphi_n^{(2)}} + O(\lambda^3)) \\
+        &\ \ \ \ \ \ = (E_n^{(0)}+\lambda E_n^{(1)} + \lambda^2 E_n^{(2)} + O(\lambda^3))(\ket{\varphi_n^{(0)}} + \lambda \ket{\varphi_n^{(1)}} + \lambda^2 \ket{\varphi_n^{(2)}} + O(\lambda^3))
+    \end{align}
+    となり、両辺の$\lambda$に関する係数比較を行うと
+    \begin{align}
+        &\lambda^0: \hat{H}_0 \ket{\varphi_n^{(0)}} = E_n^{(0)} \ket{\varphi_n^{(0)}} \\
+        &\lambda^1:\hat{H}_0 \ket{\varphi_n^{(1)}} + \hat{V}\ket{\varphi_n^{(0)}} = E_n^{(0)}\ket{\varphi_n^{(1)}} + E_n^{(1)}\ket{\varphi_n^{(0)}}\\
+        &\lambda^2:\hat{H}_0 \ket{\varphi_n^{(2)}} + \hat{V}\ket{\varphi_n^{(1)}} = E_n^{(0)}\ket{\varphi_n^{(2)}} + E_n^{(1)}\ket{\varphi_n^{(1)}} + E_n^{(2)}\ket{\varphi_n^{(0)}}\\
+        &\ \vdots \notag 
+    \end{align}
+    となる。\\
+    $\lambda$の一次の式の両辺に$\bra{\varphi_m^{(0)}}$をかけると
+    \begin{align}
+        &\bra{\varphi_m^{(0)}}\hat{H}_0 \ket{\varphi_n^{(1)}} + \bra{\varphi_m^{(0)}}\hat{V}\ket{\varphi_n^{(0)}} = \bra{\varphi_m^{(0)}}E_n^{(0)}\ket{\varphi_n^{(1)}} + \bra{\varphi_m^{(0)}}E_n^{(1)}\ket{\varphi_n^{(0)}} \notag \\
+        &\Leftrightarrow E_m^{(0)}\braket{\varphi_m^{(0)}|\varphi_n^{(1)}} + \bra{\varphi_m^{(0)}}\hat{V}\ket{\varphi_n^{(0)}} = E_n^{(0)}\braket{\varphi_m^{(0)}|\varphi_n^{(1)}} + E_n^{(1)}\braket{\varphi_m^{(0)}|\varphi_n^{(0)}}
+    \end{align}
+    となる。\\
+    $m=n$のとき
+    \begin{align}
+        &E_n^{(0)}\braket{\varphi_n^{(0)}|\varphi_n^{(1)}} + \bra{\varphi_n^{(0)}}\hat{V}\ket{\varphi_n^{(0)}} = E_n^{(0)}\braket{\varphi_n^{(0)}|\varphi_n^{(1)}} + E_n^{(1)}\braket{\varphi_n^{(0)}|\varphi_n^{(0)}} \notag \\
+        &\Leftrightarrow E_n^{(1)} = \bra{\varphi_n^{(0)}}\hat{V}\ket{\varphi_n^{(0)}}
+    \end{align}
+    となり、摂動一次のエネルギー固有値が得られる。\\
+    $m\ne n$のとき
+    \begin{align}
+        &E_m^{(0)}\braket{\varphi_m^{(0)}|\varphi_n^{(1)}} + \bra{\varphi_m^{(0)}}\hat{V}\ket{\varphi_n^{(0)}} = E_n^{(0)}\braket{\varphi_m^{(0)}|\varphi_n^{(1)}} \notag \\
+        &\Leftrightarrow  \braket{\varphi_m^{(0)}|\varphi_n^{(1)}} = \frac{\bra{\varphi_m^{(0)}}\hat{V}\ket{\varphi_n^{(0)}}}{E_n^{(0)}-E_m^{(0)}}
+    \end{align}
+    となる\footnote{$n \ne m$のとき$\braket{\varphi_m^{(0)}|\varphi_n^{(0)}}=0$であることを用いた}、したがって摂動一次の状態は
+    \begin{align}
+        \ket{\varphi_n^{(1)}} &= c_n^{(1)}\ket{\varphi_n^{(0)}} + \sum_{\underset{n\ne m}{m=0}}^\infty \braket{\varphi_m^{(0)}|\varphi_n^{(1)}}\ \ket{\varphi_m^{(0)}} \notag \\
+        &=  \sum_{\underset{n\ne m}{m=0}}^\infty \frac{\bra{\varphi_m^{(0)}}\hat{V}\ket{\varphi_n^{(0)}}}{E_n^{(0)}-E_m^{(0)}}\ket{\varphi_m^{(0)}}
+    \end{align}
+    となる。\footnote{摂動展開では$\ket{\varphi_n^{(0)}}$の係数は定まらない。このことは波動関数の係数の不定性に起因していて、$\ket{\varphi_n} = \ket{\varphi_n^{(0)}} + \lambda \ket{\varphi_n^{(1)}} + O(\lambda^2)$に$(1+c\lambda )$をかけると$(1+c\lambda) \ket{\varphi_n} = \ket{\varphi_n^{(0)} } + \lambda (\ket   {\varphi_n^{(0)}} + \ket{\varphi_n^{(1)}}) + O(\lambda^2)$となり、結果的に$\ket{\varphi_n^{(1)}}$に$\ket{\varphi_n^{(0)}}$を加えることは全体の定数倍に等しいことが分かる}$c_n^{(1)}=0$とおいた\footnote{$\ket{\varphi_n^{(1)}}$の係数を固定するために規格化を考える。$\ket{\varphi_n} = \ket{\varphi_n^{(0)}} + \lambda \ket{\varphi_n^{(1)}} + O(\lambda^2)$と展開していたので $\braket{\varphi_n|\varphi_n} = 1$より$\braket{\varphi_n^{(0)}|\varphi_n^{(0)}} + \lambda (\braket{\varphi_n^{(1)}|\varphi_n^{(0)}} + \braket{\varphi_n^{(0)}|\varphi_n^{(1)}}) + O(\lambda^2) = 1$となり、$\lambda$の一次の項をみれば$c_n^{(1)} + c_n^{(1)*} = 0 $を満たすように係数を決めればよいことが分かる。したがって$c_n^{(1)}=0$とおいた}\\
+    $\ \ $次に$\lambda$の二次の式の両辺に$\bra{\varphi_m^{(0)}}$をかけると
+    \begin{align}
+        &\bra{\varphi_m^{(0)}}\hat{H}_0 \ket{\varphi_n^{(2)}} + \bra{\varphi_m^{(0)}}\hat{V}\ket{\varphi_n^{(1)}} = \bra{\varphi_m^{(0)}}E_n^{(0)}\ket{\varphi_n^{(2)}} + \bra{\varphi_m^{(0)}}E_n^{(1)}\ket{\varphi_n^{(1)}} + \bra{\varphi_m^{(0)}}E_n^{(2)}\ket{\varphi_n^{(0)}} \notag \\
+        &\Leftrightarrow E_m^{(0)}\braket{\varphi_m^{(0)}|\varphi_n^{(2)}} + \bra{\varphi_m^{(0)}}\hat{V}\ket{\varphi_n^{(1)}} = E_n^{(0)}\braket{\varphi_m^{(0)}|\varphi_n^{(2)}} + E_n^{(1)}\braket{\varphi_m^{(0)}|\varphi_n^{(1)}} + E_n^{(2)}\braket{\varphi_m^{(0)}|\varphi_n^{(0)}} 
+    \end{align}
+    となり、$m=n$のときを考えると
+    \begin{align}
+        &E_n^{(0)}\braket{\varphi_n^{(0)}|\varphi_n^{(2)}} + \bra{\varphi_n^{(0)}}\hat{V}\ket{\varphi_n^{(1)}} = E_n^{(0)}\braket{\varphi_n^{(0)}|\varphi_n^{(2)}} + E_n^{(1)}\braket{\varphi_n^{(0)}|\varphi_n^{(1)}} + E_n^{(2)}\braket{\varphi_n^{(0)}|\varphi_n^{(0)}}  \notag \\
+        &\Leftrightarrow  \bra{\varphi_n^{(0)}}\hat{V}\ket{\varphi_n^{(1)}} = E_n^{(1)}\braket{\varphi_n^{(0)}|\varphi_n^{(1)}} + E_n^{(2)} \notag \\
+        &\Leftrightarrow E_n^{(2)} = \bra{\varphi_n^{(0)}}\hat{V}\ket{\varphi_n^{(1)}} - E_n^{(1)}\braket{\varphi_n^{(0)}|\varphi_n^{(1)}} \notag \\
+        &\Leftrightarrow E_n^{(2)} = \bra{\varphi_n^{(0)}}\hat{V} \left( c_n\ket{\varphi_n^{(0)}} + \sum_{\underset{n\ne m}{m=0}}^\infty \frac{\bra{\varphi_m^{(0)}}\hat{V}\ket{\varphi_n^{(0)}}}{E_n^{(0)}-E_m^{(0)}}\ket{\varphi_m^{(0)}}  \right) - E_n^{(1)}\braket{\varphi_n^{(0)}|\varphi_n^{(1)}} \notag \\
+        &\Leftrightarrow E_n^{(2)} = c_n\braket{\varphi_n^{(0)}|\hat{V}|\varphi_n^{(0)}} + \sum_{\underset{n\ne m}{m=0}}^\infty \frac{\bra{\varphi_m^{(0)}}\hat{V}\ket{\varphi_n^{(0)}}}{E_n^{(0)}-E_m^{(0)}}\bra{\varphi_n^{(0)}}\hat{V}\ket{\varphi_m^{(0)}} - E_n^{(1)}c_n \notag \\
+        &\Leftrightarrow E_n^{(2)} = c_nE_n^{(1)} + \sum_{\underset{n\ne m}{m=0}}^\infty \frac{\bra{\varphi_m^{(0)}}\hat{V}\ket{\varphi_n^{(0)}}}{E_n^{(0)}-E_m^{(0)}}\bra{\varphi_n^{(0)}}\hat{V}\ket{\varphi_m^{(0)}} - E_n^{(1)}c_n \notag \\
+        &\Leftrightarrow E_n^{(2)} = \sum_{\underset{n\ne m}{m=0}}^\infty \frac{\left| \bra{\varphi_m^{(0)}}\hat{V}\ket{\varphi_n^{(0)}} \right|^2}{E_n^{(0)}-E_m^{(0)}}
+    \end{align}
+    となる。\\
+    以上より
+    \begin{align}
+        \begin{aligned}
+            &E_n = E_n^{(0)} + \lambda \braket{\varphi_n^{(0)}|\hat{V}|\varphi_n^{(0)}} + \lambda^2 \sum_{\underset{n\ne m}{m=0}}^\infty \frac{\left| \braket{\varphi_m^{(0)}|\hat{V}|\varphi_n^{(0)}} \right|^2}{E_n^{(0)} - E_m^{(0)}} +O(\lambda^3)\\
+            &\ket{\varphi_n} = \ket{\varphi_n^{(0)}} + \lambda \sum_{\underset{n\ne m}{m=0}}^\infty \frac{ \braket{\varphi_m^{(0)}|\hat{V}|\varphi_n^{(0)}} }{E_n^{(0)} - E_m^{(0)}} \ket{\varphi_m^{(0)}} +O(\lambda^2)
+        \end{aligned}
+    \end{align}
+    となる$\square$
+\subsection{時間に依存しない摂動論(縮退あり)}
+    \begin{itembox}[l]{\large{覚えましょう}}
+        ハミルトニアンが$\hat{H} = \hat{H}_0 + \lambda \hat{V}$で与えられ、$\hat{H}_0$の固有状態に$N$個の縮退があり固有値を${E_n^\alpha}^{(0)}( = {E_n^{\alpha'}}^{(0)}) (\alpha,\alpha' = 1,2,\cdots,N)$、固有状態を$\ket{{\varphi_n^\alpha}^{(0)}}$とすると、$\hat{H}$の固有エネルギー$E_n^\alpha$、固有状態$\ket{\varphi_n^\alpha}$は摂動展開で
+        \begin{align}
+            &E_n^\alpha = {E_n^\alpha}^{(0)} + \lambda {E_n^\alpha}^{(1)} + O(\lambda^2) \\
+            &\ket{{\varphi_n^\alpha}} = \sum_{\beta=1}^{N} a_{n \beta}^\alpha \ket{{\varphi_n^\beta}^{(0)}} + \lambda \ket{{\varphi_n^\alpha}^{(1)}} + O(\lambda^2)
+        \end{align}
+        となり、一次の摂動エネルギーは
+        \begin{align}
+            \left(
+            \begin{matrix}
+                \braket{{\varphi_n^1}^{(0)}|\hat{V}|{\varphi_n^1}^{(0)}}&\cdots&\braket{{\varphi_n^1}^{(0)}|\hat{V}|{\varphi_n^N}^{(0)}}\\
+                \vdots&&\vdots\\
+                \braket{{\varphi_n^N}^{(0)}|\hat{V}|{\varphi_n^1}^{(0)}}&\cdots&\braket{{\varphi_n^N}^{(0)}|\hat{V}|{\varphi_n^N}^{(0)}}
+            \end{matrix}
+            \right)
+            \left(
+            \begin{matrix}
+                a_{n1}^\alpha\\
+                \vdots\\
+                a_{nN}^\alpha
+            \end{matrix}
+            \right) = {E_n^\alpha}^{(1)}
+            \left(
+            \begin{matrix}
+                a_{n1}^\alpha\\
+                \vdots\\
+                a_{nN}^\alpha
+            \end{matrix}
+            \right)
+        \end{align}
+        の固有値問題を解くことで得られる。
+    \end{itembox}
+    {\large{【導出】}}\\
+    系のハミルトニアン$\hat{H}$のエネルギー固有値$E_n$と状態$\ket{\varphi_n}$を$\lambda$に関して展開すると
+    \begin{align}
+        &E_n^\alpha = {E_n^\alpha}^{(0)} + \lambda {E_n^\alpha}^{(1)} + O(\lambda^2) \\
+            &\ket{{\varphi_n^\alpha}} = \sum_{\beta=1}^{N} a_{n \beta}^\alpha \ket{{\varphi_n^\beta}^{(0)}} + \lambda \ket{{\varphi_n^\alpha}^{(1)}} + O(\lambda^2)
+    \end{align}
+    となる。ただし()の数字は$\lambda$の次数を表す。次にこれらの式をシュレーディンガー方程式に代入すると
+    \begin{align}
+        &\hat{H} \ket{\varphi_n^\alpha} = E_n^\alpha\ket{\varphi_n} \notag \\
+        &\Leftrightarrow (\hat{H}_0 + \lambda\hat{V}) (\sum_{\beta=1}^{N} a_{n \beta}^\alpha \ket{{\varphi_n^\beta}^{(0)}} + \lambda \ket{{\varphi_n^\alpha}^{(1)}} + O(\lambda^2)) \\
+        &\ \ \ \ \ \ = ({E_n^\alpha}^{(0)} + \lambda {E_n^\alpha}^{(1)} + O(\lambda^2))(\sum_{\beta=1}^{N} a_{n \beta}^\alpha \ket{{\varphi_n^\beta}^{(0)}} + \lambda \ket{{\varphi_n^\alpha}^{(1)}} + O(\lambda^2))
+    \end{align}
+    となり、両辺の$\lambda$の一次に関する係数比較を行うと
+    \begin{align}
+        &\lambda^1:\hat{H}_0 \ket{{\varphi_n^\alpha}^{(1)}} + \hat{V}\sum_{\beta=1}^{N}a_{n \beta}^\alpha\ket{{\varphi_n^\beta}^{(0)}} = {E_n^\alpha}^{(0)}\ket{{\varphi_n^\alpha}^{(1)}} + {E_n^\alpha}^{(1)}\sum_{\beta=1}^{N}a_{n \beta}^\alpha\ket{{\varphi_n^\beta}^{(0)}}
+    \end{align}
+    となる。両辺に$\bra{{\varphi_n^\gamma}^{(0)}}$をかけると
+    \begin{align}
+        &\bra{{\varphi_n^\gamma}^{(0)}}\hat{H}_0 \ket{{\varphi_n^\alpha}^{(1)}} + \bra{{\varphi_n^\gamma}^{(0)}}\hat{V}\sum_{\beta=1}^{N}a_{n \beta}^\alpha\ket{{\varphi_n^\beta}^{(0)}} = \bra{{\varphi_n^\gamma}^{(0)}}{E_n^\alpha}^{(0)}\ket{{\varphi_n^\alpha}^{(1)}} + \bra{{\varphi_n^\gamma}^{(0)}}{E_n^\alpha}^{(1)}\sum_{\beta=1}^{N}a_{n \beta}^\alpha\ket{{\varphi_n^\beta}^{(0)}} \notag \\
+        &\Leftrightarrow {E_n^\gamma}^{(0)}\braket{{\varphi_n^\gamma}^{(0)}|{\varphi_n^\alpha}^{(1)}} + \sum_{\beta=1}^{N}\bra{{\varphi_n^\gamma}^{(0)}}\hat{V}\ket{{\varphi_n^\beta}^{(0)}}a_{n \beta}^\alpha = {E_n^\alpha}^{(0)}\braket{{\varphi_n^\gamma}^{(0)}|{\varphi_n^\alpha}^{(1)}} + {E_n^\alpha}^{(1)}\sum_{\beta=1}^{N}\braket{{\varphi_n^\gamma}^{(0)}|{\varphi_n^\beta}^{(0)}}a_{n \beta}^\alpha \notag \\
+        &\Leftrightarrow  \sum_{\beta=1}^{N}\bra{{\varphi_n^\gamma}^{(0)}}\hat{V}\ket{{\varphi_n^\beta}^{(0)}}a_{n \beta}^\alpha =  {E_n^\alpha}^{(1)}\sum_{\beta=1}^{N}\delta_{\beta \gamma}a_{n \beta}^\alpha \notag \\
+        &\Leftrightarrow  \sum_{\beta=1}^{N}\bra{{\varphi_n^\gamma}^{(0)}}\hat{V}\ket{{\varphi_n^\beta}^{(0)}}a_{n \beta}^\alpha =  {E_n^\alpha}^{(1)}a_{n \gamma}^\alpha
+    \end{align}
+    となり、この式は
+    \begin{align}
+            \left(
+            \begin{matrix}
+                \braket{{\varphi_n^1}^{(0)}|\hat{V}|{\varphi_n^1}^{(0)}}&\cdots&\braket{{\varphi_n^1}^{(0)}|\hat{V}|{\varphi_n^N}^{(0)}}\\
+                \vdots&&\vdots\\
+                \braket{{\varphi_n^N}^{(0)}|\hat{V}|{\varphi_n^1}^{(0)}}&\cdots&\braket{{\varphi_n^N}^{(0)}|\hat{V}|{\varphi_n^N}^{(0)}}
+            \end{matrix}
+            \right)
+            \left(
+            \begin{matrix}
+                a_{n1}^\alpha\\
+                \vdots\\
+                a_{nN}^\alpha
+            \end{matrix}
+            \right) = {E_n^\alpha}^{(1)}
+            \left(
+            \begin{matrix}
+                a_{n1}^\alpha\\
+                \vdots\\
+                a_{nN}^\alpha
+            \end{matrix}
+            \right)
+        \end{align}
+        を表す\footnote{この固有値方程式を解き、すべて互いに異なるエネルギー固有値が求まれば一次の摂動で縮退は完全に解けたことになる}$\square$
+\end{document}
